@@ -101,14 +101,12 @@ The \IZAW\ array follows on the lines immediately following the Header. It consi
 The \num{16} pairs of numbers are spread over \num{4} lines. The Fortran format for reading/writing the numbers on one line is: \mintinline{Fortran}{4(I7,F11.0)}.
 
 \subsubsection{\NXS\ Array}
-The \NXS\ array comes on the \num{2} lines after the \IZAW\ array. The \NXS\ array has \num{16} integer elements; \num{8} on each line. The Fortran format for reading/writing the numbers on each line is: \mintinline{Fortran}{8I9}.
-
-The first element of the \NXS\ array indicates how many numbers are in the \XSS\ array. 
+The \NXS\ array comes on the \num{2} lines after the \IZAW\ array. The \NXS\ array has \num{16} integer elements; \num{8} on each line. The Fortran format for reading/writing the numbers on each line is: \mintinline{Fortran}{8I9}. The first element of the \NXS\ array indicates how many numbers are in the \XSS\ array. The remainder of the \NXS\ array elements (usually) indicate how many of different pieces of data there is. 
 
 \subsubsection{\JXS\ Array}
-The \JXS\ array comes on the \num{4} lines after the \NXS\ array. The \JXS\ array has \num{32} integer elements; \num{8} on each line. The Fortran format for reading/writing the numbers on each line is: \mintinline{Fortran}{8I9}.
+The \JXS\ array comes on the \num{4} lines after the \NXS\ array. The \JXS\ array has \num{32} integer elements; \num{8} on each line. The Fortran format for reading/writing the numbers on each line is: \mintinline{Fortran}{8I9}. The \JXS\ array contains indices to the \XSS\ array where difference pieces of data begins. 
 
-The definition of the elements of the \NXS\ and \JXS\ arrays are dependent on the class of data in the Table and are defined in the section of this document that describes each class of data.\footnote{See, for example, Table~\ref{tab:NXSContinuousEnergyNeutron} and Table~\ref{tab:JXSContinuousEnergyNeutron}.} Note that not all elements of the arrays are (currently) being used, allowing for future expansion.
+The specific definition of the elements of the \NXS\ and \JXS\ arrays are dependent on the class of data in the Table and are defined in the section of this document that describes each class of data.\footnote{See, for example, Table~\ref{tab:NXSContinuousEnergyNeutron} and Table~\ref{tab:JXSContinuousEnergyNeutron}.} Note that not all elements of the arrays are (currently) being used, allowing for future expansion.
 
 \subsection{The \XSS\ Array}
 After the \ACE\ Header comes the \XSS\ array. It is typically \emph{very} large with hundreds of thousands of elements. It is broken up into blocks with the blocks being dependent on the class of data that is contained in the table. The description and definition of each of these blocks can be found in the descriptions later in this document.

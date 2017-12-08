@@ -31,9 +31,19 @@
 \newcommand{\Type}[1]{Type #1}
 \newcommand{\aceArray}[1]{{\sffamily #1}}
 \newcommand{\IZAW}{\aceArray{IZAW}}
+
 \newcommand{\NXS}{\aceArray{NXS}}
+\newcommand{\nxs}[1]{\texttt{NXS(#1)}}
+
 \newcommand{\JXS}{\aceArray{JXS}}
+\newcommand{\jxs}[1]{\texttt{JXS(#1)}}
+
 \newcommand{\XSS}{\aceArray{XSS}}
+\newcommand{\xss}[1]{\texttt{XSS(#1)}}
+\newcommand{\Block}[1]{ {\sffamily #1} Block}
+
+\newcommand{\Figureref}[1]{Figure~\ref{#1}}
+\newcommand{\Tableref}[1]{Table~\ref{#1}}
 
 \begin{document}
 \maketitle
@@ -45,4 +55,7 @@
 \include{Header}
 \include{UniqueIdentifier}
 \include{ContinuousEnergyNeutron}
+\include{Dosimetry}
+\include{ThermalScattering}
+\include{ContinuousEnergyPhoton}
 \end{document}

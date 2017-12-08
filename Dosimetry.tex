@@ -1,0 +1,43 @@
+\section{Neutron Dosimetry}\label{sec:Dosimetry}
+
+\subsection{\NXS\ Array}\label{sec:NXSDosimetry}
+
+\begin{table} \centering
+  \begin{tabular}{rll}
+    \toprule
+    Element  & Name   & Description \\
+    \midrule
+    1        & ---    & Length of second block of data (\XSS\ array) \\
+    2        & ZA     & $1000*Z+A$ \\
+    3        & ---    & \\
+    4        & NTR    & Number of reactions \\
+             & \ldots & \\
+    16       & ---    & \\
+    \bottomrule
+  \end{tabular}
+  \caption{\NXS\ array element definitions for neutron dosimetry \ACE\ Table.}
+  \label{tab:NXSDosimetry}
+\end{table}
+
+\subsection{\JXS\ Array}\label{sec:JXSDosimetry}
+\begin{table} \centering
+  \begin{tabular}{rll}
+    \toprule
+    Element  & Name   & Location Description \\
+    \midrule
+    1        & LONE   & First word of table \\
+    2        & ---    & \\
+    3        & MTR    & \texttt{MT} array \\
+             & \ldots & \\
+    6        & LSIG   & Table of cross section locators \\
+    7        & SIGD   & Cross sections \\
+             & \ldots & \\
+    22       & END    & Last word of this table \\
+             & \ldots & \\
+    32       & ---    & \\
+    \bottomrule
+  \end{tabular}
+  \caption{\JXS\ array element definitions for  neutron dosimtry \ACE\ Table.}
+  \label{tab:JXSDosimetry}
+\end{table}
+

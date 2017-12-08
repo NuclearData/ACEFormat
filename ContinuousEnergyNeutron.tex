@@ -1,4 +1,18 @@
-\section{Continuous Energy Neutron}\label{sec:ContinuousEnergyNeutron}
+\section{Continuous-Energy and Discrete Neutron Transport Tables}\label{sec:ContinuousEnergyNeutron}
+The format of individual blocks found on neutron transport tables is identical for continuous-energy and discrete-reaction \ACE\ Tables; the format for both are described in this section. The blocks of data are:
+\begin{enumerate}
+  \item \Block{ESZ}---contains the main energy gid for the Table and the total, absorption, and elastic cross sections as wella s the average heating numbers. The \Block{ESZ} block always exists. See \Tableref{tab:ESZBlock}.
+  \item \Block{NU}---contains prompt, delayed and/or total $\overline{\nu}$ as a function of incident neutron energy. The \Block{NU} exists only for fissionable isotopes; that is, if \jxs{2}$\neq0$. See \Tableref{tab:NUBlock}.
+  \item \Block{MTR}---contains a list of ENDF MT numbers for all neutron reactions other than elastic scattering. The \Block{MTR} exists for all isotopes that have reactions other than elastic scattering; that is, all isotopes with \nxs{4}$\neq0$. See \Tableref{tab:MTRBlock}.
+  \item \Block{LQR}---contains list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LTR} exists if \nxs{4}$\neq0$. See \Tableref{tab:LQRBlock}.
+  \item \Block{TYR}---contains information about the type of reaction for all neutron reactions other than elastic scattering. Information for each reaction includes the number of secondary neutrons and whether secondary neutron angular distributions are in the laboratory or center-of-mass system. The \Block{TYR} exists if \nxs{4}$\neq0$. See \Tableref{tab:TYRBlock}.
+  \item \Block{LSIG}---contains list of cross section locators for all neutron reacitons other than elastic scattering. The \Block{LSIG} exists if \nxs{4}$\neq0$. See \Tableref{tab:LSIGBlock}
+  \item \Block{SIG}---contains cross sections for all reactions other than elastic scattering. The \Block{SIG} exists if \nxs{4}$\neq0$. See \Tableref{tab:SIGBlock}.
+  \item \Block{LAND}---contains list of angular-distribution locators for all reactions producing secondary neutrons. The \Block{LAND} always exists. See \Tableref{tab:LANDBlock}.
+  \item \Block{AND}---contains list angular distributions for all reactions producing secondary neutrons. The \Block{AND} always exists. See \Tableref{tab:ANDBlock}.
+  \item \Block{LDLW}---contains list of energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{LDLW} exists if \nxs{5}$\neq0$. See \Tableref{tab:LDLWBlock}.
+  \item \Block{DLW}---contains energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{DLW} exists if \nxs{5}$\neq0$. See \Tableref{tab:DLWBlock}.
+\end{enumerate}
 
 \subsection{\NXS\ Array}\label{sec:NXSContinuousEnergyNeutron}
 
@@ -13,10 +27,10 @@
     4        & NTR    & Number of reactions excluding elastic scattering \\
     5        & NR     & Number of reactions having secondary neutrons excluding elastic scattering \\
     6        & NTRP   & Number of photon production reactions \\
-    7        & \ldots & \\
+             & \ldots & \\
     8        & NPCR   & Number of delayed neutron precurser families \\
              & \ldots & \\
-    15       & NT     & \\
+    15       & NT     & Number of PIKMT reaction \\
     16       & ---    & 0=normal photon production \\
              & ---    & -1=do not produce photons \\
     \bottomrule
@@ -24,6 +38,8 @@
   \caption{\NXS\ array element definitions for continuous-energy neutron \ACE\ Table.}
   \label{tab:NXSContinuousEnergyNeutron}
 \end{table}
+
+\todo[inline]{Does NXS[15] apply to every type of data, or just fast tables?}
 
 \subsection{\JXS\ Array}\label{sec:JXSContinuousEnergyNeutron}
 \begin{table} \centering
@@ -64,4 +80,29 @@
   \end{tabular}
   \caption{\JXS\ array element definitions for continuous-energy neutron \ACE\ Table.}
   \label{tab:JXSContinuousEnergyNeutron}
+\end{table}
+
+\subsection{Format of Individual Data Blocks}
+\begin{table} \centering
+  \begin{tabular}{lll}
+    <++>
+  \end{tabular}
+  \caption{\Block{ESZ}}
+  \label{tab:ESZBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    <++>
+  \end{tabular}
+  \caption{\Block{NU}}
+  \label{tab:NUBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    <++>
+  \end{tabular}
+  \caption{\Block{MTR}}
+  \label{tab:MTRBlock}
 \end{table}

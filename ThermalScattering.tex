@@ -1,0 +1,44 @@
+\section{Thermal Scattering \SaB}\label{sec:ThermalScattering}
+
+\subsection{\NXS\ Array}\label{sec:NXSThermalScattering}
+
+\begin{table} \centering
+  \begin{tabular}{rll}
+    \toprule
+    Element  & Name   & Description \\
+    \midrule
+    1        & ---    & Length of second block of data (\XSS\ array) \\
+    2        & IDPNI  & Inelastic scattering mode \\
+    3        & NIL    & Inelastic dimensioning parameter \\
+    4        & NIEB   & Number of inelastic exiting energies \\
+    5        & IDPNC  & Elastic scattering mode \\
+    6        & NCL    & Elastic dimensioning parameter \\
+    7        & IFENG  & Secondary energy mode \\
+             & \ldots & \\
+    16       & ---    & \\
+    \bottomrule
+  \end{tabular}
+  \caption{\NXS\ array element definitions for thermal scattering \ACE\ Table.}
+  \label{tab:NXSThermalScattering}
+\end{table}
+
+\subsection{\JXS\ Array}\label{sec:JXSThermalScattering}
+\begin{table} \centering
+  \begin{tabular}{rll}
+    \toprule
+    Element  & Name   & Location Description \\
+    \midrule
+    1        & ITIE   & Inelastic energy table \\
+    2        & ITIX   & Inelastic cross sections \\
+    3        & ITXE   & Inelastic energy/angle distributions \\
+    4        & ITCX   & Elastic cross sections \\
+    5        & ITCA   & Elastic angular distributions \\
+             & \ldots & \\
+    32       & ---    & \\
+    \bottomrule
+  \end{tabular}
+  \caption{\JXS\ array element definitions for thermal scattering \ACE\ Table.}
+  \label{tab:JXSThermalScattering}
+\end{table}
+
+

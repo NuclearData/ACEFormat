@@ -1,0 +1,41 @@
+\section{Continuous-Energy Photon}\label{sec:ContinuousEnergyPhoton}
+
+\subsection{\NXS\ Array}\label{sec:NXSContinuousEnergyPhoton}
+
+\begin{table} \centering
+  \begin{tabular}{rll}
+    \toprule
+    Element  & Name   & Description \\
+    \midrule
+    1        & ---    & Length of second block of data (\XSS\ array) \\
+    2        & Z      & Atomic number \\
+    3        & NES    & Number of energies \\
+    4        & NFLC   & Length of the flourescence data divided by 4 \\
+             & \ldots & \\
+    16       & ---    & \\
+    \bottomrule
+  \end{tabular}
+  \caption{\NXS\ array element definitions for continuous-energy photon \ACE\ Table.}
+  \label{tab:NXSContinuousEnergyPhoton}
+\end{table}
+
+\subsection{\JXS\ Array}\label{sec:JXSContinuousEnergyPhoton}
+\begin{table} \centering
+  \begin{tabular}{rll}
+    \toprule
+    Element  & Name   & Location Description \\
+    \midrule
+    1        & ESZG   & Energy table \\
+    2        & JINC   & Incoherent form factors \\
+    3        & JCOH   & Coherent form factors \\
+    4        & JFLO   & Fluorescence data \\
+    5        & LHNM   & Heating numbers \\
+             & \ldots & \\
+    32       & ---    & \\
+    \bottomrule
+  \end{tabular}
+  \caption{\JXS\ array element definitions for continuous-energy photon thermal scattering \ACE\ Table.}
+  \label{tab:JXSContinuousEnergyPhoton}
+\end{table}
+
+
