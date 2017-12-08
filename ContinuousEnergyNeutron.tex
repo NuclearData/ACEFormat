@@ -1,17 +1,28 @@
 \section{Continuous-Energy and Discrete Neutron Transport Tables}\label{sec:ContinuousEnergyNeutron}
 The format of individual blocks found on neutron transport tables is identical for continuous-energy and discrete-reaction \ACE\ Tables; the format for both are described in this section. The blocks of data are:
 \begin{enumerate}
-  \item \Block{ESZ}---contains the main energy gid for the Table and the total, absorption, and elastic cross sections as wella s the average heating numbers. The \Block{ESZ} block always exists. See \Tableref{tab:ESZBlock}.
-  \item \Block{NU}---contains prompt, delayed and/or total $\overline{\nu}$ as a function of incident neutron energy. The \Block{NU} exists only for fissionable isotopes; that is, if \jxs{2}$\neq0$. See \Tableref{tab:NUBlock}.
-  \item \Block{MTR}---contains a list of ENDF MT numbers for all neutron reactions other than elastic scattering. The \Block{MTR} exists for all isotopes that have reactions other than elastic scattering; that is, all isotopes with \nxs{4}$\neq0$. See \Tableref{tab:MTRBlock}.
-  \item \Block{LQR}---contains list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LTR} exists if \nxs{4}$\neq0$. See \Tableref{tab:LQRBlock}.
-  \item \Block{TYR}---contains information about the type of reaction for all neutron reactions other than elastic scattering. Information for each reaction includes the number of secondary neutrons and whether secondary neutron angular distributions are in the laboratory or center-of-mass system. The \Block{TYR} exists if \nxs{4}$\neq0$. See \Tableref{tab:TYRBlock}.
-  \item \Block{LSIG}---contains list of cross section locators for all neutron reacitons other than elastic scattering. The \Block{LSIG} exists if \nxs{4}$\neq0$. See \Tableref{tab:LSIGBlock}
-  \item \Block{SIG}---contains cross sections for all reactions other than elastic scattering. The \Block{SIG} exists if \nxs{4}$\neq0$. See \Tableref{tab:SIGBlock}.
-  \item \Block{LAND}---contains list of angular-distribution locators for all reactions producing secondary neutrons. The \Block{LAND} always exists. See \Tableref{tab:LANDBlock}.
-  \item \Block{AND}---contains list angular distributions for all reactions producing secondary neutrons. The \Block{AND} always exists. See \Tableref{tab:ANDBlock}.
-  \item \Block{LDLW}---contains list of energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{LDLW} exists if \nxs{5}$\neq0$. See \Tableref{tab:LDLWBlock}.
-  \item \Block{DLW}---contains energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{DLW} exists if \nxs{5}$\neq0$. See \Tableref{tab:DLWBlock}.
+  \item \textbf{\Block{ESZ}}---contains the main energy gid for the Table and the total, absorption, and elastic cross sections as wella s the average heating numbers. The \Block{ESZ} block always exists. See \Tableref{tab:ESZBlock}.
+  \item \textbf{\Block{NU}}---contains prompt, delayed and/or total $\overline{\nu}$ as a function of incident neutron energy. The \Block{NU} exists only for fissionable isotopes; that is, if \jxs{2}$\neq0$. See \Tableref{tab:NUBlock}.
+  \item \textbf{\Block{MTR}}---contains a list of ENDF MT numbers for all neutron reactions other than elastic scattering. The \Block{MTR} exists for all isotopes that have reactions other than elastic scattering; that is, all isotopes with \nxs{4}$\neq0$. See \Tableref{tab:MTRBlock}.
+  \item \textbf{\Block{LQR}}---contains a list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LTR} exists if \nxs{4}$\neq0$. See \Tableref{tab:LQRBlock}.
+  \item \textbf{\Block{TYR}}---contains information about the type of reaction for all neutron reactions other than elastic scattering. Information for each reaction includes the number of secondary neutrons and whether secondary neutron angular distributions are in the laboratory or center-of-mass system. The \Block{TYR} exists if \nxs{4}$\neq0$. See \Tableref{tab:TYRBlock}.
+  \item \textbf{\Block{LSIG}}---contains a list of cross section locators for all neutron reacitons other than elastic scattering. The \Block{LSIG} exists if \nxs{4}$\neq0$. See \Tableref{tab:LSIGBlock}
+  \item \textbf{\Block{SIG}}---contains cross sections for all reactions other than elastic scattering. The \Block{SIG} exists if \nxs{4}$\neq0$. See \Tableref{tab:SIGBlock}.
+  \item \textbf{\Block{LAND}}---contains a list of angular-distribution locators for all reactions producing secondary neutrons. The \Block{LAND} always exists. See \Tableref{tab:LANDBlock}.
+  \item \textbf{\Block{AND}}---contains list angular distributions for all reactions producing secondary neutrons. The \Block{AND} always exists. See \Tableref{tab:ANDBlock}.
+  \item \textbf{\Block{LDLW}}---contains a list of energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{LDLW} exists if \nxs{5}$\neq0$. See \Tableref{tab:LDLWBlock}.
+  \item \textbf{\Block{DLW}}---contains energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{DLW} exists if \nxs{5}$\neq0$. See \Tableref{tab:DLWBlock}.
+  \item \textbf{\Block{GPD}}---contains the total photon production cross section tabulated on the ESZ energy grid and a $30\times$ matrix of secondary photon energies. The \Block{GPD} exists only for those older evaluations that provide coupled neutron/photon information; that is, if \jxs{12}$\neq0$. See \Tableref{tab:GPDBlock}.
+  \item \textbf{\Block{MTRP}}---contains a list of MT numbers for all photon production reactions. The term ``photon production reaction'' is used for any information describing a specific neutron-in, photon-out reaction. The \Block{MTRP} exists if \nxs{6}$\neq6$. See \Tableref{tab:MTRPBlock}.
+  \item \textbf{\Block{LSIGP}}---contains a list of cross section locators for all photon production reactions. The \Block{LSIGP} exists if \nxs{6}$\neq0$. See \Tableref{tab:LSIGPBlock}.
+  \item \textbf{\Block{SIGP}}---contains cross sections for all photon production reactions. The \Block{SIGP} exists if \nxs{6}$\neq0$. See \Tableref{tab:SIGPBlock}.
+  \item \textbf{\Block{LANDP}}---contains a list of angular-distribution locators for all photon production reactions. The \Block{LANDP} exist if \nxs{6}$\neq0$. See \Tableref{tab:LANDPBlock}
+  \item \textbf{\Block{ANDP}}---contains photon angular distributions for all photon production reactions. The \Block{ANDP} exists if \nxs{6}$\neq0$. See \Tableref{tab:ANDPBlock}.
+  \item \textbf{\Block{LDLWP}}---contains a list of energy-distribution locators for all photon production reactions. The \Block{LDLWP} exists if \nxs{6}$\neq0$. See \Tableref{tab:LDLWPBlock}.
+  \item \textbf{\Block{DLWP}}---contains photon energy distributions for all photon production reactions. The \Block{DLWP} exists if \nxs{6}$\neq0$. See \Tableref{tab:DLWPBlock}.
+  \item \textbf{\Block{YP}}---contains a list of MT identifiers of neutron reaction cross sections required as photon production yield multipliers. The \Block{YP} exists if \nxs{6}$\neq0$. See \Tableref{tab:YPBlock}.
+  \item \textbf{\Block{FIS}}---contains the total fission cross section tabulated on the ESZ energy grid. The \Block{FIS} exists if \jxs{21}$\neq0$. See \Tableref{tab:FISBlock}.
+  \item \textbf{\Block{UNR}}---contains the unresolved resonance range probability tables. The \Block{UNR} exists if \jxs{23}$\neq0$. See \Tableref{tab:UNRBlock}.
 \end{enumerate}
 
 \subsection{\NXS\ Array}\label{sec:NXSContinuousEnergyNeutron}
@@ -83,9 +94,14 @@ The format of individual blocks found on neutron transport tables is identical f
 \end{table}
 
 \subsection{Format of Individual Data Blocks}
+\todo[inline]{How to do tables with footnotes.}
 \begin{table} \centering
   \begin{tabular}{lll}
-    <++>
+    \toprule
+    Location in \XSS & Parameter & Description \\
+    \midrule
+    \jxs{1} & $E(l), l=1,\ldots\nxs{3}$ & Energies \\
+    \bottomrule
   \end{tabular}
   \caption{\Block{ESZ}}
   \label{tab:ESZBlock}
@@ -93,7 +109,9 @@ The format of individual blocks found on neutron transport tables is identical f
 
 \begin{table} \centering
   \begin{tabular}{lll}
-    <++>
+    \toprule
+    \midrule
+    \bottomrule
   \end{tabular}
   \caption{\Block{NU}}
   \label{tab:NUBlock}
@@ -101,8 +119,200 @@ The format of individual blocks found on neutron transport tables is identical f
 
 \begin{table} \centering
   \begin{tabular}{lll}
-    <++>
+    \toprule
+    \midrule
+    \bottomrule
   \end{tabular}
   \caption{\Block{MTR}}
   \label{tab:MTRBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{LQR}}
+  \label{tab:LQRBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{TYR}}
+  \label{tab:TYRBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{LSIG}}
+  \label{tab:LSIGBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{SIG}}
+  \label{tab:SIGBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{LAND}}
+  \label{tab:LANDBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{AND}}
+  \label{tab:ANDBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{LDLW}}
+  \label{tab:LDLWBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{DLW}}
+  \label{tab:DLWBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{GPD}}
+  \label{tab:GPDBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{MTRP}}
+  \label{tab:MTRPBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{LSIGP}}
+  \label{tab:LSIGPBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{SIGP}}
+  \label{tab:SIGPBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{LANDP}}
+  \label{tab:LANDPBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{ANDP}}
+  \label{tab:ANDPBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{LDLWP}}
+  \label{tab:LDLWPBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{DLWP}}
+  \label{tab:DLWPBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{YP}}
+  \label{tab:YPBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{FIS}}
+  \label{tab:FISBlock}
+\end{table}
+
+\begin{table} \centering
+  \begin{tabular}{lll}
+    \toprule
+    \midrule
+    \bottomrule
+  \end{tabular}
+  \caption{\Block{UNR}}
+  \label{tab:UNRBlock}
 \end{table}
