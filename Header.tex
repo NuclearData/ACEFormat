@@ -1,13 +1,139 @@
 \section{\ACE\ Tables}
-An \ACE\ Table consists of a header followed by an array (\XSS) containing the actual data. The header and \XSS\ array are the same regardless of whether the \ACE\ Table is \Type{1} or \Type{2}. All data in the \XSS\ array can be read using the Fortran format: \mintinline{Fortran}{4E20.0}.
+An \ACE\ Table consists of a Header followed by an array (\XSS) containing the actual data. The Header and \XSS\ array are the same regardless of whether the \ACE\ Table is \Type{1} or \Type{2}. Each line in a \Type{1} \ACE\ Table is \num{80} characters or less. 
 
-\subsection{\ACE\ Header}
-The \ACE\ Header contains metadata\footnote{data about the data} about the \ACE\ Table.
+\subsection{\ACE\ Header}\label{sec:ACEHeader}
+The first section of an \ACE\ Table is the Header. The \ACE\ Header contains metadata\footnote{data about the data} about the \ACE\ Table. The Header consists of four parts:
+\begin{enumerate}
+  \item Opening,
+  \item \IZAW\ array,
+  \item \NXS\ array, and
+  \item \JXS\ array.
+\end{enumerate}
+An example of an \ACE\ Table Header (from \isotope[1]{H} in the ENDf71x library) is given in Figure~\ref{fig:HeaderExample} with each part highlighted a different color.
 
-Following the opening of the Header are three arrays, \IZAW, \NXS, and \JXS\ respectively. They are each described below. Immediately following the \JXS\ array is the \XSS array.
-\subsubsection{\IZAW\ Array}\label{sec:IZAW}
-\subsubsection{\NXS\ Array}\label{sec:NXS}
-\subsubsection{\JXS\ Array}\label{sec:JXS}
+\begin{figure}[h!] \centering
+  \begin{Verbatim}[frame=single, fontsize=\footnotesize,commandchars=\\\{\},numbers=left,numbersep=2pt]
+\color{red}{1001.80c    0.999167  2.5301E-08   12/17/12}
+\color{red}{H1 ENDF71x (jlconlin)  Ref. see jlconlin (ref 09/10/2012  10:00:53)      mat 125}
+\color{blue}{      0         0.      0         0.      0         0.      0         0.}
+\color{blue}{      0         0.      0         0.      0         0.      0         0.}
+\color{blue}{      0         0.      0         0.      0         0.      0         0.}
+\color{blue}{      0         0.      0         0.      0         0.      0         0.}
+\color{teal}{    17969     1001      590        3        0        1        1        0}
+\color{teal}{        0        1        1        0        0        0        0        0}
+\color{violet}{        1        0     2951     2954     2957     2960     2963     4352}
+\color{violet}{     4353     5644     5644     5644     6234     6235     6236     6244}
+\color{violet}{     6245     6245     6246    16721        0    16722        0        0}
+\color{violet}{        0        0        0        0        0    16723    16724    16725}
+\end{Verbatim}
+\caption{Header example. The (Legacy) Opening (lines 1--2) is in {\color{red}red}, the \IZAW\ array (lines 3--6) is in {\color{blue}blue}, the \NXS\ array (lines 7--8) is in {\color{teal}teal}, and the \JXS\ array (lines 9--12) is in {\color{violet}violet}.}
+  \label{fig:HeaderExample}
+\end{figure}
 
-\subsection{Locating Data on a \Type{1} Table}\label{sec:LocatingType1}
-\subsection{Locating Data on a \Type{2} Table}\label{sec:LocatingType2}
+\paragraph{Legacy Header Opening}
+There are two slightly different formats for the Header Opening. The most common one found is called here the Legacy Opening and is the one demonstrated in the Header example in Figure~\ref{fig:HeaderExample}.
+
+The Legacy Opening consists of several variables given over two 80-character lines. The variables and the Fortran format for reading the variable is given in Table~\ref{tab:LegacyHeader}
+\begin{table} \centering
+  \begin{tabular}{rlll}
+    \toprule
+    Line     & Variable & Format                      & Description\\
+    \midrule
+    1        & HZ       & \mintinline{Fortran}{A10}   & \ZAID\ (see Section~\ref{sec:ZAID})\\
+    1        & AW       & \mintinline{Fortran}{E12.0} & atomic weight ratio \\
+    1        & TZ       & \mintinline{Fortran}{E12.0} & temperature \\
+    1        & ---      & \mintinline{Fortran}{1X}    & (blank space) \\
+    1        & HD       & \mintinline{Fortran}{A10}   & processing date \\
+    \cmidrule{1-4}
+    2        & HK       & \mintinline{Fortran}{A70}   & descriptive string \\
+    2        & HM       & \mintinline{Fortran}{A10}   & 10-character material identifier \\
+    \bottomrule
+  \end{tabular}
+  \caption{Variables in the Legacy Opening part of the \ACE\ Header.}
+  \label{tab:LegacyHeader}
+\end{table}
+
+\paragraph{2.0.1 Header Opening}
+\todo[inline]{Don't forget the 2.0.1 Header Opening}
+There is a limitation to the number of unique \ZA\ IDs for a given \ZA; 100 different IDs, in fact, for each class of \ACE\ Table. To overcome this limitation, a new Header Opening was developed in 2013\todo{check this} and updated a few years later to correct some errors.
+
+\begin{table} \centering
+  \begin{tabular}{rlll}
+    \toprule
+    Line     & Variable & Format                      & Description\\
+    \midrule
+    1        & VERS     & \mintinline{Fortran}{A10}   & version format string \\
+    1        & HZ       & \mintinline{Fortran}{A24}   & \SZAID\ (see Section~\ref{sec:SZAID})\\
+    1        & SRC      & \mintinline{Fortran}{???}   & evaluation source \\
+    \cmidrule{1-4}
+    2        & AW       & \mintinline{Fortran}{E12.0} & atomic weight ratio \\
+    2        & TZ       & \mintinline{Fortran}{E12.0} & temperature \\
+    2        & ---      & \mintinline{Fortran}{1X}    & (blank space) \\
+    2        & HD       & \mintinline{Fortran}{A10}   & processing date \\
+    2        & N        & \mintinline{Fortran}{I10}   & number of comment lines to follow \\
+    3--(N+2) & ---      & \mintinline{Fortran}{A70}   & comment lines \\
+    \bottomrule
+  \end{tabular}
+  \caption{Variables in the 2.0.1 Opening part of the \ACE\ Header.}
+  \label{tab:LegacyHeader}
+\end{table}
+
+
+\begin{figure}[h!] \centering
+\begin{Verbatim}[frame=single, fontsize=\footnotesize,commandchars=\\\{\}]
+\color{red}{2.0.0      1001.710nc               ENDFB-VII.1             }
+\color{red}{0.999167 2.5301E-08 12/17/12     3}
+\color{blue}{The next two lines are the first two lines of 'old-style' ACE.}
+\color{blue}{  1001.80c    0.999167  2.5301E-08   12/17/12}
+\color{blue}{H1 ENDF71x (jlconlin)  Ref. see jlconlin (ref 09/10/2012  10:00:53)      mat 125}
+\end{Verbatim}
+\caption{Header Opening example. The Legacy Opening is shown in {\color{blue}blue} while the 2.0.1 Opening consists of the {\color{red}red} and the {\color{blue}blue} portions.}
+  \label{fig:HeaderOpeningExample}
+\end{figure}
+
+Note that a Legacy Header Opening can be contained in the comment section of the 2.0.1 Header Opening. This was designed explicitly to allow backwards compatibility while application codes were modified to be able to handle. An example of this is shown in Figure~\ref{fig:HeaderExample}\todo{verify correctness}. Codes that cannot read the 2.0.1 Header can be told (typically via an xsdir\todo{provide reference} entry) to start reading the \ACE\ Table several lines after the beginning of the 2.0.1 Header.
+
+Following the Opening of the Header are three arrays, \IZAW, \NXS, and \JXS\ respectively. They are each described below. Immediately following the \JXS\ array is the \XSS array.
+
+\subsubsection{\IZAW\ Array}
+The \IZAW\ array follows on the lines immediately following the Header. It consists of \num{16} pairs of \ZA's (\texttt{IZ}) and atomic weight ratios (\texttt{AW}). The \texttt{IZ} entries are still needed for \SaB\ Tables to indicate for which isotope(s) the scattering data are appropriate.
+
+The \num{16} pairs of numbers are spread over \num{4} lines. The Fortran format for reading/writing the numbers on one line is: \mintinline{Fortran}{4(I7,F11.0)}.
+
+\subsubsection{\NXS\ Array}
+The \NXS\ array comes on the \num{2} lines after the \IZAW\ array. The \NXS\ array has \num{16} integer elements; \num{8} on each line. The Fortran format for reading/writing the numbers on each line is: \mintinline{Fortran}{8I9}.
+
+The first element of the \NXS\ array indicates how many numbers are in the \XSS\ array. 
+
+\subsubsection{\JXS\ Array}
+The \JXS\ array comes on the \num{4} lines after the \NXS\ array. The \JXS\ array has \num{32} integer elements; \num{8} on each line. The Fortran format for reading/writing the numbers on each line is: \mintinline{Fortran}{8I9}.
+
+The definition of the elements of the \NXS\ and \JXS\ arrays are dependent on the class of data in the Table and are defined in the section of this document that describes each class of data.\footnote{See, for example, Table~\ref{tab:NXSContinuousEnergyNeutron} and Table~\ref{tab:JXSContinuousEnergyNeutron}.} Note that not all elements of the arrays are (currently) being used, allowing for future expansion.
+
+\subsection{The \XSS\ Array}
+After the \ACE\ Header comes the \XSS\ array. It is typically \emph{very} large with hundreds of thousands of elements. It is broken up into blocks with the blocks being dependent on the class of data that is contained in the table. The description and definition of each of these blocks can be found in the descriptions later in this document.
+
+The data is written with \num{4} floating-point numbers on each 80-character line.  All data in the \XSS\ array can be read using the Fortran format: \mintinline{Fortran}{4E20.0} for each line.
+
+\begin{figure}[h!] \centering
+\begin{Verbatim}[frame=single,fontsize=\footnotesize,numbers=left, numbersep=2pt]
+2.0.0      1001.710nc               ENDFB-VII.1             
+0.999167 2.5301E-08 12/17/12     3
+The next two lines are the first two lines of 'old-style' ACE.
+  1001.80c    0.999167  2.5301E-08   12/17/12
+H1 ENDF71x (jlconlin)  Ref. see jlconlin (ref 09/10/2012  10:00:53)      mat 125
+1.00000000000E-11   1.03125000000E-11   1.06250000000E-11   1.09375000000E-11
+1.12500000000E-11   1.15625000000E-11   1.18750000000E-11   1.21875000000E-11
+1.25000000000E-11   1.28125000000E-11   1.31250000000E-11   1.34375000000E-11
+1.37500000000E-11   1.43750000000E-11   1.50000000000E-11   1.56250000000E-11
+1.62500000000E-11   1.68750000000E-11   1.75000000000E-11   1.81250000000E-11
+1.87500000000E-11   1.93750000000E-11   2.00000000000E-11   2.09375000000E-11
+2.18750000000E-11   2.28125000000E-11   2.37500000000E-11   2.46875000000E-11
+2.56250000000E-11   2.65625000000E-11   2.75000000000E-11   2.84375000000E-11
+2.93750000000E-11   3.03125000000E-11   3.12500000000E-11   3.21875000000E-11
+3.31250000000E-11   3.40625000000E-11   3.50000000000E-11   3.59375000000E-11
+\end{Verbatim}
+\caption{\ACE\ Header with beginning of \XSS\ array for \isotope[1]{H} from the ENDF71x library. Note this uses the 2.0.1 Header with backwards compatibility with the Legacy Header.}
+  \label{fig:XSSExample}
+\end{figure}
+

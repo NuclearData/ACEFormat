@@ -3,3 +3,6 @@
 *.fdb_latexmk
 *.log
 *.out
+_minted*
+*.toc
+*.tdo

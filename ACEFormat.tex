@@ -4,6 +4,10 @@
 \usepackage{minted}
 \usepackage{enumitem}
 \usepackage{booktabs}
+\usepackage{todonotes}
+\usepackage{siunitx}
+\usepackage{fancyvrb}
+\usepackage{isotope}
 
 \usepackage[colorlinks=true]{hyperref}
 
@@ -21,9 +25,11 @@
 \setlist[itemize,1]{label=--}
 \newcommand{\ACE}{ACE}
 \newcommand{\SaB}{\ensuremath{S(\alpha, \beta)}}
-\newcommand{\ZAID}{ZAID}
+\newcommand{\ZA}{ {\sffamily ZA}}
+\newcommand{\ZAID}{{\sffamily ZAID}}
+\newcommand{\SZAID}{{\sffamily SZAID}}
 \newcommand{\Type}[1]{Type #1}
-\newcommand{\aceArray}[1]{\texttt{#1}}
+\newcommand{\aceArray}[1]{{\sffamily #1}}
 \newcommand{\IZAW}{\aceArray{IZAW}}
 \newcommand{\NXS}{\aceArray{NXS}}
 \newcommand{\JXS}{\aceArray{JXS}}
@@ -31,7 +37,12 @@
 
 \begin{document}
 \maketitle
+
+\tableofcontents
+\listoftodos
+
 \include{Introduction}
 \include{Header}
+\include{UniqueIdentifier}
 \include{ContinuousEnergyNeutron}
 \end{document}
