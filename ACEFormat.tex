@@ -1,6 +1,9 @@
 \documentclass{scrartcl}
 \usepackage[T1]{fontenc}
 \usepackage{authblk}
+\usepackage{minted}
+\usepackage{enumitem}
+\usepackage{booktabs}
 
 \usepackage[colorlinks=true]{hyperref}
 
@@ -14,10 +17,17 @@
 \affil[2]{Los Alamos National Laboratory, MCNP Team}
 \affil[3]{University of Michigan, Department of Nuclear Engineering and Radiological Sciences}
 
+\setlist{nosep}
+\setlist[itemize,1]{label=--}
 \newcommand{\ACE}{ACE}
 \newcommand{\SaB}{\ensuremath{S(\alpha, \beta)}}
 \newcommand{\ZAID}{ZAID}
 \newcommand{\Type}[1]{Type #1}
+\newcommand{\aceArray}[1]{\texttt{#1}}
+\newcommand{\IZAW}{\aceArray{IZAW}}
+\newcommand{\NXS}{\aceArray{NXS}}
+\newcommand{\JXS}{\aceArray{JXS}}
+\newcommand{\XSS}{\aceArray{XSS}}
 
 \begin{document}
 \maketitle

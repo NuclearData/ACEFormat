@@ -1,1 +1,13 @@
-\section{Locating Data on a \Type{1} Table}
+\section{\ACE\ Tables}
+An \ACE\ Table consists of a header followed by an array (\XSS) containing the actual data. The header and \XSS\ array are the same regardless of whether the \ACE\ Table is \Type{1} or \Type{2}. All data in the \XSS\ array can be read using the Fortran format: \mintinline{Fortran}{4E20.0}.
+
+\subsection{\ACE\ Header}
+The \ACE\ Header contains metadata\footnote{data about the data} about the \ACE\ Table.
+
+Following the opening of the Header are three arrays, \IZAW, \NXS, and \JXS\ respectively. They are each described below. Immediately following the \JXS\ array is the \XSS array.
+\subsubsection{\IZAW\ Array}\label{sec:IZAW}
+\subsubsection{\NXS\ Array}\label{sec:NXS}
+\subsubsection{\JXS\ Array}\label{sec:JXS}
+
+\subsection{Locating Data on a \Type{1} Table}\label{sec:LocatingType1}
+\subsection{Locating Data on a \Type{2} Table}\label{sec:LocatingType2}

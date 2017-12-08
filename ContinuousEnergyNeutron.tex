@@ -1,1 +1,67 @@
 \section{Continuous Energy Neutron}\label{sec:ContinuousEnergyNeutron}
+
+\subsection{\NXS\ Array}\label{sec:NXSContinuousEnergyNeutron}
+
+\begin{table} \centering
+  \begin{tabular}{rll}
+    \toprule
+    Element  & Name   & Description \\
+    \midrule
+    1        & ---    & Length of second block of data (\XSS\ array) \\
+    2        & ZA     & $1000*Z+A$ \\
+    3        & NES    & Number of energies \\
+    4        & NTR    & Number of reactions excluding elastic scattering \\
+    5        & NR     & Number of reactions having secondary neutrons excluding elastic scattering \\
+    6        & NTRP   & Number of photon production reactions \\
+    7        & \ldots & \\
+    8        & NPCR   & Number of delayed neutron precurser families \\
+             & \ldots & \\
+    15       & NT     & \\
+    16       & ---    & 0=normal photon production \\
+             & ---    & -1=do not produce photons \\
+    \bottomrule
+  \end{tabular}
+  \caption{\NXS\ array element definitions for continuous-energy neutron \ACE\ Table.}
+  \label{tab:NXSContinuousEnergyNeutron}
+\end{table}
+
+\subsection{\JXS\ Array}\label{sec:JXSContinuousEnergyNeutron}
+\begin{table} \centering
+  \begin{tabular}{rll}
+    \toprule
+    Element  & Name   & Location Description \\
+    \midrule
+    1        & ESZ    & Energy table \\
+    2        & NU     & Fission $\nu$ data \\
+    3        & MTR    & \texttt{MT} array \\
+    4        & LQR    & $Q$-calue array \\
+    5        & TYR    & Reaction type array \\
+    6        & LSIG   & Table of cross section locators \\
+    7        & SIG    & Cross sections \\
+    8        & LAND   & Table of angular distribution locators \\
+    9        & AND    & Angular distributions \\
+    10       & LDLW   & Table of energy distribution locators \\
+    11       & DLW    & Energy distributions \\
+    12       & GPD    & Photon production data \\
+    13       & MTRP   & Photon production \texttt{MT} array \\
+    14       & LSIGP  & Table of photon production cross section locators \\
+    15       & SIGP   & Photon production cross sections \\
+    16       & LANDP  & Table of photon production angular distribution locators \\
+    17       & ANDP   & Photon production angular distributions \\
+    18       & LDLWP  & Table of photon production energy distribution locators \\
+    19       & DLWP   & Photon production energy distributions \\
+    20       & YP     & Table of yield multipliers \\
+    21       & FIS    & Total fission cross section \\
+    22       & END    & Last word of this table \\
+    23       & LUNR   & Probability tables \\
+    24       & DNU    & Delayed $\overline{\nu}$ data \\
+    25       & BDD    & Basic delayed data ($\lambda$'s, probabilities) \\
+    26       & DNEDL  & Table of energy distribution locators \\
+    27       & DNED   & Energy distributions \\
+             & \ldots & \\
+    32       & ---    & \\
+    \bottomrule
+  \end{tabular}
+  \caption{\JXS\ array element definitions for continuous-energy neutron \ACE\ Table.}
+  \label{tab:JXSContinuousEnergyNeutron}
+\end{table}
