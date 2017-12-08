@@ -1,0 +1,32 @@
+\section{Introduction}\label{sec:Introduction}
+The \ACE\ format consists of two \emph{types} and nine \emph{classes} of data. The data are kept in an \ACE\ Table. The term \ACE\ Table and \ACE\ file are often used interchangeably.
+
+\subsection{Types of \ACE-Formatted Data}
+There are two types of \ACE-formatted data; simply called Type 1 and Type 2.
+\begin{description}
+  \item[Type 1] Standard formatted tables. These tables contain ASCII text and are machine independent; they are readable on every machine. 
+  \item[Type 2] Standard unformatted tables. These tables are binary and can be generated from the Type 1 files. They are more compact and faster to read than the Type 1 \ACE\ Tables
+ but are machine/platform dependent; they are not readable on every machine. 
+\end{description}
+Traditionally
+ Type 2 \ACE\ files were more commonly used because they were smaller in size and faster to read. However
+ due to the fact that they are not portable across machines and platforms they have fallen out of fashion.
+
+\subsection{Classes of \ACE-Formatted Data}
+There are nine classes of \ACE-formatted data:
+\begin{enumerate}
+  \item continuous-energy neutron,
+  \item discrete-reaction neutron,
+  \item continuous-energy photoatomic interaction,
+  \item continuous-energy electron interaction,
+  \item continuous- energy photonuclear interaction,
+  \item neutron dosimetry,
+  \item \SaB thermal,
+  \item neutron multigroup, and
+  \item photoatomic multigroup.
+\end{enumerate}
+
+An \ACE\ Table is an entity that contains evaluation-dependent data about one of the nine classes of data for a specific material---an target isotope, isomer, or element. For a given \ZAID, the data contained on a Type 1 and Type 2 tables are identical. Simulations run with one type of data should produce identical results as those run with the other type of data. 
+
+\subsection{\ACE\ Libraries}
+A collection of \ACE\ data tables that derive from a single set of evaluation files are typically grouped together in a ``library''---not to be confused from the evaluation library from which they derive. Multiple \ACE\ data tables can concatenated into the same logical file on the computer, although this has fallen somewhat out of fashion due to the large amount of data on each \ACE\ table derived from modern evaluation files. Applications that use \ACE-formatted data should produce the same results regardless of whether the tables are contained in one logical file on the computer or spread across many.
