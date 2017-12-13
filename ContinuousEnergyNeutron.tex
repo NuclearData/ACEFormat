@@ -27,11 +27,7 @@ The format of individual blocks found on neutron transport tables is identical f
 
 \subsection{\NXS\ Array}\label{sec:NXSContinuousEnergyNeutron}
 
-\begin{table} \centering
-  \begin{tabular}{rll}
-    \toprule
-    Element  & Name   & Description \\
-    \midrule
+\begin{NXSTable}{continuous-energy neutron}
     1        & ---    & Length of second block of data (\XSS\ array) \\
     2        & ZA     & $1000*Z+A$ \\
     3        & NES    & Number of energies \\
@@ -43,21 +39,14 @@ The format of individual blocks found on neutron transport tables is identical f
              & \ldots & \\
     15       & NT     & Number of PIKMT reaction \\
     16       & ---    & 0=normal photon production \\
-             & ---    & -1=do not produce photons \\
-    \bottomrule
-  \end{tabular}
-  \caption{\NXS\ array element definitions for continuous-energy neutron \ACE\ Table.}
+             &        & -1=do not produce photons \\
   \label{tab:NXSContinuousEnergyNeutron}
-\end{table}
+\end{NXSTable}
 
 \todo[inline]{Does NXS[15] apply to every type of data, or just fast tables?}
 
 \subsection{\JXS\ Array}\label{sec:JXSContinuousEnergyNeutron}
-\begin{table} \centering
-  \begin{tabular}{rll}
-    \toprule
-    Element  & Name   & Location Description \\
-    \midrule
+\begin{JXSTable}{continuous-energy neutron}
     1        & ESZ    & Energy table \\
     2        & NU     & Fission $\nu$ data \\
     3        & MTR    & \texttt{MT} array \\
@@ -87,11 +76,8 @@ The format of individual blocks found on neutron transport tables is identical f
     27       & DNED   & Energy distributions \\
              & \ldots & \\
     32       & ---    & \\
-    \bottomrule
-  \end{tabular}
-  \caption{\JXS\ array element definitions for continuous-energy neutron \ACE\ Table.}
   \label{tab:JXSContinuousEnergyNeutron}
-\end{table}
+\end{JXSTable}
 
 \subsection{Format of Individual Data Blocks}
 \todo[inline]{How to do tables with footnotes.}
@@ -100,9 +86,12 @@ The format of individual blocks found on neutron transport tables is identical f
     \toprule
     Location in \XSS & Parameter & Description \\
     \midrule
-    \jxs{1} & $E(l), l=1,\ldots\nxs{3}$ & Energies \\
+    S$_{ESZ}$ & $E(l), l=1,\ldots N_{E}$ & Energies \\
+    \jxs{1} + $N_{E}$ & $\sigma_{t}(l), l=1,\ldots N_{E}$ & Total cross section \\
     \bottomrule
-  \end{tabular}
+  \end{tabular} \\
+  S$_{ESZ}$ is index of the \XSS\ array where the \Block{ESZ} starts; \jxs{1}. \\
+  where $N_{E}$ is the number of energy energy points \nxs{3}.
   \caption{\Block{ESZ}}
   \label{tab:ESZBlock}
 \end{table}
