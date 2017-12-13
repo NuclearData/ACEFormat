@@ -80,228 +80,98 @@ The format of individual blocks found on neutron transport tables is identical f
 \end{JXSTable}
 
 \subsection{Format of Individual Data Blocks}
-\todo[inline]{How to do tables with footnotes.}
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    Location in \XSS & Parameter & Description \\
-    \midrule
-    S$_{ESZ}$ & $E(l), l=1,\ldots N_{E}$ & Energies \\
-    \jxs{1} + $N_{E}$ & $\sigma_{t}(l), l=1,\ldots N_{E}$ & Total cross section \\
-    \bottomrule
-  \end{tabular} \\
-  S$_{ESZ}$ is index of the \XSS\ array where the \Block{ESZ} starts; \jxs{1}. \\
-  where $N_{E}$ is the number of energy energy points \nxs{3}.
-  \caption{\Block{ESZ}}
-  \label{tab:ESZBlock}
-\end{table}
+\begin{ThreePartTable}
+  \begin{BlockTable}{ESZ}
+    S$_{ESZ}$         & $E(l), l=1,\ldots N_{E}$          & Energies \\
+    \jxs{1} + $N_{E}$ & $\sigma_{t}(l), l=1,\ldots N_{E}$ & Total cross section
+    \label{tab:ESZBlock}
+  \end{BlockTable}
+  \begin{tablenotes}
+    \note S$_{ESZ}$ is index of the \XSS\ array where the \Block{ESZ} starts; \jxs{1}. \\
+    where $N_{E}$ is the number of energy energy points \nxs{3}.
+  \end{tablenotes}
+\end{ThreePartTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{NU}}
+\begin{BlockTable}{NU} 
   \label{tab:NUBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{MTR}}
+\begin{BlockTable}{MTR}
   \label{tab:MTRBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{LQR}}
+\begin{BlockTable}{LQR}
   \label{tab:LQRBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{TYR}}
+\begin{BlockTable}{TYR}
   \label{tab:TYRBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{LSIG}}
+\begin{BlockTable}{LSIG}
   \label{tab:LSIGBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{SIG}}
+\begin{BlockTable}{SIG}
   \label{tab:SIGBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{LAND}}
+\begin{BlockTable}{LAND}
   \label{tab:LANDBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{AND}}
+\begin{BlockTable}{AND}
   \label{tab:ANDBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{LDLW}}
+\begin{BlockTable}{LDLW}
   \label{tab:LDLWBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{DLW}}
+\begin{BlockTable}{DLW}
   \label{tab:DLWBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{GPD}}
+\begin{BlockTable}{GPD}
   \label{tab:GPDBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{MTRP}}
+\begin{BlockTable}{MTRP}
   \label{tab:MTRPBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{LSIGP}}
+\begin{BlockTable}{LSIG}
   \label{tab:LSIGPBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{SIGP}}
+\begin{BlockTable}{SIG}
   \label{tab:SIGPBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{LANDP}}
+\begin{BlockTable}{LANDP}
   \label{tab:LANDPBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{ANDP}}
+\begin{BlockTable}{ANDP}
   \label{tab:ANDPBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{LDLWP}}
+\begin{BlockTable}{LDLWP}
   \label{tab:LDLWPBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{DLWP}}
+\begin{BlockTable}{DLWP}
   \label{tab:DLWPBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{YP}}
+\begin{BlockTable}{YP}
   \label{tab:YPBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{FIS}}
+\begin{BlockTable}{FIS}
   \label{tab:FISBlock}
-\end{table}
+\end{BlockTable}
 
-\begin{table} \centering
-  \begin{tabular}{lll}
-    \toprule
-    \midrule
-    \bottomrule
-  \end{tabular}
-  \caption{\Block{UNR}}
+\begin{BlockTable}{UNR}
   \label{tab:UNRBlock}
-\end{table}
+\end{BlockTable}

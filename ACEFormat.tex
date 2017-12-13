@@ -1,4 +1,4 @@
-\documentclass{scrartcl}
+\documentclass{ACEFormat}
 \usepackage[T1]{fontenc}
 \usepackage{authblk}
 \usepackage{minted}
@@ -27,60 +27,13 @@
 \setlist{nosep}
 \setlist[itemize,1]{label=--}
 
-\newenvironment{NXSTable}[1]{%
-  \begin{XXSTable}{\NXS}{#1}
-  }
-{\end{XXSTable}}
-
-\newenvironment{JXSTable}[1]{%
-  \begin{XXSTable}{\JXS}{#1}
-  }
-{\end{XXSTable}}
-
-\makeatletter
-\newenvironment{XXSTable}[2]{%
-  \begin{longtable}{rll}
-  \caption{#1 array element definitions for #1 \ACE\ Table.} \\[1.5ex]
-    \toprule
-    \ifthenelse{\equal{#1}{\JXS}}%
-      {Element  & Name   & Location Description \\}
-      {Element  & Name   & Description \\}
-    \midrule
-\endfirsthead
-  \caption{#1 (continued)} \\[1.5ex]
-    \toprule
-    Element  & Name   & Location Description \\
-    \midrule
-\endhead
-    \bottomrule
-    \multicolumn{3}{r}{\emph{Continued on next page}}
-  \endfoot
-    \bottomrule
-    \ifcsempty{TPTL@body}{}{%test
-      \insertTableNotes 
-      \csgdef{TPTL@body}{}% delete the body
-    }
-  \endlastfoot
-}
-{\end{longtable}}
-
 \newcommand{\ACE}{ACE}
 \newcommand{\SaB}{\ensuremath{S(\alpha, \beta)}}
 \newcommand{\ZA}{ {\sffamily ZA}}
 \newcommand{\ZAID}{{\sffamily ZAID}}
 \newcommand{\SZAID}{{\sffamily SZAID}}
 \newcommand{\Type}[1]{Type #1}
-\newcommand{\aceArray}[1]{{\sffamily #1}}
-\newcommand{\IZAW}{\aceArray{IZAW}}
 
-\newcommand{\NXS}{\aceArray{NXS}}
-\newcommand{\nxs}[1]{\texttt{NXS(#1)}}
-
-\newcommand{\JXS}{\aceArray{JXS}}
-\newcommand{\jxs}[1]{\texttt{JXS(#1)}}
-
-\newcommand{\XSS}{\aceArray{XSS}}
-\newcommand{\xss}[1]{\texttt{XSS(#1)}}
 \newcommand{\Block}[1]{ {\sffamily #1} Block}
 
 \newcommand{\Figureref}[1]{Figure~\ref{#1}}
