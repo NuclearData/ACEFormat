@@ -2,39 +2,29 @@
 
 \subsection{\NXS\ Array}\label{sec:NXSContinuousEnergyPhoton}
 
-\begin{ThreePartTable}
-  \begin{TableNotes}
-    \item[a] \label{tn:mcplib03} mcplib03 and later, older libraries don't use this option.
-  \end{TableNotes}
-  \begin{NXSTable}{continuous-energyphoton}
-    1        & ---    & Length of second block of data (\XSS\ array) \\
-    2        & Z      & Atomic number \\
-    3        & NES    & Number of energies \\
-    4        & NFLC   & Length of the flourescence data divided by 4 \\
-    5        & NSH    & Number of electron shells\tnotex{tn:mcplib03} \\
-             & \ldots & \\
-    16       & ---    & \\
-  \end{NXSTable}
-\end{ThreePartTable}
+\begin{NXSTable}{continuous-energyphoton}
+  1        & ---    & Length of second block of data (\XSS\ array) \\
+  2        & Z      & Atomic number \\
+  3        & NES    & Number of energies \\
+  4        & NFLC   & Length of the flourescence data divided by 4 \\
+  5        & NSH    & Number of electron shells \\
+           & \ldots & \\
+  16       & ---    & \\
+\end{NXSTable}
 
 \subsection{\JXS\ Array}\label{sec:JXSContinuousEnergyPhoton}
-\begin{ThreePartTable}
-  \begin{TableNotes}
-    \item[a] \label{tn:mcplib03} mcplib03 and later, older libraries don't use this option.
-  \end{TableNotes}
 \begin{JXSTable}{continuous-energy photon}
     1        & ESZG   & Energy table \\
     2        & JINC   & Incoherent form factors \\
     3        & JCOH   & Coherent form factors \\
     4        & JFLO   & Fluorescence data \\
     5        & LHNM   & Heating numbers \\
-    6        & LNEPS  & Number of electrons per shell\tnotex{tn:mcplib03} \\
-    7        & LBEPS  & Binding energy per shell\tnotex{tn:mcplib03} \\
-    8        & LPIPS  & Probability of interaction per shell\tnotex{tn:mcplib03} \\
-    9        & LSWD   & Array of offsets to the shell-wise data \tnotex{tn:mcplib03} \\
-    10       & SWD    & Shell-wise data in PDF and CDF form\tnotex{tn:mcplib03} \\
+    6        & LNEPS  & Number of electrons per shell \\
+    7        & LBEPS  & Binding energy per shell \\
+    8        & LPIPS  & Probability of interaction per shell \\
+    9        & LSWD   & Array of offsets to the shell-wise data  \\
+    10       & SWD    & Shell-wise data in PDF and CDF form \\
              & \ldots & \\
     32       & ---    &
   \label{tab:JXSContinuousEnergyPhoton}
 \end{JXSTable}
-\end{ThreePartTable}

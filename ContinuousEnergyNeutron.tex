@@ -1,28 +1,28 @@
 \section{Continuous-Energy and Discrete Neutron Transport Tables}\label{sec:ContinuousEnergyNeutron}
 The format of individual blocks found on neutron transport tables is identical for continuous-energy and discrete-reaction \ACE\ Tables; the format for both are described in this section. The blocks of data are:
 \begin{enumerate}
-  \item \textbf{\Block{ESZ}}---contains the main energy gid for the Table and the total, absorption, and elastic cross sections as wella s the average heating numbers. The \Block{ESZ} block always exists. See \Tableref{tab:ESZBlock}.
-  \item \textbf{\Block{NU}}---contains prompt, delayed and/or total $\overline{\nu}$ as a function of incident neutron energy. The \Block{NU} exists only for fissionable isotopes; that is, if \jxs{2}$\neq0$. See \Tableref{tab:NUBlock}.
-  \item \textbf{\Block{MTR}}---contains a list of ENDF MT numbers for all neutron reactions other than elastic scattering. The \Block{MTR} exists for all isotopes that have reactions other than elastic scattering; that is, all isotopes with \nxs{4}$\neq0$. See \Tableref{tab:MTRBlock}.
-  \item \textbf{\Block{LQR}}---contains a list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LTR} exists if \nxs{4}$\neq0$. See \Tableref{tab:LQRBlock}.
-  \item \textbf{\Block{TYR}}---contains information about the type of reaction for all neutron reactions other than elastic scattering. Information for each reaction includes the number of secondary neutrons and whether secondary neutron angular distributions are in the laboratory or center-of-mass system. The \Block{TYR} exists if \nxs{4}$\neq0$. See \Tableref{tab:TYRBlock}.
-  \item \textbf{\Block{LSIG}}---contains a list of cross section locators for all neutron reacitons other than elastic scattering. The \Block{LSIG} exists if \nxs{4}$\neq0$. See \Tableref{tab:LSIGBlock}
-  \item \textbf{\Block{SIG}}---contains cross sections for all reactions other than elastic scattering. The \Block{SIG} exists if \nxs{4}$\neq0$. See \Tableref{tab:SIGBlock}.
-  \item \textbf{\Block{LAND}}---contains a list of angular-distribution locators for all reactions producing secondary neutrons. The \Block{LAND} always exists. See \Tableref{tab:LANDBlock}.
-  \item \textbf{\Block{AND}}---contains list angular distributions for all reactions producing secondary neutrons. The \Block{AND} always exists. See \Tableref{tab:ANDBlock}.
-  \item \textbf{\Block{LDLW}}---contains a list of energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{LDLW} exists if \nxs{5}$\neq0$. See \Tableref{tab:LDLWBlock}.
-  \item \textbf{\Block{DLW}}---contains energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{DLW} exists if \nxs{5}$\neq0$. See \Tableref{tab:DLWBlock}.
-  \item \textbf{\Block{GPD}}---contains the total photon production cross section tabulated on the ESZ energy grid and a $30\times$ matrix of secondary photon energies. The \Block{GPD} exists only for those older evaluations that provide coupled neutron/photon information; that is, if \jxs{12}$\neq0$. See \Tableref{tab:GPDBlock}.
-  \item \textbf{\Block{MTRP}}---contains a list of MT numbers for all photon production reactions. The term ``photon production reaction'' is used for any information describing a specific neutron-in, photon-out reaction. The \Block{MTRP} exists if \nxs{6}$\neq6$. See \Tableref{tab:MTRPBlock}.
-  \item \textbf{\Block{LSIGP}}---contains a list of cross section locators for all photon production reactions. The \Block{LSIGP} exists if \nxs{6}$\neq0$. See \Tableref{tab:LSIGPBlock}.
-  \item \textbf{\Block{SIGP}}---contains cross sections for all photon production reactions. The \Block{SIGP} exists if \nxs{6}$\neq0$. See \Tableref{tab:SIGPBlock}.
-  \item \textbf{\Block{LANDP}}---contains a list of angular-distribution locators for all photon production reactions. The \Block{LANDP} exist if \nxs{6}$\neq0$. See \Tableref{tab:LANDPBlock}
-  \item \textbf{\Block{ANDP}}---contains photon angular distributions for all photon production reactions. The \Block{ANDP} exists if \nxs{6}$\neq0$. See \Tableref{tab:ANDPBlock}.
-  \item \textbf{\Block{LDLWP}}---contains a list of energy-distribution locators for all photon production reactions. The \Block{LDLWP} exists if \nxs{6}$\neq0$. See \Tableref{tab:LDLWPBlock}.
-  \item \textbf{\Block{DLWP}}---contains photon energy distributions for all photon production reactions. The \Block{DLWP} exists if \nxs{6}$\neq0$. See \Tableref{tab:DLWPBlock}.
-  \item \textbf{\Block{YP}}---contains a list of MT identifiers of neutron reaction cross sections required as photon production yield multipliers. The \Block{YP} exists if \nxs{6}$\neq0$. See \Tableref{tab:YPBlock}.
-  \item \textbf{\Block{FIS}}---contains the total fission cross section tabulated on the ESZ energy grid. The \Block{FIS} exists if \jxs{21}$\neq0$. See \Tableref{tab:FISBlock}.
-  \item \textbf{\Block{UNR}}---contains the unresolved resonance range probability tables. The \Block{UNR} exists if \jxs{23}$\neq0$. See \Tableref{tab:UNRBlock}.
+  \item \textbf{\Block{ESZ}}---contains the main energy gid for the Table and the total, absorption, and elastic cross sections as wella s the average heating numbers. The \Block{ESZ} block always exists. See \Sectionref{sec:ESZBlock}.
+  \item \textbf{\Block{NU}}---contains prompt, delayed and/or total $\overline{\nu}$ as a function of incident neutron energy. The \Block{NU} exists only for fissionable isotopes; that is, if \jxs{2}$\neq0$. See \Sectionref{sec:NUBlock}.
+  \item \textbf{\Block{MTR}}---contains a list of ENDF MT numbers for all neutron reactions other than elastic scattering. The \Block{MTR} exists for all isotopes that have reactions other than elastic scattering; that is, all isotopes with \nxs{4}$\neq0$. See \Sectionref{sec:MTRBlock}.
+  \item \textbf{\Block{LQR}}---contains a list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LTR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:LQRBlock}.
+  \item \textbf{\Block{TYR}}---contains information about the type of reaction for all neutron reactions other than elastic scattering. Information for each reaction includes the number of secondary neutrons and whether secondary neutron angular distributions are in the laboratory or center-of-mass system. The \Block{TYR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:TYRBlock}.
+  \item \textbf{\Block{LSIG}}---contains a list of cross section locators for all neutron reacitons other than elastic scattering. The \Block{LSIG} exists if \nxs{4}$\neq0$. See \Sectionref{sec:LSIGBlock}
+  \item \textbf{\Block{SIG}}---contains cross sections for all reactions other than elastic scattering. The \Block{SIG} exists if \nxs{4}$\neq0$. See \Sectionref{sec:SIGBlock}.
+  \item \textbf{\Block{LAND}}---contains a list of angular-distribution locators for all reactions producing secondary neutrons. The \Block{LAND} always exists. See \Sectionref{sec:LANDBlock}.
+  \item \textbf{\Block{AND}}---contains list angular distributions for all reactions producing secondary neutrons. The \Block{AND} always exists. See \Sectionref{sec:ANDBlock}.
+  \item \textbf{\Block{LDLW}}---contains a list of energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{LDLW} exists if \nxs{5}$\neq0$. See \Sectionref{sec:LDLWBlock}.
+  \item \textbf{\Block{DLW}}---contains energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{DLW} exists if \nxs{5}$\neq0$. See \Sectionref{sec:DLWBlock}.
+  \item \textbf{\Block{GPD}}---contains the total photon production cross section tabulated on the ESZ energy grid and a $30\times$ matrix of secondary photon energies. The \Block{GPD} exists only for those older evaluations that provide coupled neutron/photon information; that is, if \jxs{12}$\neq0$. See \Sectionref{sec:GPDBlock}.
+  \item \textbf{\Block{MTRP}}---contains a list of MT numbers for all photon production reactions. The term ``photon production reaction'' is used for any information describing a specific neutron-in, photon-out reaction. The \Block{MTR} exists if \nxs{6}$\neq6$. See \Sectionref{sec:MTRBlock}.
+  \item \textbf{\Block{LSIGP}}---contains a list of cross section locators for all photon production reactions. The \Block{LSIGP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:LSIGPBlock}.
+  \item \textbf{\Block{SIGP}}---contains cross sections for all photon production reactions. The \Block{SIGP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:SIGPBlock}.
+  \item \textbf{\Block{LANDP}}---contains a list of angular-distribution locators for all photon production reactions. The \Block{LANDP} exist if \nxs{6}$\neq0$. See \Sectionref{sec:LANDPBlock}
+  \item \textbf{\Block{ANDP}}---contains photon angular distributions for all photon production reactions. The \Block{ANDP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:ANDPBlock}.
+  \item \textbf{\Block{LDLWP}}---contains a list of energy-distribution locators for all photon production reactions. The \Block{LDLWP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:LDLWPBlock}.
+  \item \textbf{\Block{DLWP}}---contains photon energy distributions for all photon production reactions. The \Block{DLWP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:DLWPBlock}.
+  \item \textbf{\Block{YP}}---contains a list of MT identifiers of neutron reaction cross sections required as photon production yield multipliers. The \Block{YP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:YPBlock}.
+  \item \textbf{\Block{FIS}}---contains the total fission cross section tabulated on the ESZ energy grid. The \Block{FIS} exists if \jxs{21}$\neq0$. See \Sectionref{sec:FISBlock}.
+  \item \textbf{\Block{UNR}}---contains the unresolved resonance range probability tables. The \Block{UNR} exists if \jxs{23}$\neq0$. See \Sectionref{sec:UNRBlock}.
 \end{enumerate}
 
 \subsection{\NXS\ Array}\label{sec:NXSContinuousEnergyNeutron}
@@ -80,98 +80,232 @@ The format of individual blocks found on neutron transport tables is identical f
 \end{JXSTable}
 
 \subsection{Format of Individual Data Blocks}
+\subsubsection{\Block{ESZ}}\label{sec:ESZBlock}
+The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
 \begin{ThreePartTable}
   \begin{BlockTable}{ESZ}
-    S$_{ESZ}$         & $E(l), l=1,\ldots N_{E}$          & Energies \\
-    \jxs{1} + $N_{E}$ & $\sigma_{t}(l), l=1,\ldots N_{E}$ & Total cross section
+    \startblock{ESZ}            & $E(l), l=1,\ldots, N_{E}$           & Energies \\
+    \startblock{ESZ} + $N_{E}$  & $\sigma_{t}(l), l=1,\ldots, N_{E}$  & Total cross section \\
+    \startblock{ESZ} + $2N_{E}$ & $\sigma_{s}(l), l=1,\ldots, N_{E}$  & Total absorption cross section \\
+    \startblock{ESZ} + $3N_{E}$ & $\sigma_{el}(l), l=1,\ldots, N_{E}$ & Elastic cross section \\
+    \startblock{ESZ} + $4N_{E}$ & $H_{el}(l), l=1,\ldots, N_{E}$      & Average Heating numbers
     \label{tab:ESZBlock}
   \end{BlockTable}
   \begin{tablenotes}
-    \note S$_{ESZ}$ is index of the \XSS\ array where the \Block{ESZ} starts; \jxs{1}. \\
-    where $N_{E}$ is the number of energy energy points \nxs{3}.
+    \note \startblock{ESZ} is index of the \XSS\ array where the \Block{ESZ} starts, \jxs{1},  and $N_{E}$ is the number of energy energy points, \nxs{3}.
   \end{tablenotes}
 \end{ThreePartTable}
 
-\begin{BlockTable}{NU} 
-  \label{tab:NUBlock}
-\end{BlockTable}
+\subsubsection{\Block{NU}}\label{sec:NUBlock}
+There are four possibilities for the \Block{NU}:
+\begin{enumerate}
+  \item No \Block{NU}. This happens when \jxs{2}=0.
+  \item Either prompt or total \nubar\ is given (but not both). The \aceArray{NU} array begins at location \xss{KNU} where \var{KNU}=\jxs{2}.
+  \item Both prompt and total \nubar\ are given. The prompt \aceArray{NU} array begins at \xss{KNU} where \var{KNU}=\jxs{2}; the total \aceArray{NU} array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}})+1}
+  \item Delayed \nubar\ is given. The delayed \nubar\ array begins at \xss{KNU} where\\ \var{KNU}=\jxs{24}. Delayed \nubar\ must be given in form b described below.
+\end{enumerate}
 
-\begin{BlockTable}{MTR}
+The format of the \Block{NU} has two forms (if it exists); polynomial (see \Tableref{tab:NUBlockPolynomial}) and tabulated (see \Tableref{tab:NUBlockTabulated}). The format is specified by the \var{LNU} flag located in the \XSS\ array at index \var{KNU} where \var{KNU} is defined above.
+\begin{BlockTable}[---Polynomial function form]{NU}
+  \var{KNU}   & \var{LNU}=1                     & Polynomial function flag \\
+  \var{KNU}+1 & $N_{C}$                   & Number of coefficients \\
+  \var{KNU}+2 & $C(l), l=1,\ldots, N_{C}$ & Coefficients
+  \label{tab:NUBlockPolynomial}
+\end{BlockTable}
+When using the polynomial function form of the \aceArray{NU} array, \nubar\ is reconstructed as
+\begin{equation}
+  \nubar(E) = \sum_{l=1}^{N_{C}} C(l)E^{l-1},
+  \label{eq:nubarPolynomialReconstruction}
+\end{equation}
+where the energy, $E$, is given in \si{\MeV}.
+
+\begin{ThreePartTable}
+  \begin{TableNotes}
+  \item[$\dagger$] \label{tn:scheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
+  \end{TableNotes}
+  \begin{BlockTable}[---Tabulated form]{NU}
+    \var{KNU}                   & \var{LNU}=2                  & Tabulated data flag \\
+    \var{KNU}+1                 & $N_{R}$                      & Number of interpolation regions \\
+    \var{KNU}+2                 & \var{NBT}$(l), l=1,\ldots,N_{R}$   & ENDF interpolation parameters \\
+    \var{KNU}+2+$N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$   & ENDF interpolation scheme\tnotex{tn:scheme} \\
+    \var{KNU}+2+$2N_{R}$       & $N_{E}$                      & Number of energies \\
+    \var{KNU}+3+$2N_{R}$       & $E(l),l=1,\ldots,N_{E}$      & Tabulated energy points \\
+    \var{KNU}+3+$2N_{R}+N_{E}$ & $\nubar(l),l=1,\ldots,N_{E}$ & Tabulated \nubar\ values
+    \label{tab:NUBlockTabulated}
+  \end{BlockTable}
+\end{ThreePartTable}
+
+If delayed neutron data exist (when \jxs{24}>0), the precursor distribution format is given as in \Tableref{tab:DelayedPrecursorDistribution}. The decay constant for the first group \var{DEC}$_{1}$ is given at \xss{\jxs{25}}. The precursor distribution immediately follows as described in \Tableref{tab:DelayedPrecursorDistribution}. The indices (locators) of the \XSS\ array where each precursor distribution begins (\startblock{DNU}) can found using the format described in \Sectionref{sec:LDLWPBlock} and \Sectionref{sec:DLWPBlock}, where \var{LED}=\jxs{26} and \var{NMT}=\nxs{8}.
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:schemeDelayedPrecursors} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
+  \end{TableNotes}
+  \begin{longtable}{lll}
+    \caption{Delayed \nubar\ precursor distribution.} \\[1.5ex]
+    \toprule
+    Location in \XSS & Parameter & Description \\
+    \midrule
+  \endfirsthead
+    \caption{Delayed \nubar\ precursor distribution (continued).} \\[1.5ex]
+    \toprule
+    Element  & Name   & Location Description \\
+    \midrule
+  \endhead
+    \bottomrule
+    \multicolumn{3}{r}{\emph{Continued on next page}}
+  \endfoot
+    \bottomrule
+    \insertTableNotes
+  \endlastfoot
+    \label{tab:DelayedPrecursorDistribution}
+    \startblock{DNU}                   & \var{DEC}$_{i}$                  & Decay constant for the $i$-th group \\
+    \startblock{DNU}+1                 & $N_{R}$                          & Number of interpolation regions \\
+    \startblock{KNU}+2                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
+    \startblock{KNU}+2+$N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:schemeDelayedPrecursors} \\
+    \startblock{DNU}+2+$2N_{R}$       & $N_{E}$                          & Number of energies \\
+    \startblock{DNU}+3+$2N_{R}$       & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
+    \startblock{DNU}+3+$2N_{R}+N_{E}$ & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities \\
+  \end{longtable}
+  \begin{tablenotes}
+    \note \startblock{DNU} is the index of the \XSS\ array where the delayed \nubar\ precursor distribution begins; the first one is at \startblock{DNU}=\jxs{25}.
+  \end{tablenotes}
+\end{ThreePartTable}
+
+\subsubsection{\Block{MTR \textnormal{\&} MTRP}s}\label{sec:MTRBlock}
+The format of the \Block{MTR} or \Block{MTRP} (for photon production data) is given in \Tableref{tab:MTRBlock}. The starting index depends on whether it is the \Block{MTR} or \Block{MTRP} and are given in \Tableref{tab:LMT_NMT}.
+\begin{table}[h!] \centering
+  \begin{tabular}[h]{lll}
+    \toprule
+    Block & \var{LMT} & \var{NMT} \\
+    \midrule
+    \var{MTR} & \jxs{3} & \nxs{4} \\
+    \var{MTRP} & \jxs{13} & \nxs{6} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\var{LMT} and \var{NMT} values for the \Block{MTR} and \Block{MTR}.}
+  \label{tab:LMT_NMT}
+\end{table}
+
+\begin{BlockTable}{MTR \textnormal{\&} MTRP}
+  \var{LMT} & \MT$_{1}$ & First ENDF Reaction available \\
+  \var{LMT}+1 & \MT$_{2}$ & Second sENDF Reaction available \\
+  \ldots \\
+  \var{LMT}+\var{NMT}+1 & \MT$_{\var{NMT}}$ & Last ENDF reaction available \\
   \label{tab:MTRBlock}
 \end{BlockTable}
 
+For the \Block{MTR}, \MT$_{1},\ldots,\MT_{\var{NMT}}$ are standard ENDF \MT numbers; that is, \MT=16=$(n,2n)$; \MT=17=$(n,3n)$; etc. For a complete listing of \MT numbers, see \citetitle{Trkov:2011ENDF--0} \cite[Appendix B]{Trkov:2011ENDF--0}.
+
+\subsubsection{\Block{LQR}}\label{sec:LQRBlock}
+The format of the \Block{LQR} is given in \Tableref{tab:LQRBlock}.
 \begin{BlockTable}{LQR}
   \label{tab:LQRBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{TYR}}\label{sec:TYRBlock}
+The format of the \Block{TYR} is given in \Tableref{tab:TYRBlock}.
 \begin{BlockTable}{TYR}
   \label{tab:TYRBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{LSIG}}\label{sec:LSIGBlock}
+The format of the \Block{LSIG} is given in \Tableref{tab:LSIGBlock}.
 \begin{BlockTable}{LSIG}
   \label{tab:LSIGBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{SIG}}\label{sec:SIGBlock}
+The format of the \Block{SIG} is given in \Tableref{tab:SIGBlock}.
 \begin{BlockTable}{SIG}
   \label{tab:SIGBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{LAND}}\label{sec:LANDBlock}
+The format of the \Block{LAND} is given in \Tableref{tab:LANDBlock}.
 \begin{BlockTable}{LAND}
   \label{tab:LANDBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{AND}}\label{sec:ANDBlock}
+The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}.
 \begin{BlockTable}{AND}
   \label{tab:ANDBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{LDLW}}\label{sec:LDLWBlock}
+The format of the \Block{LDLW} is given in \Tableref{tab:LDLWBlock}.
 \begin{BlockTable}{LDLW}
   \label{tab:LDLWBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{DLW}}\label{sec:DLWBlock}
+The format of the \Block{DLW} is given in \Tableref{tab:DLWBlock}.
 \begin{BlockTable}{DLW}
   \label{tab:DLWBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{GPD}}\label{sec:GPDBlock}
+The format of the \Block{GPD} is given in \Tableref{tab:GPDBlock}.
 \begin{BlockTable}{GPD}
   \label{tab:GPDBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{MTRP}}\label{sec:MTRPBlock}
+The format of the \Block{MTRP} is given in \Tableref{tab:MTRPBlock}.
 \begin{BlockTable}{MTRP}
   \label{tab:MTRPBlock}
 \end{BlockTable}
 
-\begin{BlockTable}{LSIG}
+\subsubsection{\Block{LSIGP}}\label{sec:LSIGPBlock}
+The format of the \Block{LSIGP} is given in \Tableref{tab:LSIGPBlock}.
+\begin{BlockTable}{LSIGP}
   \label{tab:LSIGPBlock}
 \end{BlockTable}
 
-\begin{BlockTable}{SIG}
+\subsubsection{\Block{SIGP}}\label{sec:SIGPBlock}
+The format of the \Block{SIGP} is given in \Tableref{tab:SIGPBlock}.
+\begin{BlockTable}{SIGP}
   \label{tab:SIGPBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{LANDP}}\label{sec:LANDPBlock}
+The format of the \Block{LANDP} is given in \Tableref{tab:LANDPBlock}.
 \begin{BlockTable}{LANDP}
   \label{tab:LANDPBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{ANDP}}\label{sec:ANDPBlock}
+The format of the \Block{ANDP} is given in \Tableref{tab:ANDPBlock}.
 \begin{BlockTable}{ANDP}
   \label{tab:ANDPBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{LDLWP}}\label{sec:LDLWPBlock}
+The format of the \Block{LDLWP} is given in \Tableref{tab:LDLWPBlock}.
 \begin{BlockTable}{LDLWP}
   \label{tab:LDLWPBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{DLWP}}\label{sec:DLWPBlock}
+The format of the \Block{DLWP} is given in \Tableref{tab:DLWPBlock}.
 \begin{BlockTable}{DLWP}
   \label{tab:DLWPBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{YP}}\label{sec:YPBlock}
+The format of the \Block{YP} is given in \Tableref{tab:YPBlock}.
 \begin{BlockTable}{YP}
   \label{tab:YPBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{FIS}}\label{sec:FISBlock}
+The format of the \Block{FIS} is given in \Tableref{tab:FISBlock}.
 \begin{BlockTable}{FIS}
   \label{tab:FISBlock}
 \end{BlockTable}
 
+\subsubsection{\Block{UNR}}\label{sec:UNRBlock}
+The format of the \Block{UNR} is given in \Tableref{tab:UNRBlock}.
 \begin{BlockTable}{UNR}
   \label{tab:UNRBlock}
 \end{BlockTable}

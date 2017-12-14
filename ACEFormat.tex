@@ -1,4 +1,4 @@
-\documentclass{ACEFormat}
+\documentclass[11pt]{ACEFormat}
 \usepackage[T1]{fontenc}
 \usepackage{authblk}
 \usepackage{minted}
@@ -11,8 +11,9 @@
 \usepackage{longtable}
 \usepackage[referable]{threeparttablex}
 \usepackage{etoolbox}
+\RequirePackage[backend=biber,defernumbers=false,sorting=none, minbibnames=5, maxbibnames=10]{biblatex}
 
-\usepackage[colorlinks=true]{hyperref}
+\usepackage[colorlinks=true,citecolor=blue]{hyperref}
 
 \title{A Compact ENDF (ACE) Format Specification}
 \date{}
@@ -27,15 +28,17 @@
 \setlist{nosep}
 \setlist[itemize,1]{label=--}
 
+\addbibresource{References.bib}
+
 \newcommand{\ACE}{ACE}
 \newcommand{\SaB}{\ensuremath{S(\alpha, \beta)}}
 \newcommand{\ZA}{ {\sffamily ZA}}
 \newcommand{\ZAID}{{\sffamily ZAID}}
 \newcommand{\SZAID}{{\sffamily SZAID}}
 \newcommand{\Type}[1]{Type #1}
+\newcommand{\nubar}{\ensuremath{\overline{\nu}}}
 
-\newcommand{\Block}[1]{ {\sffamily #1} Block}
-
+\newcommand{\Sectionref}[1]{Section~\ref{#1}}
 \newcommand{\Figureref}[1]{Figure~\ref{#1}}
 \newcommand{\Tableref}[1]{Table~\ref{#1}}
 
@@ -53,4 +56,7 @@
 \include{Dosimetry}
 \include{ThermalScattering}
 \include{ContinuousEnergyPhoton}
+
+\printbibliography
+
 \end{document}

@@ -12,6 +12,9 @@
 
 \LoadClass{scrartcl}
 
+\newcommand{\MT}{\textsf{MT}}
+
+\newcommand{\var}[1]{\textsf{#1}}
 \newcommand{\aceArray}[1]{{\sffamily #1}}
 \newcommand{\IZAW}{\aceArray{IZAW}}
 \newcommand{\NXS}{\aceArray{NXS}}
@@ -20,6 +23,9 @@
 \newcommand{\jxs}[1]{\texttt{JXS(#1)}}
 \newcommand{\XSS}{\aceArray{XSS}}
 \newcommand{\xss}[1]{\texttt{XSS(#1)}}
+
+\newcommand{\Block}[1]{{\sffamily #1} Block}
+\newcommand{\startblock}[1]{\ensuremath{S_{\mathrm{#1}}}}
 
 %------- table environments ---------
 \newenvironment{NXSTable}[1]{%
@@ -60,14 +66,14 @@
 }
 {\end{longtable}}
 
-\newenvironment{BlockTable}[1]{%
+\newenvironment{BlockTable}[2][]{%
   \begin{longtable}{lll}
-    \caption{\Block{#1}.} \\[1.5ex]
+    \caption{\Block{#2}#1.} \\[1.5ex]
     \toprule
     Location in \XSS & Parameter & Description \\
     \midrule
   \endfirsthead
-    \caption{\Block{#1} (continued)} \\[1.5ex]
+    \caption{\Block{#2}#1 (continued)} \\[1.5ex]
     \toprule
     Element  & Name   & Location Description \\
     \midrule

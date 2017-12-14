@@ -8,3 +8,7 @@ _minted*
 *.tdo
 *.pyg
 *.lot
+*.bbl
+*.bcf
+*.blg
+*.run.xml
