@@ -14,7 +14,7 @@ The format of individual blocks found on neutron transport tables is identical f
   \item \textbf{\Block{DLW}}---contains energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{DLW} exists if \nxs{5}$\neq0$. See \Sectionref{sec:DLWBlock}.
   \item \textbf{\Block{GPD}}---contains the total photon production cross section tabulated on the ESZ energy grid and a $30\times$ matrix of secondary photon energies. The \Block{GPD} exists only for those older evaluations that provide coupled neutron/photon information; that is, if \jxs{12}$\neq0$. See \Sectionref{sec:GPDBlock}.
   \item \textbf{\Block{MTRP}}---contains a list of MT numbers for all photon production reactions. The term ``photon production reaction'' is used for any information describing a specific neutron-in, photon-out reaction. The \Block{MTR} exists if \nxs{6}$\neq6$. See \Sectionref{sec:MTRBlock}.
-  \item \textbf{\Block{LSIGP}}---contains a list of cross section locators for all photon production reactions. The \Block{LSIGP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:LSIGPBlock}.
+  \item \textbf{\Block{LSIGP}}---contains a list of cross section locators for all photon production reactions. The \Block{LSIGP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:LSIGBlock}.
   \item \textbf{\Block{SIGP}}---contains cross sections for all photon production reactions. The \Block{SIGP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:SIGPBlock}.
   \item \textbf{\Block{LANDP}}---contains a list of angular-distribution locators for all photon production reactions. The \Block{LANDP} exist if \nxs{6}$\neq0$. See \Sectionref{sec:LANDPBlock}
   \item \textbf{\Block{ANDP}}---contains photon angular distributions for all photon production reactions. The \Block{ANDP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:ANDPBlock}.
@@ -172,7 +172,7 @@ If delayed neutron data exist (when \jxs{24}>0), the precursor distribution form
 \end{ThreePartTable}
 
 \subsubsection{\Block{MTR \textnormal{\&} MTRP}s}\label{sec:MTRBlock}
-The format of the \Block{MTR} or \Block{MTRP} (for photon production data) is given in \Tableref{tab:MTRBlock}. The starting index depends on whether it is the \Block{MTR} or \Block{MTRP} and are given in \Tableref{tab:LMT_NMT}.
+The format of the \Block{MTR} (for incident neutron reactions) and \Block{MTRP} (for photon production reactions) is given in \Tableref{tab:MTRBlock}. The starting index depends on whether it is the \Block{MTR} or \Block{MTRP} and are given in \Tableref{tab:LMT_NMT}.
 \begin{table}[h!] \centering
   \begin{tabular}[h]{lll}
     \toprule
@@ -190,34 +190,70 @@ The format of the \Block{MTR} or \Block{MTRP} (for photon production data) is gi
   \var{LMT} & \MT$_{1}$ & First ENDF Reaction available \\
   \var{LMT}+1 & \MT$_{2}$ & Second sENDF Reaction available \\
   \ldots \\
-  \var{LMT}+\var{NMT}+1 & \MT$_{\var{NMT}}$ & Last ENDF reaction available \\
+  \var{LMT}+\var{NMT}+1 & \MT$_{\var{NMT}}$ & Last ENDF reaction available
   \label{tab:MTRBlock}
 \end{BlockTable}
 
-For the \Block{MTR}, \MT$_{1},\ldots,\MT_{\var{NMT}}$ are standard ENDF \MT numbers; that is, \MT=16=$(n,2n)$; \MT=17=$(n,3n)$; etc. For a complete listing of \MT numbers, see \citetitle{Trkov:2011ENDF--0} \cite[Appendix B]{Trkov:2011ENDF--0}.
+For the \Block{MTR}, \MT$_{1},\ldots,\MT_{\var{NMT}}$ are standard ENDF \MT numbers; that is, \MT=16=$(n,2n)$; \MT=17=$(n,3n)$; etc. For a complete listing of \MT\ numbers, see \cite[Appendix B]{Trkov:2011ENDF--0}.
+
+For the \Block{MTRP}, the \MT\ numbers are somewhat arbitrary. To understand the scheme used for numbering the photon production \MT s, it is necessary to realize that in the ENDF format, more than one photon can be produced by a particular neutron reaction that is itself specified by a single \MT. Each of these photons is produced with an individual energy-dependent cross section. For example, \MT 102 (radiatiive capture) might be responsible for 40 photons, each with its own cross section, angular distribution, and energy distribution. We need 40 photon \MT s to represent the data; the \MT s are numbered \textsf{1002001}, \textsf{1002002}, \ldots, \textsf{1002040}. Therefore, if ENDF \MT\ $N$ is responsible for $M$ photons, we shall number the photon \MT s \textsf{1000*$N$+1}, \textsf{1000*$N$+2}, \ldots, \textsf{1000*$N$+$M$}.
 
 \subsubsection{\Block{LQR}}\label{sec:LQRBlock}
-The format of the \Block{LQR} is given in \Tableref{tab:LQRBlock}.
+The format of the \Block{LQR}, containing the reaction-specific $Q$-values, is given in \Tableref{tab:LQRBlock}. The index at the start of the \Block{LQR}, \startblock{LQR}=\jxs{4}. The number of reactions, \var{NMT}, is the same through the \ACE\ Table, \var{NMT}=\nxs{4}.
 \begin{BlockTable}{LQR}
+  \startblock{LQR}           & $Q_{1}$         & $Q$-value for reaction \MT$_{1}$ \\
+  \startblock{LQR}+1         & $Q_{2}$         & $Q$-value for reaction \MT$_{2}$ \\
+  \ldots \\
+  \startblock{LQR}+\var{NMT}-1 & $Q_{\var{NMT}}$ & $Q$-value for reaction \MT$_{\var{NMT}}$
   \label{tab:LQRBlock}
 \end{BlockTable}
 
 \subsubsection{\Block{TYR}}\label{sec:TYRBlock}
-The format of the \Block{TYR} is given in \Tableref{tab:TYRBlock}.
+The format of the \Block{TYR} is given in \Tableref{tab:TYRBlock}. The index at the start of the \Block{TYR}, \startblock{TYR}=\jxs{5}. The number of reactions, \var{NMT}, is the same through the \ACE\ Table, \var{NMT}=\nxs{4}.
+
 \begin{BlockTable}{TYR}
+  \startblock{TYR}             & \var{TY}$_{1}$         & Neutron release for reaction \MT$_{1}$ \\
+  \startblock{TYR}+1           & \var{TY}$_{2}$         & Neutron release for reaction \MT$_{2}$ \\
+  \ldots \\
+  \startblock{TYR}+\var{NMT}-1 & \var{TY}$_{\var{NMT}}$ & Neutron release for reaction \MT$_{\var{NMT}}$
   \label{tab:TYRBlock}
 \end{BlockTable}
+The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering: negative=center-of-mass, positive=Lab. Thus if \var{TY}$_{i}$=+3, three neutrons are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the lab frame of reference. \var{TY}=19 indicates fission. The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption (ENDF reactions \MT>100); no neutrons are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent neutron multiplicities. The number of secondary neutrons released is determined from the yield data found in the \Block{DLW}. The \MT$_{i}$s are given in the \Block{MTR}.
 
-\subsubsection{\Block{LSIG}}\label{sec:LSIGBlock}
-The format of the \Block{LSIG} is given in \Tableref{tab:LSIGBlock}.
-\begin{BlockTable}{LSIG}
+\subsubsection{\Block{LSIG \textnormal{\&} LSIGP}}\label{sec:LSIGBlock}
+The \Block{LSIG} and \Block{LSIGP} gives the locators for cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data. In this case, the data is the cross section values. The format of the \Block{LSIG} (for incident neutron cross sections) and \Block{LSIGP} (for photon production cross sections) is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}. The format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock}.
+
+All locators are relative to \jxs{7} for the \Block{LSIG} or \jxs{15} for the \Block{LSIGP}. That is, \var{LXS}=\jxs{7} for the \Block{LSIG} and \var{LXS}=\jxs{15} for the \Block{LSIGP}. So the actual cross section data begins at the index \var{LOCA}+\var{LXS}. The \MT s are given in the \Block{MTR} and the \Block{MTRP} for the \Block{LSIG} and the \Block{LSIGP} respectively. \var{LOCA}$_{i}$ must be monotonically increasing.
+\begin{BlockTable}{LSIG \textnormal{\&} LSIGP}
+  \var{LXS}             & \var{LOCA}$_{1}=1$       & Location of cross sections for reaction \MT$_{1}$ \\
+  \var{LXS}+1           & \var{LOCA}$_{2}$         & Location of cross sections for reaction \MT$_{2}$ \\
+  \ldots \\
+  \var{LXS}+\var{NMT}-1 & \var{LOCA}$_{\var{NMT}}$ & Location of cross sections for reaction \MT$_{\var{NMT}}$ \\
   \label{tab:LSIGBlock}
 \end{BlockTable}
 
 \subsubsection{\Block{SIG}}\label{sec:SIGBlock}
-The format of the \Block{SIG} is given in \Tableref{tab:SIGBlock}.
-\begin{BlockTable}{SIG}
-  \label{tab:SIGBlock}
+The \Block{SIG} contains the incident neutron cross section data. (The photon production cross section is in the \Block{SIGP}.) The format of the \Block{SIG} is given in \Tableref{tab:SIGBlock}. The cross section data begins at the index specified by the locator from the \Block{LSIG}; the format for which is given in \Tableref{tab:CrossSectionArray}.
+\begin{ThreePartTable}
+  \begin{BlockTable}{SIG}
+    \var{LXS}+\var{LOCA}$_{1}-1$ &  & Cross section array for reaction \MT$_{1}$ \\
+    \var{LXS}+\var{LOCA}$_{2}-1$ &  & Cross section array for reaction \MT$_{2}$ \\
+    \ldots \\
+    \var{LXS}+\var{LOCA}$_{\var{NMT}}-1$ &  & Cross section array for reaction \MT$_{\var{NMT}}$
+    \label{tab:SIGBlock}
+  \end{BlockTable}
+  \begin{tablenotes}
+    \note The number of cross section arrays \var{NMT}=\nxs{4}.
+  \end{tablenotes}
+\end{ThreePartTable}
+
+The \var{LOCA}$_{i}$ values are given in the \Block{LSIG} and are all relative to \jxs{7}. The energy grid, $E(K)$ is given in the \Block{ESZ}. The energy grid index $IE_{i}$ corresponds to the first energy in the grid at which a cross section is given. The \MT$_{i}$s are defined in the \Block{MTR}.
+\begin{BlockTable}{\textnormal{Cross section array for the $i$-th \var{SIG}}}
+\var{LXS} + \var{LOCA}$_{i}$-1 & $IE_{i}$                              & Energy grid index for reaction \MT$_{i}$ \\
+\var{LXS} + \var{LOCA}$_{i}$   & $NE_{i}$                              & Number of consecutive entries for \MT$_{i}$ \\
+\multirow{2}{*}{\var{LXS} + \var{LOCA}$_{i}$+1} & $\sigma_{i}[E(K)]$                    & \multirow{2}{*}{Cross section for reaction \MT$_{i}$} \\
+                               & for $K=IE_{i},\ldots,IE_{i}+NE_{i}-1$ &
+  \label{tab:CrossSectionArray}
 \end{BlockTable}
 
 \subsubsection{\Block{LAND}}\label{sec:LANDBlock}
@@ -254,12 +290,6 @@ The format of the \Block{GPD} is given in \Tableref{tab:GPDBlock}.
 The format of the \Block{MTRP} is given in \Tableref{tab:MTRPBlock}.
 \begin{BlockTable}{MTRP}
   \label{tab:MTRPBlock}
-\end{BlockTable}
-
-\subsubsection{\Block{LSIGP}}\label{sec:LSIGPBlock}
-The format of the \Block{LSIGP} is given in \Tableref{tab:LSIGPBlock}.
-\begin{BlockTable}{LSIGP}
-  \label{tab:LSIGPBlock}
 \end{BlockTable}
 
 \subsubsection{\Block{SIGP}}\label{sec:SIGPBlock}
