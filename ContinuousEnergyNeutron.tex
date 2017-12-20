@@ -19,8 +19,8 @@ The format of individual blocks found on neutron transport tables is identical f
   \item \textbf{\Block{SIGP}}---contains cross sections for all photon production reactions. The \Block{SIGP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:SIGPBlock}.
   \item \textbf{\Block{LANDP}}---contains a list of angular-distribution locators for all photon production reactions. The \Block{LANDP} exist if \nxs{6}$\neq0$. See \Sectionref{sec:LANDPBlock}
   \item \textbf{\Block{ANDP}}---contains photon angular distributions for all photon production reactions. The \Block{ANDP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:ANDPBlock}.
-  \item \textbf{\Block{LDLWP}}---contains a list of energy-distribution locators for all photon production reactions. The \Block{LDLWP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:LDLWPBlock}.
-  \item \textbf{\Block{DLWP}}---contains photon energy distributions for all photon production reactions. The \Block{DLWP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:DLWPBlock}.
+  \item \textbf{\Block{LDLWP}}---contains a list of energy-distribution locators for all photon production reactions. The \Block{LDLWP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:LDLWBlock}.
+  \item \textbf{\Block{DLWP}}---contains photon energy distributions for all photon production reactions. The \Block{DLWP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:DLWBlock}.
   \item \textbf{\Block{YP}}---contains a list of MT identifiers of neutron reaction cross sections required as photon production yield multipliers. The \Block{YP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:YPBlock}.
   \item \textbf{\Block{FIS}}---contains the total fission cross section tabulated on the ESZ energy grid. The \Block{FIS} exists if \jxs{21}$\neq0$. See \Sectionref{sec:FISBlock}.
   \item \textbf{\Block{UNR}}---contains the unresolved resonance range probability tables. The \Block{UNR} exists if \jxs{23}$\neq0$. See \Sectionref{sec:UNRBlock}.
@@ -136,7 +136,7 @@ where the energy, $E$, is given in \si{\MeV}.
   \end{BlockTable}
 \end{ThreePartTable}
 
-If delayed neutron data exist (when \jxs{24}>0), the precursor distribution format is given as in \Tableref{tab:DelayedPrecursorDistribution}. The decay constant for the first group \var{DEC}$_{1}$ is given at \xss{\jxs{25}}. The precursor distribution immediately follows as described in \Tableref{tab:DelayedPrecursorDistribution}. The indices (locators) of the \XSS\ array where each precursor distribution begins (\startblock{DNU}) can found using the format described in \Sectionref{sec:LDLWPBlock} and \Sectionref{sec:DLWPBlock}, where \var{LED}=\jxs{26} and \var{NMT}=\nxs{8}.
+If delayed neutron data exist (when \jxs{24}>0), the precursor distribution format is given as in \Tableref{tab:DelayedPrecursorDistribution}. The decay constant for the first group \var{DEC}$_{1}$ is given at \xss{\jxs{25}}. The precursor distribution immediately follows as described in \Tableref{tab:DelayedPrecursorDistribution}. The indices (locators) of the \XSS\ array where each precursor distribution begins (\startblock{DNU}) can found using the format described in \Sectionref{sec:LDLWBlock} and \Sectionref{sec:DLWBlock}, where \var{LED}=\jxs{26} and \var{NMT}=\nxs{8}.
 \begin{ThreePartTable}
   \begin{TableNotes}
     \item[$\dagger$] \label{tn:schemeDelayedPrecursors} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
@@ -206,7 +206,7 @@ The format of the \Block{TYR} is given in \Tableref{tab:TYRBlock}. The index at 
 The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering: negative=\CM, positive=\LAB. Thus if \var{TY}$_{i}$=+3, three neutrons are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission. The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption (ENDF reactions \MT>100); no neutrons are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent neutron multiplicities. The number of secondary neutrons released is determined from the yield data found in the \Block{DLW}. The \MT$_{i}$s are given in the \Block{MTR}.
 
 \subsubsection{\Block{LSIG \textnormal{\&} LSIGP}}\label{sec:LSIGBlock}
-The \Block{LSIG} and \Block{LSIGP} gives the locators for cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data. In this case, the data is the cross section values. The format of the \Block{LSIG} (for incident neutron cross sections) and \Block{LSIGP} (for photon production cross sections) is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}. The format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock}.
+The \Block{LSIG} and \Block{LSIGP} give the locators for cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data. In this case, the data is the cross section values. The format of the \Block{LSIG} (for incident neutron cross sections) and \Block{LSIGP} (for photon production cross sections) is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}. The format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock}.
 
 All locators are relative to \jxs{7} for the \Block{LSIG} or \jxs{15} for the \Block{LSIGP}. That is, \var{LXS}=\jxs{7} for the \Block{LSIG} and \var{LXS}=\jxs{15} for the \Block{LSIGP}. So the actual cross section data begins at the index \var{LOCA}+\var{LXS}. The \MT s are given in the \Block{MTR} and the \Block{MTRP} for the \Block{LSIG} and the \Block{LSIGP} respectively. \var{LOCA}$_{i}$ must be monotonically increasing.
 \begin{BlockTable}{LSIG \textnormal{\&} LSIGP}
@@ -312,14 +312,39 @@ The angular distribution arrays (\Tableref{tab:AngularDistributionArray}) contai
 \end{tablenotes}
 \end{ThreePartTable}
 
+\subsubsection{\Block{LDLW \textnormal{\&} LDLWP}}\label{sec:LDLWBlock}
+The \Block{LDLW} and \Block{LDLW} give the locators for the energy distribution for every reaction that produces secondary neutrons or secondary photons (respectively). The format of the \Block{LDLW} (for secondary neutrons) and \Block{LDLW} (for secondary photons) is given in \Tableref{tab:LDLWBlock}. The locators for the delayed neutron precursors (see \Sectionref{sec:NUBlock}) also use the same format. The format for the distribution arrays is given in \Sectionref{sec:DLWBlock}.
 
+The \Block{LDLW} exists if \nxs{5}$\neq0$ while the \Block{LDLWP} exists if \nxs{6}$\neq0$. The starting index, \var{LED}, depends on what data is being read; the starting values and the number of locators, \var{NMT}, are given in \Tableref{tab:LEDNMT}.
 
-\subsubsection{\Block{LDLW}}\label{sec:LDLWBlock}
-The format of the \Block{LDLW} is given in \Tableref{tab:LDLWBlock}.
+\begin{table}[h!] \centering
+  \begin{tabular}{lll}
+    \toprule
+    Block            & \var{LED} & \var{NMT} \\
+    \midrule
+    \var{LDLW}       & \jxs{10}  & \nxs{5} \\
+    \var{LDLWP}      & \jxs{18}  & \nxs{5} \\
+    delayed neutrons & \jxs{26}  & \nxs{8} \\
+    \bottomrule
+  \end{tabular}
+  \caption{LED and NMT values for the \Block{LDLW} and \Block{LDLWP}.}
+  \label{tab:LEDNMT}
+\end{table}
+
+\begin{ThreePartTable}
 \begin{BlockTable}{LDLW}
+  \var{LED}             & \var{LOCC}$_{1}$         & Location of energy distribution data for reaction \MT$_{1}$ or group 1 (if delayed neutron) \\
+  \var{LED}+1           & \var{LOCC}$_{2}$         & Location of energy distribution data for reaction \MT$_{2}$ or group 2 (if delayed neutron) \\
+  \ldots \\
+  \var{LED}+\var{NMT}-1 & \var{LOCC}$_{\var{NMT}}$ & Location of energy distribution data for reaction \MT$_{\var{NMT}}$ or group \var{NMT} (if delayed neutron)
   \label{tab:LDLWBlock}
 \end{BlockTable}
+\begin{tablenotes}
+  \note The \var{LOCC}$_{i}$ must be monotonically increasing.
+\end{tablenotes}
+\end{ThreePartTable}
 
+All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array. The \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \Block{MTRP} for \Block{LDLWP}.
 \subsubsection{\Block{DLW}}\label{sec:DLWBlock}
 The format of the \Block{DLW} is given in \Tableref{tab:DLWBlock}.
 \begin{BlockTable}{DLW}
@@ -354,18 +379,6 @@ The format of the \Block{LANDP} is given in \Tableref{tab:LANDPBlock}.
 The format of the \Block{ANDP} is given in \Tableref{tab:ANDPBlock}.
 \begin{BlockTable}{ANDP}
   \label{tab:ANDPBlock}
-\end{BlockTable}
-
-\subsubsection{\Block{LDLWP}}\label{sec:LDLWPBlock}
-The format of the \Block{LDLWP} is given in \Tableref{tab:LDLWPBlock}.
-\begin{BlockTable}{LDLWP}
-  \label{tab:LDLWPBlock}
-\end{BlockTable}
-
-\subsubsection{\Block{DLWP}}\label{sec:DLWPBlock}
-The format of the \Block{DLWP} is given in \Tableref{tab:DLWPBlock}.
-\begin{BlockTable}{DLWP}
-  \label{tab:DLWPBlock}
 \end{BlockTable}
 
 \subsubsection{\Block{YP}}\label{sec:YPBlock}
