@@ -352,8 +352,45 @@ The format of the \Block{DLW} is given in \Tableref{tab:DLWBlock}.
 \end{BlockTable}
 
 \subsubsection{\Block{GPD}}\label{sec:GPDBlock}
-The format of the \Block{GPD} is given in \Tableref{tab:GPDBlock}.
+The \Block{GPD} contains the \emph{total} photon production cross section, tabulated on the energy grid given in the \Block{ESZ}, the size of which is given by \nxs{3}. The \Block{GPD} only exists if \jxs{12}$\neq0$. 
+
+There are \num{30} groups for the incident neutron energies, the boundaries of which are shown in \Tableref{tab:DiscreteNeutronEnergyBoundaries}. For each incident neutron energy group, the outgoing photon energies are discretized into \num{20} equiprobable energy groups, thus creating a $30\times20$ matrix. The outgoing energies are given in the \Block{GPD} as shown in \Tableref{tab:GPDBlock}. Note that this matrix is only used for older tables that do not provide expanded photon production data.
+\begin{table}[h!] \centering
+  \caption{Discrete neutron energy boundaries.}
+  \begin{tabular}{rS[table-format = 1.3e1]|rS}
+    \toprule
+    \multirow{2}{*}{Group \#} & \multicolumn{1}{c}{Upper Boundary} & \multirow{2}{*}{Group \#} & \multicolumn{1}{c}{Upper Boundary} \\
+                              & \multicolumn{1}{c}{(\si{\MeV})}    &                           & \multicolumn{1}{c}{(\si{\MeV})} \\
+    \midrule
+    1                         & 1.39E-10                     & 16                        & .184      \\
+    2                         & 1.52E-7                      & 17                        & .303     \\
+    3                         & 4.14E-7                      & 18                        & .500     \\
+    4                         & 1.13E-6                      & 19                        & .823     \\
+    5                         & 3.06E-6                      & 20                        & 1.353    \\
+    6                         & 8.32E-6                      & 21                        & 1.738    \\
+    7                         & 2.26E-5                      & 22                        & 2.232    \\
+    8                         & 6.14E-5                      & 23                        & 2.865    \\
+    9                         & 1.67E-4                      & 24                        & 3.68     \\
+    10                        & 4.54E-4                      & 25                        & 6.07     \\
+    11                        & 1.235E-3                     & 26                        & 7.79      \\
+    12                        & 3.35E-3                      & 27                        & 10.      \\
+    13                        & 9.23E-3                      & 28                        & 12.      \\
+    14                        & 2.48E-2                      & 29                        & 13.5     \\
+    15                        & 6.76E-2                      & 30                        & 15.      \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:DiscreteNeutronEnergyBoundaries}
+\end{table}
+
+The format of the this Block is given in \Tableref{tab:GPDBlock}. The \XSS\ array index at the start of the \Block{GPD}, \startblock{GPD}=\jxs{12}.
 \begin{BlockTable}{GPD}
+  \startblock{GPD} & $\sigma_{\gamma}(l),l=1,\ldots,\var{NES}$  & Total photon production cross section \\
+  \startblock{GPD}+\var{NES} & $E_{1}(K),K=1,20$ & \num{20} equiprobable outgoing photon energies for incident neutron $E<E_{N}(2)$ \\
+  \startblock{GPD}+\var{NES}+20 & $E_{2}(K),K=1,20$ & \num{20} equiprobable outgoing photon energies for incident neutron $E_{N}(2) \leq E < E_{N}(3)$ \\
+  \ldots \\
+  \startblock{GPD}+\var{NES}+(i-1)*20 & $E_{i}(K),K=1,20$ & \num{20} equiprobable outgoing photon energies for incident neutron $E_{N}(i) \leq E < E_{N}(i+1)$ \\
+  \ldots \\
+  \startblock{GPD}+\var{NES}+(30-1)*20 & $E_{2}(K),K=1,20$ & \num{20} equiprobable outgoing photon energies for incident neutron $E \geq E_{N}(30)$
   \label{tab:GPDBlock}
 \end{BlockTable}
 
