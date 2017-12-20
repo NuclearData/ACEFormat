@@ -6,7 +6,7 @@ The format of individual blocks found on neutron transport tables is identical f
   \item \textbf{\Block{NU}}---contains prompt, delayed and/or total $\overline{\nu}$ as a function of incident neutron energy. The \Block{NU} exists only for fissionable isotopes; that is, if \jxs{2}$\neq0$. See \Sectionref{sec:NUBlock}.
   \item \textbf{\Block{MTR}}---contains a list of ENDF MT numbers for all neutron reactions other than elastic scattering. The \Block{MTR} exists for all isotopes that have reactions other than elastic scattering; that is, all isotopes with \nxs{4}$\neq0$. See \Sectionref{sec:MTRBlock}.
   \item \textbf{\Block{LQR}}---contains a list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LTR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:LQRBlock}.
-  \item \textbf{\Block{TYR}}---contains information about the type of reaction for all neutron reactions other than elastic scattering. Information for each reaction includes the number of secondary neutrons and whether secondary neutron angular distributions are in the laboratory or center-of-mass system. The \Block{TYR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:TYRBlock}.
+  \item \textbf{\Block{TYR}}---contains information about the type of reaction for all neutron reactions other than elastic scattering. Information for each reaction includes the number of secondary neutrons and whether secondary neutron angular distributions are in the laboratory or \CM system. The \Block{TYR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:TYRBlock}.
   \item \textbf{\Block{LSIG}}---contains a list of cross section locators for all neutron reacitons other than elastic scattering. The \Block{LSIG} exists if \nxs{4}$\neq0$. See \Sectionref{sec:LSIGBlock}
   \item \textbf{\Block{SIG}}---contains cross sections for all reactions other than elastic scattering. The \Block{SIG} exists if \nxs{4}$\neq0$. See \Sectionref{sec:SIGBlock}.
   \item \textbf{\Block{LAND}}---contains a list of angular-distribution locators for all reactions producing secondary neutrons. The \Block{LAND} always exists. See \Sectionref{sec:LANDBlock}.
@@ -219,7 +219,7 @@ The format of the \Block{TYR} is given in \Tableref{tab:TYRBlock}. The index at 
   \startblock{TYR}+\var{NMT}-1 & \var{TY}$_{\var{NMT}}$ & Neutron release for reaction \MT$_{\var{NMT}}$
   \label{tab:TYRBlock}
 \end{BlockTable}
-The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering: negative=center-of-mass, positive=Lab. Thus if \var{TY}$_{i}$=+3, three neutrons are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the lab frame of reference. \var{TY}=19 indicates fission. The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption (ENDF reactions \MT>100); no neutrons are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent neutron multiplicities. The number of secondary neutrons released is determined from the yield data found in the \Block{DLW}. The \MT$_{i}$s are given in the \Block{MTR}.
+The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering: negative=\CM, positive=\LAB. Thus if \var{TY}$_{i}$=+3, three neutrons are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission. The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption (ENDF reactions \MT>100); no neutrons are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent neutron multiplicities. The number of secondary neutrons released is determined from the yield data found in the \Block{DLW}. The \MT$_{i}$s are given in the \Block{MTR}.
 
 \subsubsection{\Block{LSIG \textnormal{\&} LSIGP}}\label{sec:LSIGBlock}
 The \Block{LSIG} and \Block{LSIGP} gives the locators for cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data. In this case, the data is the cross section values. The format of the \Block{LSIG} (for incident neutron cross sections) and \Block{LSIGP} (for photon production cross sections) is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}. The format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock}.
@@ -229,7 +229,7 @@ All locators are relative to \jxs{7} for the \Block{LSIG} or \jxs{15} for the \B
   \var{LXS}             & \var{LOCA}$_{1}=1$       & Location of cross sections for reaction \MT$_{1}$ \\
   \var{LXS}+1           & \var{LOCA}$_{2}$         & Location of cross sections for reaction \MT$_{2}$ \\
   \ldots \\
-  \var{LXS}+\var{NMT}-1 & \var{LOCA}$_{\var{NMT}}$ & Location of cross sections for reaction \MT$_{\var{NMT}}$ \\
+  \var{LXS}+\var{NMT}-1 & \var{LOCA}$_{\var{NMT}}$ & Location of cross sections for reaction \MT$_{\var{NMT}}$
   \label{tab:LSIGBlock}
 \end{BlockTable}
 
@@ -249,25 +249,86 @@ The \Block{SIG} contains the incident neutron cross section data. (The photon pr
 \end{ThreePartTable}
 
 The \var{LOCA}$_{i}$ values are given in the \Block{LSIG} and are all relative to \jxs{7}. The energy grid, $E(K)$ is given in the \Block{ESZ}. The energy grid index $IE_{i}$ corresponds to the first energy in the grid at which a cross section is given. The \MT$_{i}$s are defined in the \Block{MTR}.
-\begin{BlockTable}{\textnormal{Cross section array for the $i$-th \var{SIG}}}
-\var{LXS} + \var{LOCA}$_{i}$-1 & $IE_{i}$                              & Energy grid index for reaction \MT$_{i}$ \\
-\var{LXS} + \var{LOCA}$_{i}$   & $NE_{i}$                              & Number of consecutive entries for \MT$_{i}$ \\
-\multirow{2}{*}{\var{LXS} + \var{LOCA}$_{i}$+1} & $\sigma_{i}[E(K)]$                    & \multirow{2}{*}{Cross section for reaction \MT$_{i}$} \\
-                               & for $K=IE_{i},\ldots,IE_{i}+NE_{i}-1$ &
+\begin{XSSTable}{Cross section array for the $i$-th reaction.}
+\var{LXS} + \var{LOCA}$_{i}$-1                  & $IE_{i}$                          & Energy grid index for reaction \MT$_{i}$ \\
+\var{LXS} + \var{LOCA}$_{i}$                    & $NE_{i}$                          & Number of consecutive entries for \MT$_{i}$ \\
+\multirow{2}{*}{\var{LXS} + \var{LOCA}$_{i}$+1} & $\sigma_{i}[E(K)]$ for            & \multirow{2}{*}{Cross section for reaction \MT$_{i}$} \\
+                                                & $K=IE_{i},\ldots,IE_{i}+NE_{i}-1$ & 
   \label{tab:CrossSectionArray}
-\end{BlockTable}
+\end{XSSTable}
 
 \subsubsection{\Block{LAND}}\label{sec:LANDBlock}
-The format of the \Block{LAND} is given in \Tableref{tab:LANDBlock}.
+The \Block{LAND} contains locators for the angular distributions for all reactions producing secondary neutrons. The \Block{LAND} always exists and begins at \startblock{LAND}=\jxs{8}. All locators (\var{LOCB}) are relative \jxs{9}; that is, the angular distribution begins at $\jxs{9}+\var{LOCB}_{i}$. The \var{LOCB}$_{i}$ locators must be monotonically increasing. The format of the \Block{LAND} is given in \Tableref{tab:LANDBlock}.
+\todo[inline]{Fix \Tableref{tab:LANDBLock} so that the third column isn't so huge.}
+\begin{ThreePartTable}
 \begin{BlockTable}{LAND}
+  \startblock{LAND} & \var{LOCB}$_{1}=1$ & Location of angular distribution data for elastic scattering reaction \\
+  \startblock{LAND}+1 & \var{LOCB}$_{2}$ & Location of angular distribution data for reaction \MT$_{1}$ \\
+  \ldots \\
+  \startblock{LAND}+\var{NMT} & \var{LOCB}$_{\var{NMT}}$ & Location of angular distribution data for reaction \MT$_{\var{NMT}}$
   \label{tab:LANDBlock}
 \end{BlockTable}
+\begin{tablenotes}
+  \note \startblock{LAND}=\jxs{8} and \var{NMT}=\nxs{5} is the number of reactions (excluding elastic scattering).
+\end{tablenotes}
+\end{ThreePartTable}
 
 \subsubsection{\Block{AND}}\label{sec:ANDBlock}
-The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}.
+The \Block{AND} contains angular distribution data for all reactions that produce secondary neutrons. The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \var{LOCB} from the \Block{LAND}. If \var{LOCB}$_{i}=0$ (given in the \Block{LAND}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR}. If \var{LOCB}$_{i}=-1$ no angular distribution data are given for reaction $i$ in the \Block{AND}. The angular distribution data are specified through \law{44} in the \Block{DLW}. 
+
+\begin{ThreePartTable}
 \begin{BlockTable}{AND}
+  \jxs{9}+\var{LOCB}$_{1}-1$ & & Angular distribution array for elastic scattering \\
+  \jxs{9}+\var{LOCB}$_{2}-1$ & & Angular distribution array for reaction \MT$_{1}$ \\
+  \jxs{9}+\var{LOCB}$_{\var{NMT}}-1$ & & Angular distribution array for \MT$_{\var{NMT}}$
   \label{tab:ANDBlock}
 \end{BlockTable}
+\begin{tablenotes}
+  \note The format for the angular distribution of the $i$-th array is given in \Tableref{tab:AngularDistributionArray}.
+\end{tablenotes}
+\end{ThreePartTable}
+
+\begin{XSSTable}{Angular distribution array for the $i$-th reaction.}
+  \jxs{9}+\var{LOCB}$_{i}-1$     & $N_{E}$                     & Number of energies at which angular distributions are tabulated.  \\
+  \jxs{9}+\var{LOCB}$_{i}$       & $E(l),l=1,\ldots,N_{E}$     & Energy grid \\
+  \jxs{9}+\var{LOCB}$_{i}+N_{E}$ & $L_{C}(l),l=1,\ldots,N_{E}$ & Location of tables associated with energies $E(l)$
+  \label{tab:AngularDistributionArray}
+\end{XSSTable}
+
+Note that the angular distribution arrays (\Tableref{tab:AngularDistributionArray}) contains additional locators, $L_{C}$; the sign of these locators is a flag:
+\begin{itemize}
+  \item if $L_{C}(l)>0$, then $L_{C}(l)$ points to a 32 equiprobable bin distribution (see \Tableref{tab:32EquiprobableBinDistribution});
+  \item if $L_{C}(l)<0$, then $L_{C}(l)$ points to a tabulated angular distribution (see \Tableref{tab:TabulatedAngularDistribution});
+  \item if $L_{C}(l)=0$, then distribution is isotropic and no further data is needed.
+\end{itemize}
+
+\begin{XSSTable}{Format for the 32 equiprobable bin distribution.}
+  \jxs{9}+$|L_{C}(l)|-1$ & $P(1,K),K=1,\ldots,33$ & 32 equiprobable cosine bins for scattering at energy $E(1)$.
+  \label{tab:32EquiprobableBinDistribution}
+\end{XSSTable}
+
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:InterpolationFlag}
+      \begin{description}[font=\ttfamily]
+        \item[0] histogram interpolation
+        \item[1] linear-linear interpolation
+      \end{description}
+  \end{TableNotes}
+\begin{XSSTable}{Format for the tabulated angular distribution.}
+  \var{LDAT}$_{l}+1$ & \var{JJ}                       & Interpolation flag\tnotex{tn:InterpolationFlag} \\
+  \var{LDAT}$_{l}+2$ & $N_{P}$                        & Number of points in the distribution \\
+  \var{LDAT}$_{l}+3$ & $CS_{\mathrm{out}}(j),j=1,\ldots,N_{P}$ & Cosine scattering angular grid \\
+  \var{LDAT}$_{l}+4$ & $\PDF(j),j=1,\ldots,N_{P}$ & Probability density function \\
+  \var{LDAT}$_{l}+5$ & $\CDF(j),j=1,\ldots,N_{P}$ & Cumulative density function 
+  \label{tab:TabulatedAngularDistribution}
+\end{XSSTable}
+\begin{tablenotes}
+  \note \var{LDAT}$_{l}=\jxs{9}+|L_{C}(l)|-1$
+\end{tablenotes}
+\end{ThreePartTable}
+
+
 
 \subsubsection{\Block{LDLW}}\label{sec:LDLWBlock}
 The format of the \Block{LDLW} is given in \Tableref{tab:LDLWBlock}.

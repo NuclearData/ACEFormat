@@ -15,7 +15,7 @@
 \newcommand{\MT}{\textsf{MT}}
 
 \newcommand{\var}[1]{\textsf{#1}}
-\newcommand{\aceArray}[1]{{\sffamily #1}}
+\newcommand{\aceArray}[1]{\textsf{#1}}
 \newcommand{\IZAW}{\aceArray{IZAW}}
 \newcommand{\NXS}{\aceArray{NXS}}
 \newcommand{\nxs}[1]{\texttt{NXS(#1)}}
@@ -25,7 +25,26 @@
 \newcommand{\xss}[1]{\texttt{XSS(#1)}}
 
 \newcommand{\Block}[1]{{\sffamily #1} Block}
-\newcommand{\startblock}[1]{\ensuremath{S_{\mathrm{#1}}}}
+\newcommand{\startblock}[1]{\ensuremath{S_{\mathsf{#1}}}}
+\newcommand{\law}[1]{\textsf{law=#1}}
+
+\newcommand{\LAB}{Lab}
+\newcommand{\CM}{center-of-mass}
+
+\newcommand{\PDF}{\ensuremath{\mathrm{PDF}}}
+\newcommand{\CDF}{\ensuremath{\mathrm{CDF}}}
+
+\newcommand{\ACE}{ACE}
+\newcommand{\SaB}{\ensuremath{S(\alpha, \beta)}}
+\newcommand{\ZA}{ {\sffamily ZA}}
+\newcommand{\ZAID}{{\sffamily ZAID}}
+\newcommand{\SZAID}{{\sffamily SZAID}}
+\newcommand{\Type}[1]{Type #1}
+\newcommand{\nubar}{\ensuremath{\overline{\nu}}}
+
+\newcommand{\Sectionref}[1]{Section~\ref{#1}}
+\newcommand{\Figureref}[1]{Figure~\ref{#1}}
+\newcommand{\Tableref}[1]{Table~\ref{#1}}
 
 %------- table environments ---------
 \newenvironment{NXSTable}[1]{%
@@ -57,7 +76,7 @@
     \bottomrule
     \multicolumn{3}{r}{\emph{Continued on next page}}
   \endfoot
-    \bottomrule
+    \bottomrule%
     \ifcsempty{TPTL@body}{}{%test
       \insertTableNotes 
       \csgdef{TPTL@body}{}% delete the body
@@ -67,15 +86,20 @@
 {\end{longtable}}
 
 \newenvironment{BlockTable}[2][]{%
+  \begin{XSSTable}{\Block{#2}#1.}
+  }
+{\end{XSSTable}}
+
+\newenvironment{XSSTable}[1]{%
   \begin{longtable}{lll}
-    \caption{\Block{#2}#1.} \\[1.5ex]
+    \caption{#1.} \\[1.5ex]
     \toprule
     Location in \XSS & Parameter & Description \\
     \midrule
   \endfirsthead
-    \caption{\Block{#2}#1 (continued)} \\[1.5ex]
+    \caption{#1 (continued)} \\[1.5ex]
     \toprule
-    Element  & Name   & Location Description \\
+    Location in \XSS\  & Parameter   & Description \\
     \midrule
 \endhead
     \bottomrule
