@@ -144,8 +144,8 @@ If delayed neutron data exist (when \jxs{24}>0), the precursor distribution form
   \begin{XSSTable}{Delayed \nubar\ precursor distribution.}
     \startblock{DNU}                   & \var{DEC}$_{i}$                  & Decay constant for the $i$-th group \\
     \startblock{DNU}+1                 & $N_{R}$                          & Number of interpolation regions \\
-    \startblock{KNU}+2                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
-    \startblock{KNU}+2+$N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:schemeDelayedPrecursors} \\
+    \startblock{KNU}+2                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters\tnotex{tn:schemeDelayedPrecursors} \\
+    \startblock{KNU}+2+$N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme \\
     \startblock{DNU}+2+$2N_{R}$       & $N_{E}$                          & Number of energies \\
     \startblock{DNU}+3+$2N_{R}$       & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
     \startblock{DNU}+3+$2N_{R}+N_{E}$ & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities
@@ -208,12 +208,12 @@ The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$
 \subsubsection{\Block{LSIG \textnormal{\&} LSIGP}}\label{sec:LSIGBlock}
 The \Block{LSIG} and \Block{LSIGP} give the locators for cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data. In this case, the data is the cross section values. The format of the \Block{LSIG} (for incident neutron cross sections) and \Block{LSIGP} (for photon production cross sections) is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}. The format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock}.
 
-All locators are relative to \jxs{7} for the \Block{LSIG} or \jxs{15} for the \Block{LSIGP}. That is, \var{LXS}=\jxs{7} for the \Block{LSIG} and \var{LXS}=\jxs{15} for the \Block{LSIGP}. So the actual cross section data begins at the index \var{LOCA}+\var{LXS}. The \MT s are given in the \Block{MTR} and the \Block{MTRP} for the \Block{LSIG} and the \Block{LSIGP} respectively. \var{LOCA}$_{i}$ must be monotonically increasing.
+All locators are relative to \jxs{7} for the \Block{LSIG} or \jxs{15} for the \Block{LSIGP}. That is, \var{LXS}=\jxs{7} for the \Block{LSIG} and \var{LXS}=\jxs{15} for the \Block{LSIGP}. So the actual cross section data begins at the index \LOC{A}+\var{LXS}. The \MT s are given in the \Block{MTR} and the \Block{MTRP} for the \Block{LSIG} and the \Block{LSIGP} respectively. \LOC{A}{i} must be monotonically increasing.
 \begin{BlockTable}{LSIG \textnormal{\&} LSIGP}
-  \var{LXS}             & \var{LOCA}$_{1}=1$       & Location of cross sections for reaction \MT$_{1}$ \\
-  \var{LXS}+1           & \var{LOCA}$_{2}$         & Location of cross sections for reaction \MT$_{2}$ \\
+  \var{LXS}             & \LOC{A}{1}=1       & Location of cross sections for reaction \MT$_{1}$ \\
+  \var{LXS}+1           & \LOC{A}{2}         & Location of cross sections for reaction \MT$_{2}$ \\
   \ldots \\
-  \var{LXS}+\var{NMT}-1 & \var{LOCA}$_{\var{NMT}}$ & Location of cross sections for reaction \MT$_{\var{NMT}}$
+  \var{LXS}+\var{NMT}-1 & \LOC{A}{\var{NMT}} & Location of cross sections for reaction \MT$_{\var{NMT}}$
   \label{tab:LSIGBlock}
 \end{BlockTable}
 
@@ -221,10 +221,10 @@ All locators are relative to \jxs{7} for the \Block{LSIG} or \jxs{15} for the \B
 The \Block{SIG} contains the incident neutron cross section data. (The photon production cross section is in the \Block{SIGP}.) The format of the \Block{SIG} is given in \Tableref{tab:SIGBlock}. The cross section data begins at the index specified by the locator from the \Block{LSIG}; the format for which is given in \Tableref{tab:CrossSectionArray}.
 \begin{ThreePartTable}
   \begin{LOCTable}{\Block{SIG}}
-    \var{LXS}+\var{LOCA}$_{1}-1$         & Cross section array for reaction \MT$_{1}$ \\
-    \var{LXS}+\var{LOCA}$_{2}-1$         & Cross section array for reaction \MT$_{2}$ \\
+    \var{LXS}+\LOC{A}{1}-1         & Cross section array for reaction \MT$_{1}$ \\
+    \var{LXS}+\LOC{A}{2}-1         & Cross section array for reaction \MT$_{2}$ \\
     \ldots \\
-    \var{LXS}+\var{LOCA}$_{\var{NMT}}-1$ & Cross section array for reaction \MT$_{\var{NMT}}$
+    \var{LXS}+\LOC{A}{\var{NMT}}-1 & Cross section array for reaction \MT$_{\var{NMT}}$
     \label{tab:SIGBlock}
   \end{LOCTable}
   \begin{tablenotes}
@@ -232,23 +232,23 @@ The \Block{SIG} contains the incident neutron cross section data. (The photon pr
   \end{tablenotes}
 \end{ThreePartTable}
 
-The \var{LOCA}$_{i}$ values are given in the \Block{LSIG} and are all relative to \jxs{7}. The energy grid, $E(K)$ is given in the \Block{ESZ}. The energy grid index $IE_{i}$ corresponds to the first energy in the grid at which a cross section is given. The \MT$_{i}$s are defined in the \Block{MTR}.
+The \LOC{A}{i} values are given in the \Block{LSIG} and are all relative to \jxs{7}. The energy grid, $E(K)$ is given in the \Block{ESZ}. The energy grid index $IE_{i}$ corresponds to the first energy in the grid at which a cross section is given. The \MT$_{i}$s are defined in the \Block{MTR}.
 \begin{XSSTable}{Cross section array for the $i$-th reaction.}
-\var{LXS} + \var{LOCA}$_{i}$-1                  & $IE_{i}$                          & Energy grid index for reaction \MT$_{i}$ \\
-\var{LXS} + \var{LOCA}$_{i}$                    & $NE_{i}$                          & Number of consecutive entries for \MT$_{i}$ \\
-\multirow{2}{*}{\var{LXS} + \var{LOCA}$_{i}$+1} & $\sigma_{i}[E(K)]$ for            & \multirow{2}{*}{Cross section for reaction \MT$_{i}$} \\
+\var{LXS} + \LOC{A}{i}-1                  & $IE_{i}$                          & Energy grid index for reaction \MT$_{i}$ \\
+\var{LXS} + \LOC{A}{i}                    & $NE_{i}$                          & Number of consecutive entries for \MT$_{i}$ \\
+\multirow{2}{*}{\var{LXS} + \LOC{A}{i}+1} & $\sigma_{i}[E(K)]$ for            & \multirow{2}{*}{Cross section for reaction \MT$_{i}$} \\
                                                 & $K=IE_{i},\ldots,IE_{i}+NE_{i}-1$ & 
   \label{tab:CrossSectionArray}
 \end{XSSTable}
 
 \subsubsection{\Block{LAND}}\label{sec:LANDBlock}
-The \Block{LAND} contains locators for the angular distributions for all reactions producing secondary neutrons. The \Block{LAND} always exists and begins at \startblock{LAND}=\jxs{8}. All locators (\var{LOCB}) are relative \jxs{9}; that is, the angular distribution begins at $\jxs{9}+\var{LOCB}_{i}$. The \var{LOCB}$_{i}$ locators must be monotonically increasing. The format of the \Block{LAND} is given in \Tableref{tab:LANDBlock}.
+The \Block{LAND} contains locators for the angular distributions for all reactions producing secondary neutrons. The \Block{LAND} always exists and begins at \startblock{LAND}=\jxs{8}. All locators (\LOC{B}) are relative \jxs{9}; that is, the angular distribution begins at \jxs{9}+\LOC{B}$_{i}$. The \LOC{B}{i} locators must be monotonically increasing. The format of the \Block{LAND} is given in \Tableref{tab:LANDBlock}.
 \begin{ThreePartTable}
 \begin{BlockTable}{LAND}
-  \startblock{LAND} & \var{LOCB}$_{1}=1$ & Location of angular distribution data for elastic scattering reaction \\
-  \startblock{LAND}+1 & \var{LOCB}$_{2}$ & Location of angular distribution data for reaction \MT$_{1}$ \\
+  \startblock{LAND} & \LOC{B}{1}=1 & Location of angular distribution data for elastic scattering reaction \\
+  \startblock{LAND}+1 & \LOC{B}{2} & Location of angular distribution data for reaction \MT$_{1}$ \\
   \ldots \\
-  \startblock{LAND}+\var{NMT} & \var{LOCB}$_{\var{NMT}}$ & Location of angular distribution data for reaction \MT$_{\var{NMT}}$
+  \startblock{LAND}+\var{NMT} & \LOC{B}{\var{NMT}} & Location of angular distribution data for reaction \MT$_{\var{NMT}}$
   \label{tab:LANDBlock}
 \end{BlockTable}
 \begin{tablenotes}
@@ -257,13 +257,13 @@ The \Block{LAND} contains locators for the angular distributions for all reactio
 \end{ThreePartTable}
 
 \subsubsection{\Block{AND}}\label{sec:ANDBlock}
-The \Block{AND} contains angular distribution data for all reactions that produce secondary neutrons. The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \var{LOCB} from the \Block{LAND}. If \var{LOCB}$_{i}=0$ (given in the \Block{LAND}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR}. If \var{LOCB}$_{i}=-1$ no angular distribution data are given for reaction $i$ in the \Block{AND}. The angular distribution data are specified through \law{44} in the \Block{DLW}. 
+The \Block{AND} contains angular distribution data for all reactions that produce secondary neutrons. The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}. If \LOC{B}{i}=0 (given in the \Block{LAND}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR}. If \LOC{B}{i}=-1 no angular distribution data are given for reaction $i$ in the \Block{AND}. The angular distribution data are specified through \law{44} in the \Block{DLW}. 
 
 \begin{ThreePartTable}
 \begin{LOCTable}{\Block{AND}}
-  \jxs{9}+\var{LOCB}$_{1}-1$         & Angular distribution array for elastic scattering \\
-  \jxs{9}+\var{LOCB}$_{2}-1$         & Angular distribution array for reaction \MT$_{1}$ \\
-  \jxs{9}+\var{LOCB}$_{\var{NMT}}-1$ & Angular distribution array for reaction \MT$_{\var{NMT}}$
+  \jxs{9}+\LOC{B}{1}-1         & Angular distribution array for elastic scattering \\
+  \jxs{9}+\LOC{B}{2}-1         & Angular distribution array for reaction \MT$_{1}$ \\
+  \jxs{9}+\LOC{B}{\var{NMT}}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
   \label{tab:ANDBlock}
 \end{LOCTable}
 \begin{tablenotes}
@@ -272,9 +272,9 @@ The \Block{AND} contains angular distribution data for all reactions that produc
 \end{ThreePartTable}
 
 \begin{XSSTable}{Angular distribution array for the $i$-th reaction.}
-  \jxs{9}+\var{LOCB}$_{i}-1$     & $N_{E}$                     & Number of energies at which angular distributions are tabulated.  \\
-  \jxs{9}+\var{LOCB}$_{i}$       & $E(l),l=1,\ldots,N_{E}$     & Energy grid \\
-  \jxs{9}+\var{LOCB}$_{i}+N_{E}$ & $L_{C}(l),l=1,\ldots,N_{E}$ & Location of tables associated with $E(l)$
+  \jxs{9}+\LOC{B}{i}-1     & $N_{E}$                     & Number of energies at which angular distributions are tabulated.  \\
+  \jxs{9}+\LOC{B}{i}       & $E(l),l=1,\ldots,N_{E}$     & Energy grid \\
+  \jxs{9}+\LOC{B}{i}$+N_{E}$ & $L_{C}(l),l=1,\ldots,N_{E}$ & Location of tables associated with $E(l)$
   \label{tab:AngularDistributionArray}
 \end{XSSTable}
 
@@ -285,7 +285,7 @@ The angular distribution arrays (\Tableref{tab:AngularDistributionArray}) contai
   \item if $L_{C}(l)=0$, then distribution is isotropic and no further data is needed.
 \end{itemize}
 
-\begin{XSSTable}{Format for the 32 equiprobable bin distribution.}
+\begin{XSSTable}{Format for the 32 equiprobable bin distribution}
   \multirow{2}{*}{\jxs{9}+$|L_{C}(l)|-1$} & $P(1,K)$        & 32 equiprobable cosine bins for scattering  \\
                                           & $K=1,\ldots,33$ & at energy $E(1)$.
   \label{tab:32EquiprobableBinDistribution}
@@ -333,14 +333,14 @@ The \Block{LDLW} exists if \nxs{5}$\neq0$ while the \Block{LDLWP} exists if \nxs
 
 \begin{ThreePartTable}
 \begin{BlockTable}{LDLW}
-  \var{LED}             & \var{LOCC}$_{1}$         & Location of energy distribution data for reaction \MT$_{1}$ or group 1 (if delayed neutron) \\
-  \var{LED}+1           & \var{LOCC}$_{2}$         & Location of energy distribution data for reaction \MT$_{2}$ or group 2 (if delayed neutron) \\
+  \var{LED}             & \LOC{C}{1}         & Location of energy distribution data for reaction \MT$_{1}$ or group 1 (if delayed neutron) \\
+  \var{LED}+1           & \LOC{C}{2}         & Location of energy distribution data for reaction \MT$_{2}$ or group 2 (if delayed neutron) \\
   \ldots \\
-  \var{LED}+\var{NMT}-1 & \var{LOCC}$_{\var{NMT}}$ & Location of energy distribution data for reaction \MT$_{\var{NMT}}$ or group \var{NMT} (if delayed neutron)
+  \var{LED}+\var{NMT}-1 & \LOC{C}{\var{NMT}} & Location of energy distribution data for reaction \MT$_{\var{NMT}}$ or group \var{NMT} (if delayed neutron)
   \label{tab:LDLWBlock}
 \end{BlockTable}
 \begin{tablenotes}
-  \note The \var{LOCC}$_{i}$ must be monotonically increasing.
+  \note The \LOC{C}{i} must be monotonically increasing.
 \end{tablenotes}
 \end{ThreePartTable}
 
@@ -394,17 +394,61 @@ The format of the this Block is given in \Tableref{tab:GPDBlock}. The \XSS\ arra
   \label{tab:GPDBlock}
 \end{BlockTable}
 
-\subsubsection{\Block{MTRP}}\label{sec:MTRPBlock}
-The format of the \Block{MTRP} is given in \Tableref{tab:MTRPBlock}.
-\begin{BlockTable}{MTRP}
-  \label{tab:MTRPBlock}
-\end{BlockTable}
-
 \subsubsection{\Block{SIGP}}\label{sec:SIGPBlock}
-The format of the \Block{SIGP} is given in \Tableref{tab:SIGPBlock}.
+The \Block{SIGP} contains the photon production cross section data. The format of the \Block{SIGP} is given in \Tableref{tab:SIGPBlock}. The cross section data begins at the index specified by the locator, \LOC{A}{i}, given in the \Block{LSIG} (see \Sectionref{sec:LSIGBlock}). All indices to the \XSS\ array are \emph{relative} to \jxs{15}. 
+\begin{ThreePartTable}
 \begin{BlockTable}{SIGP}
+  \jxs{15}+\LOC{A}{1}-1         & \var{MFTYPE}$_{1}$ & Cross section array for reaction \MT$_{1}$ \\
+  \jxs{15}+\LOC{A}{2}-1         & \var{MFTYPE}$_{2}$ & Cross section array for reaction \MT$_{2}$ \\
+  \ldots \\
+  \jxs{15}+\LOC{A}{\var{NMT}}-1 & \var{MFTYPE}$_{\var{NMT}}$ & Cross section array for reaction \MT$_{\var{NMT}}$
   \label{tab:SIGPBlock}
 \end{BlockTable}
+\begin{tablenotes}
+  \note The number of photon production cross section arrays \var{NMT}=\nxs{6}.
+\end{tablenotes}
+\end{ThreePartTable}
+
+The format of the $i$-th cross section array has two possible forms depending on the first number in the array, \var{MFTYPE}.
+\begin{enumerate}
+  \item If \var{MFTYPE}=12 or \var{MFTYPE}=16, yield data taken from ENDF File 12 or 6, respectively (see \Tableref{tab:PhotonProductionArray}). With this format, the photon production cross section can be constructed using \Equationref{eq:PhotonProductionConstruction};
+  \begin{equation}
+    \sigma_{\gamma,i}(E) = Y(E)*\sigma_{\var{MTMULT}}(E).
+    \label{eq:PhotonProductionConstruction}
+  \end{equation}
+  \item If \var{MFTYPE}=13, cross section data from ENDF File 13 (see \Tableref{tab:PhotonProductionCrossSectionArray}).
+\end{enumerate}
+
+\begin{ThreePartTable}
+  \begin{TableNotes}
+  \item[$\dagger$] \label{tn:PPANBT} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is used.
+  \end{TableNotes}
+\begin{XSSTable}{Photon production array if \var{MFTYPE}=12 or 16}
+  \jxs{15}+\LOC{A}{i}-1   & \var{MFTYPE}                                      & 12 or 16 \\
+  \jxs{15}+\LOC{A}{i}     & \var{MTMULT}                                      & Neutron \MT\ whose cross section should multiply the yield \\
+  \jxs{15}+\LOC{A}{i}+1   & $N_{R}$                                           & Number of interpolation regions \\
+  \jxs{15}+\LOC{A}{i}+2   & \var{NBT}$(l), l=1,\ldots,N_{R}$                  & ENDF interpolation parameters \\
+  \jxs{15}+\LOC{A}{i}+2   & \multirow{2}{*}{\var{INT}$(l), l=1,\ldots,N_{R}$} & \multirow{2}{*}{ENDF interpolation scheme} \\
+  \hfill +$N_{R}$         &                                                   & \\
+  \jxs{15}+\LOC{A}{i}+2   & \multirow{2}{*}{$N_{E}$}                          & \multirow{2}{*}{Number of energies at which the yield is tabulated} \\
+  \hfill +$2*N_{R}$       &                                                   & \\
+  \jxs{15}+\LOC{A}{i}+3   & \multirow{2}{*}{$E(l),l=1,\ldots,N_{E}$}          & \multirow{2}{*}{Energies} \\
+  \hfill +$2*N_{R}$       &                                                   & \\
+  \jxs{15}+\LOC{A}{i}+3   & \multirow{2}{*}{$Y(l),l=1,\ldots,N_{E}$ }         & \multirow{2}{*}{Yields} \\
+  \hfill +$2*N_{R}+N_{E}$ &                                                   & 
+  \label{tab:PhotonProductionArray}
+\end{XSSTable}
+  
+\end{ThreePartTable}
+
+\begin{XSSTable}{Photon production cross section array if \var{MFTYPE}=13}
+  \jxs{15}+\LOC{A}{i}-1                  & \var{MFTYPE}                          & 13 \\
+  \jxs{15}+\LOC{A}{i}                    & \var{IE}                              & Energy grid index \\
+  \jxs{15}+\LOC{A}{i}+1                  & $N_{E}$                               & Number of consecutive entries \\
+  \multirow{2}{*}{\jxs{15}+\LOC{A}{i}+2} & $\sigma_{\gamma,i}[E(K)],$            & \multirow{2}{*}{Photon production cross sections for reaction \MT$_{i}$} \\
+                                         & $K=\var{IE},\ldots,\var{IE}+N_{E}-1$ & 
+  \label{tab:PhotonProductionCrossSectionArray}
+\end{XSSTable}
 
 \subsubsection{\Block{LANDP}}\label{sec:LANDPBlock}
 The format of the \Block{LANDP} is given in \Tableref{tab:LANDPBlock}.

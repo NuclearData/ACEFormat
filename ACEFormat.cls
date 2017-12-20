@@ -12,10 +12,13 @@
 
 \LoadClass{scrartcl}
 \RequirePackage{array}
+\RequirePackage{xparse}
 
 \newcommand{\MT}{\textsf{MT}}
 
 \newcommand{\var}[1]{\textsf{#1}}
+\NewDocumentCommand\LOC{mg}{\var{LOC#1}\textsubscript{#2}}
+
 \newcommand{\aceArray}[1]{\textsf{#1}}
 \newcommand{\IZAW}{\aceArray{IZAW}}
 \newcommand{\NXS}{\aceArray{NXS}}
@@ -46,6 +49,7 @@
 \newcommand{\Sectionref}[1]{Section~\ref{#1}}
 \newcommand{\Figureref}[1]{Figure~\ref{#1}}
 \newcommand{\Tableref}[1]{Table~\ref{#1}}
+\newcommand{\Equationref}[1]{Equation~\ref{#1}}
 
 %------- table environments ---------
 \newenvironment{NXSTable}[1]{%
@@ -87,11 +91,13 @@
 {\end{longtable}}
 
 \newenvironment{BlockTable}[2][]{%
-  \begin{XSSTable}{\Block{#2}#1.}
+  \begin{XSSTable}{\Block{#2}#1}
   }
 {\end{XSSTable}}
 
+\newcolumntype{J}{>{\arraybackslash}m{0.25\linewidth}}
 \newcolumntype{L}{>{\arraybackslash}m{0.5\linewidth}}
+\newcolumntype{M}{>{\arraybackslash}m{0.65\linewidth}}
 
 \newenvironment{XSSTable}[1]{%
   \begin{longtable}{llL}
@@ -117,7 +123,6 @@
 }
 {\end{longtable}}
 
-\newcolumntype{M}{>{\arraybackslash}m{0.65\linewidth}}
 \newenvironment{LOCTable}[1]{%
   \begin{longtable}{lM}
     \caption{#1.} \\[1.5ex]
