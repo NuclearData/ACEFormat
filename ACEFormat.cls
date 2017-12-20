@@ -11,6 +11,7 @@
 \ProcessOptions\relax
 
 \LoadClass{scrartcl}
+\RequirePackage{array}
 
 \newcommand{\MT}{\textsf{MT}}
 
@@ -90,8 +91,10 @@
   }
 {\end{XSSTable}}
 
+\newcolumntype{L}{>{\arraybackslash}m{0.5\linewidth}}
+
 \newenvironment{XSSTable}[1]{%
-  \begin{longtable}{lll}
+  \begin{longtable}{llL}
     \caption{#1.} \\[1.5ex]
     \toprule
     Location in \XSS & Parameter & Description \\
@@ -104,6 +107,31 @@
 \endhead
     \bottomrule
     \multicolumn{3}{r}{\emph{Continued on next page}}
+  \endfoot
+    \bottomrule
+    \ifcsempty{TPTL@body}{}{%test
+      \insertTableNotes 
+      \csgdef{TPTL@body}{}% delete the body
+    }
+  \endlastfoot
+}
+{\end{longtable}}
+
+\newcolumntype{M}{>{\arraybackslash}m{0.65\linewidth}}
+\newenvironment{LOCTable}[1]{%
+  \begin{longtable}{lM}
+    \caption{#1.} \\[1.5ex]
+    \toprule
+    Location in \XSS &  Description \\
+    \midrule
+  \endfirsthead
+    \caption{#1 (continued)} \\[1.5ex]
+    \toprule
+    Location in \XSS\  &  Description \\
+    \midrule
+\endhead
+    \bottomrule
+    \multicolumn{2}{r}{\emph{Continued on next page}}
   \endfoot
     \bottomrule
     \ifcsempty{TPTL@body}{}{%test

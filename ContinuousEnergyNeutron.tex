@@ -40,7 +40,7 @@ The format of individual blocks found on neutron transport tables is identical f
              & \ldots & \\
     15       & NT     & Number of PIKMT reaction \\
     16       & ---    & 0=normal photon production \\
-             &        & -1=do not produce photons \\
+             &        & -1=do not produce photons
   \label{tab:NXSContinuousEnergyNeutron}
 \end{NXSTable}
 
@@ -76,7 +76,7 @@ The format of individual blocks found on neutron transport tables is identical f
     26       & DNEDL  & Table of energy distribution locators \\
     27       & DNED   & Energy distributions \\
              & \ldots & \\
-    32       & ---    & \\
+    32       & ---    &
   \label{tab:JXSContinuousEnergyNeutron}
 \end{JXSTable}
 
@@ -141,32 +141,16 @@ If delayed neutron data exist (when \jxs{24}>0), the precursor distribution form
   \begin{TableNotes}
     \item[$\dagger$] \label{tn:schemeDelayedPrecursors} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
   \end{TableNotes}
-  \begin{longtable}{lll}
-    \caption{Delayed \nubar\ precursor distribution.} \\[1.5ex]
-    \toprule
-    Location in \XSS & Parameter & Description \\
-    \midrule
-  \endfirsthead
-    \caption{Delayed \nubar\ precursor distribution (continued).} \\[1.5ex]
-    \toprule
-    Element  & Name   & Location Description \\
-    \midrule
-  \endhead
-    \bottomrule
-    \multicolumn{3}{r}{\emph{Continued on next page}}
-  \endfoot
-    \bottomrule
-    \insertTableNotes
-  \endlastfoot
-    \label{tab:DelayedPrecursorDistribution}
+  \begin{XSSTable}{Delayed \nubar\ precursor distribution.}
     \startblock{DNU}                   & \var{DEC}$_{i}$                  & Decay constant for the $i$-th group \\
     \startblock{DNU}+1                 & $N_{R}$                          & Number of interpolation regions \\
     \startblock{KNU}+2                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
     \startblock{KNU}+2+$N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:schemeDelayedPrecursors} \\
     \startblock{DNU}+2+$2N_{R}$       & $N_{E}$                          & Number of energies \\
     \startblock{DNU}+3+$2N_{R}$       & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
-    \startblock{DNU}+3+$2N_{R}+N_{E}$ & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities \\
-  \end{longtable}
+    \startblock{DNU}+3+$2N_{R}+N_{E}$ & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities
+    \label{tab:DelayedPrecursorDistribution}
+  \end{XSSTable}
   \begin{tablenotes}
     \note \startblock{DNU} is the index of the \XSS\ array where the delayed \nubar\ precursor distribution begins; the first one is at \startblock{DNU}=\jxs{25}.
   \end{tablenotes}
@@ -236,13 +220,13 @@ All locators are relative to \jxs{7} for the \Block{LSIG} or \jxs{15} for the \B
 \subsubsection{\Block{SIG}}\label{sec:SIGBlock}
 The \Block{SIG} contains the incident neutron cross section data. (The photon production cross section is in the \Block{SIGP}.) The format of the \Block{SIG} is given in \Tableref{tab:SIGBlock}. The cross section data begins at the index specified by the locator from the \Block{LSIG}; the format for which is given in \Tableref{tab:CrossSectionArray}.
 \begin{ThreePartTable}
-  \begin{BlockTable}{SIG}
-    \var{LXS}+\var{LOCA}$_{1}-1$ &  & Cross section array for reaction \MT$_{1}$ \\
-    \var{LXS}+\var{LOCA}$_{2}-1$ &  & Cross section array for reaction \MT$_{2}$ \\
+  \begin{LOCTable}{\Block{SIG}}
+    \var{LXS}+\var{LOCA}$_{1}-1$         & Cross section array for reaction \MT$_{1}$ \\
+    \var{LXS}+\var{LOCA}$_{2}-1$         & Cross section array for reaction \MT$_{2}$ \\
     \ldots \\
-    \var{LXS}+\var{LOCA}$_{\var{NMT}}-1$ &  & Cross section array for reaction \MT$_{\var{NMT}}$
+    \var{LXS}+\var{LOCA}$_{\var{NMT}}-1$ & Cross section array for reaction \MT$_{\var{NMT}}$
     \label{tab:SIGBlock}
-  \end{BlockTable}
+  \end{LOCTable}
   \begin{tablenotes}
     \note The number of cross section arrays \var{NMT}=\nxs{4}.
   \end{tablenotes}
@@ -259,7 +243,6 @@ The \var{LOCA}$_{i}$ values are given in the \Block{LSIG} and are all relative t
 
 \subsubsection{\Block{LAND}}\label{sec:LANDBlock}
 The \Block{LAND} contains locators for the angular distributions for all reactions producing secondary neutrons. The \Block{LAND} always exists and begins at \startblock{LAND}=\jxs{8}. All locators (\var{LOCB}) are relative \jxs{9}; that is, the angular distribution begins at $\jxs{9}+\var{LOCB}_{i}$. The \var{LOCB}$_{i}$ locators must be monotonically increasing. The format of the \Block{LAND} is given in \Tableref{tab:LANDBlock}.
-\todo[inline]{Fix \Tableref{tab:LANDBLock} so that the third column isn't so huge.}
 \begin{ThreePartTable}
 \begin{BlockTable}{LAND}
   \startblock{LAND} & \var{LOCB}$_{1}=1$ & Location of angular distribution data for elastic scattering reaction \\
@@ -277,12 +260,12 @@ The \Block{LAND} contains locators for the angular distributions for all reactio
 The \Block{AND} contains angular distribution data for all reactions that produce secondary neutrons. The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \var{LOCB} from the \Block{LAND}. If \var{LOCB}$_{i}=0$ (given in the \Block{LAND}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR}. If \var{LOCB}$_{i}=-1$ no angular distribution data are given for reaction $i$ in the \Block{AND}. The angular distribution data are specified through \law{44} in the \Block{DLW}. 
 
 \begin{ThreePartTable}
-\begin{BlockTable}{AND}
-  \jxs{9}+\var{LOCB}$_{1}-1$ & & Angular distribution array for elastic scattering \\
-  \jxs{9}+\var{LOCB}$_{2}-1$ & & Angular distribution array for reaction \MT$_{1}$ \\
-  \jxs{9}+\var{LOCB}$_{\var{NMT}}-1$ & & Angular distribution array for \MT$_{\var{NMT}}$
+\begin{LOCTable}{\Block{AND}}
+  \jxs{9}+\var{LOCB}$_{1}-1$         & Angular distribution array for elastic scattering \\
+  \jxs{9}+\var{LOCB}$_{2}-1$         & Angular distribution array for reaction \MT$_{1}$ \\
+  \jxs{9}+\var{LOCB}$_{\var{NMT}}-1$ & Angular distribution array for reaction \MT$_{\var{NMT}}$
   \label{tab:ANDBlock}
-\end{BlockTable}
+\end{LOCTable}
 \begin{tablenotes}
   \note The format for the angular distribution of the $i$-th array is given in \Tableref{tab:AngularDistributionArray}.
 \end{tablenotes}
@@ -291,11 +274,11 @@ The \Block{AND} contains angular distribution data for all reactions that produc
 \begin{XSSTable}{Angular distribution array for the $i$-th reaction.}
   \jxs{9}+\var{LOCB}$_{i}-1$     & $N_{E}$                     & Number of energies at which angular distributions are tabulated.  \\
   \jxs{9}+\var{LOCB}$_{i}$       & $E(l),l=1,\ldots,N_{E}$     & Energy grid \\
-  \jxs{9}+\var{LOCB}$_{i}+N_{E}$ & $L_{C}(l),l=1,\ldots,N_{E}$ & Location of tables associated with energies $E(l)$
+  \jxs{9}+\var{LOCB}$_{i}+N_{E}$ & $L_{C}(l),l=1,\ldots,N_{E}$ & Location of tables associated with $E(l)$
   \label{tab:AngularDistributionArray}
 \end{XSSTable}
 
-Note that the angular distribution arrays (\Tableref{tab:AngularDistributionArray}) contains additional locators, $L_{C}$; the sign of these locators is a flag:
+The angular distribution arrays (\Tableref{tab:AngularDistributionArray}) contains additional locators, $L_{C}$; the sign of these locators is a flag:
 \begin{itemize}
   \item if $L_{C}(l)>0$, then $L_{C}(l)$ points to a 32 equiprobable bin distribution (see \Tableref{tab:32EquiprobableBinDistribution});
   \item if $L_{C}(l)<0$, then $L_{C}(l)$ points to a tabulated angular distribution (see \Tableref{tab:TabulatedAngularDistribution});
@@ -303,7 +286,8 @@ Note that the angular distribution arrays (\Tableref{tab:AngularDistributionArra
 \end{itemize}
 
 \begin{XSSTable}{Format for the 32 equiprobable bin distribution.}
-  \jxs{9}+$|L_{C}(l)|-1$ & $P(1,K),K=1,\ldots,33$ & 32 equiprobable cosine bins for scattering at energy $E(1)$.
+  \multirow{2}{*}{\jxs{9}+$|L_{C}(l)|-1$} & $P(1,K)$        & 32 equiprobable cosine bins for scattering  \\
+                                          & $K=1,\ldots,33$ & at energy $E(1)$.
   \label{tab:32EquiprobableBinDistribution}
 \end{XSSTable}
 
@@ -316,11 +300,11 @@ Note that the angular distribution arrays (\Tableref{tab:AngularDistributionArra
       \end{description}
   \end{TableNotes}
 \begin{XSSTable}{Format for the tabulated angular distribution.}
-  \var{LDAT}$_{l}+1$ & \var{JJ}                       & Interpolation flag\tnotex{tn:InterpolationFlag} \\
-  \var{LDAT}$_{l}+2$ & $N_{P}$                        & Number of points in the distribution \\
+  \var{LDAT}$_{l}+1$ & \var{JJ}                                & Interpolation flag\tnotex{tn:InterpolationFlag} \\
+  \var{LDAT}$_{l}+2$ & $N_{P}$                                 & Number of points in the distribution \\
   \var{LDAT}$_{l}+3$ & $CS_{\mathrm{out}}(j),j=1,\ldots,N_{P}$ & Cosine scattering angular grid \\
-  \var{LDAT}$_{l}+4$ & $\PDF(j),j=1,\ldots,N_{P}$ & Probability density function \\
-  \var{LDAT}$_{l}+5$ & $\CDF(j),j=1,\ldots,N_{P}$ & Cumulative density function 
+  \var{LDAT}$_{l}+4$ & $\PDF(j),j=1,\ldots,N_{P}$              & Probability density function \\
+  \var{LDAT}$_{l}+5$ & $\CDF(j),j=1,\ldots,N_{P}$              & Cumulative density function
   \label{tab:TabulatedAngularDistribution}
 \end{XSSTable}
 \begin{tablenotes}
