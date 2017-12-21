@@ -17,7 +17,7 @@
 \newcommand{\MT}{\textsf{MT}}
 
 \newcommand{\var}[1]{\textsf{#1}}
-\NewDocumentCommand\LOC{mg}{\var{LOC#1}\textsubscript{#2}}
+\NewDocumentCommand\LOC{mG{}}{\var{LOC#1}\textsubscript{#2}}
 
 \newcommand{\aceArray}[1]{\textsf{#1}}
 \newcommand{\IZAW}{\aceArray{IZAW}}

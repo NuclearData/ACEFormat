@@ -271,7 +271,7 @@ The \Block{AND} contains angular distribution data for all reactions that produc
 \end{tablenotes}
 \end{ThreePartTable}
 
-\begin{XSSTable}{Angular distribution array for the $i$-th reaction.}
+\begin{XSSTable}{Angular distribution array for the $i$-th reaction}
   \jxs{9}+\LOC{B}{i}-1     & $N_{E}$                     & Number of energies at which angular distributions are tabulated.  \\
   \jxs{9}+\LOC{B}{i}       & $E(l),l=1,\ldots,N_{E}$     & Energy grid \\
   \jxs{9}+\LOC{B}{i}$+N_{E}$ & $L_{C}(l),l=1,\ldots,N_{E}$ & Location of tables associated with $E(l)$
@@ -451,16 +451,53 @@ The format of the $i$-th cross section array has two possible forms depending on
 \end{XSSTable}
 
 \subsubsection{\Block{LANDP}}\label{sec:LANDPBlock}
-The format of the \Block{LANDP} is given in \Tableref{tab:LANDPBlock}.
+\todo[inline]{Should this section be merged with \Sectionref{sec:LANDBlock}? It is just a minor difference. The combination is done similarly in \Sectionref{sec:LDLWBlock}.}
+
+The \Block{LANDP} gives locator information for angular distribution arrays for photon production reactions and exists if $\nxs{6}\neq0$. All locators (\LOC{B}) in the \Block{LANDP} are \emph{relative} to \jxs{17}; that is, the angular distribution arrays begin at $\jxs{17}+\LOC{B}{i}$. The number of photon-producing reactions is \var{NMT}=\nxs{6}. The \LOC{B}{i} must be monotonically increasing. The \MT s are defined in the \Block{MTRP} (see \Sectionref{sec:MTRBlock}). The format of the \Block{LANDP} is given in \Tableref{tab:LANDPBlock}.
+
+\begin{ThreePartTable}
 \begin{BlockTable}{LANDP}
+  \jxs{16} & \LOC{B}{1}=1 & Location of angular distribution data for reaction \MT$_{1}$ \\
+  \jxs{16}+1 & \LOC{B}{2} & Location of angular distribution data for reaction \MT$_{2}$ \\
+  \ldots \\
+  \jxs{16}+\var{NMT}-1 & \LOC{B}{\var{NMT}} & Location of angular distribution data for reaction \MT$_{\var{NMT}}$ \\
   \label{tab:LANDPBlock}
 \end{BlockTable}
+\begin{tablenotes}
+  \note The \LOC{B}{i} must be monotonically increasing. The format for the angular distribution of the $i$-th reaction is given in \Tableref{tab:SecondaryPhotonAngularDistribution}.
+\end{tablenotes}
+\end{ThreePartTable}
 
 \subsubsection{\Block{ANDP}}\label{sec:ANDPBlock}
-The format of the \Block{ANDP} is given in \Tableref{tab:ANDPBlock}.
-\begin{BlockTable}{ANDP}
+The \Block{ANDP} contains angular distribution data for all photon-producing reactions and exists if $\nxs{6}\neq0$. The format of the \Block{ANDP} is given in \Tableref{tab:ANDPBlock}; the format of each angular distribution array is given in \Tableref{tab:SecondaryPhotonAngularDistribution}. The angular distribution data begins at the index specified by the locator, \LOC{B}, from the \Block{LANDP}; if $\LOC{B}{i}=0$, there are no angular distribution data given for reaction $i$ and isotropic scattering is assumed in the \LAB\ system. 
+\begin{ThreePartTable}
+\begin{LOCTable}{ANDP}
+  \jxs{17}+\LOC{B}{1}-1         & Angular distribution array for reaction \MT$_{1}$ \\
+  \jxs{17}+\LOC{B}{2}           & Angular distribution array for reaction \MT$_{2}$ \\
+  \ldots \\
+  \jxs{17}+\LOC{B}{\var{NMT}}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
   \label{tab:ANDPBlock}
-\end{BlockTable}
+\end{LOCTable}
+\begin{tablenotes}
+  \note \var{NMT}=\nxs{6} is the number of photon-producing reactions.
+\end{tablenotes}
+\end{ThreePartTable}
+
+\begin{ThreePartTable}
+  \begin{TableNotes}
+  \item[$\dagger$] \label{tn:CosineBinLocators} All values of $L_{C}(l)$ are \emph{relative} to \jxs{17}. If $L_{C}(l)=0$, no table is given for energy $E(l)$ and scattering is assumed to be isotropic in the \LAB\ system.
+  \end{TableNotes}
+\begin{XSSTable}{Angular distribution array for the $i$-th photon-producing reaction}
+  \jxs{17}+\LOC{B}{i}-1       & $N_{E}$                      & Number of energies at which angular distributions are tabulated. \\
+  \jxs{17}+\LOC{B}{i}         & $E(l),l=1,N_{E}$             & Energy grid \\
+  \jxs{17}+\LOC{B}{i}+$N_{E}$ & $L_{C}(l),l=1,\ldots, N_{E}$ & Location of tables associated with $E(l)$\tnotex{tn:CosineBinLocators} \\
+  \jxs{17}+$L_{C}(1)-1$       & $P_{1}(K),K=1,\ldots,33$     & 32 equiprobable cosine bins for scattering at energy $E(1)$ \\
+  \jxs{17}+$L_{C}(2)-1$       & $P_{2}(K),K=1,\ldots,33$     & 32 equiprobable cosine bins for scattering at energy $E(2)$ \\
+  \ldots \\
+  \jxs{17}+$L_{C}(N_{E})-1$       & $P_{N_{E}}(K),K=1,\ldots,33$     & 32 equiprobable cosine bins for scattering at energy $E(N_{E})$
+  \label{tab:SecondaryPhotonAngularDistribution}
+\end{XSSTable}
+\end{ThreePartTable}
 
 \subsubsection{\Block{YP}}\label{sec:YPBlock}
 The format of the \Block{YP} is given in \Tableref{tab:YPBlock}.
