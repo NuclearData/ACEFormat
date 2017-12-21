@@ -21,24 +21,26 @@
 \date{}
 
 \author[1]{Jeremy Lloyd Conlin (editor)}
-\author[2]{Forrest B. Brown}
-\author[2,3]{Brian K. Kiedrowski}
-\affil[1]{Los Alamos National Laboratory, Nuclear Data Team}
-\affil[2]{Los Alamos National Laboratory, MCNP Team}
-\affil[3]{University of Michigan, Department of Nuclear Engineering and Radiological Sciences}
+\affil[1]{\textsl{Los Alamos National Laboratory}}
 
 \setlist{nosep}
 \setlist[itemize,1]{label=--}
 
 \addbibresource{References.bib}
 
+\includeonly{
+  % frontmatter,
+  % Introduction,
+  % Header,
+  % UniqueIdentifier,
+  ContinuousEnergyNeutron,
+  % Dosimetry,
+  % ThermalScattering,
+  % ContinuousEnergyPhoton,
+  % backmatter
+}
 \begin{document}
-\maketitle
-
-\tableofcontents
-\listoftables
-\listoftodos
-
+\include{frontmatter}
 \include{Introduction}
 \include{Header}
 \include{UniqueIdentifier}
@@ -46,7 +48,6 @@
 \include{Dosimetry}
 \include{ThermalScattering}
 \include{ContinuousEnergyPhoton}
-
-\printbibliography
+\include{backmatter}
 
 \end{document}
