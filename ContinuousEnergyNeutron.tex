@@ -350,11 +350,75 @@ The \Block{LDLW} exists if \nxs{5}$\neq0$ while the \Block{LDLWP} exists if \nxs
 \end{ThreePartTable}
 
 All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array. The \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \Block{MTRP} for \Block{LDLWP}.
-\subsubsection{\Block{DLW}}\label{sec:DLWBlock}
-The format of the \Block{DLW} is given in \Tableref{tab:DLWBlock}.
-\begin{BlockTable}{DLW}
+\subsubsection{\Block{DLW \textnormal{\&} DLWP}}\label{sec:DLWBlock}
+The \Block{DLW} contains secondary energy distributions for all reactions producing secondary neutrons---expect for elastic scattering. The \Block{DLWP} contains secondary energy distribution for all photon-producing reactions. Both the \Block{DLW} and \Block{DLWP} have the same format. The energy distributions are given staring with a locator, \LOC{C}, which were given in the \Block{LDLW} and \Block{LDLWP}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions) is dependent on whether it is the \Block{DLW} or \Block{DLWP}. These values are given in \Tableref{tab:JED_NMT}.
+\begin{table}[h!] \centering
+  \begin{tabular}{lll}
+    \toprule
+    Block            & \var{JED} & \var{NMT} \\
+    \midrule
+    \var{DLW}        & \jxs{11}  & \nxs{5} \\
+    \var{DLWP}       & \jxs{19}  & \nxs{6} \\
+    delayed neutrons & \jxs{27}  & N/A \\
+    \bottomrule
+  \end{tabular}
+  \caption{\var{JED} and \var{NMT} for the \Block{DLW} and \Block{DLW}.}
+  \label{tab:JED_NMT}
+\end{table}
+
+\begin{LOCTable}{DLW}
+  \var{JED}+\LOC{C}{1}-1 & Energy distribution array for reaction \MT$_{1}$ \\
+  \var{JED}+\LOC{C}{2}-1 & Energy distribution array for reaction \MT$_{2}$ \\
+  \ldots \\
+  \var{JED}+\LOC{C}{\var{NMT}}-1 & Energy distribution array for reaction \MT$_{\var{NMT}}$
   \label{tab:DLWBlock}
-\end{BlockTable}
+\end{LOCTable}
+
+The $i$-th array has the form shown in 
+\begin{ThreePartTable}
+  \begin{TableNotes}
+  \item[$\dagger$] \label{tn:LNW} If \var{LNW}$_{i}=0$ then \var{LAW}$_{1}$ is used regardless of other circumstantes.
+  \item[$\ddagger$] \label{tn:EnergyDistributionInterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
+  \item[$\ast$] \label{tn:EnergyDistributionProbability} If the particle energy $E<$(1), then $P(E)=P(1)$. If $E>E(N_{E})$, then $P(E)=P(N_{E})$. If more than one law is given, then \var{LAW}$_{1}$ is used only if $\xi<P(E)$ where $\xi$ is a random number between 0 and 1.
+  \end{TableNotes}
+\begin{XSSTable}{Format for the secondary energy distribution.}
+  \var{JED}+\LOC{C}{i}-1                & \var{LNW}$_{1}$                  & Location of next law.\tnotex{tn:LNW} \\
+  \var{JED}+\LOC{C}{i}                  & \var{LAW}$_{1}$                  & Name of this law \\
+  \var{JED}+\LOC{C}{i}+1                & \var{IDAT}$_{1}$                 & Location of data for this law relative to \var{JED} \\
+  \var{JED}+\LOC{C}{i}+2                & $N_{R}$                          & Number of interpolation regions to define law applicability regime \\
+  \var{JED}+\LOC{C}{i}+3                & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
+  \var{JED}+\LOC{C}{i}+3+$N_{R}$        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:EnergyDistributionInterpolationScheme} \\
+  \var{JED}+\LOC{C}{i}+3+$2N_{R}$       & $N_{E}$                          & Number of energies \\
+  \var{JED}+\LOC{C}{i}+4+$2N_{R}$       & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
+  \var{JED}+\LOC{C}{i}+4+$2N_{R}+N_{E}$ & $P(l),l=1,\ldots,N_{E}$          & Probability of law validity\tnotex{tn:EnergyDistributionProbability} \\
+  \var{JED}+\var{IDAT}$_{1}-1$          & \var{LDAT}$(l),l,\ldots,L$       & Law data for \var{LAW}$_{1}$. \\
+  \var{JED}+\var{LNW}$_{1}-1$           & \var{LNW}$_{2}$                  & Location of next law \\
+  \var{JED}+\var{LNW}$_{1}$             & \var{LAW}$_{2}$                  & Name of this law \\
+  \var{JED}+\var{LNW}+1                 & \var{IDAT}$_{2}$                 & Location of data for this law relative to \var{JED} \\
+  \ldots
+  \label{tab:EnergyDistributionArray}
+\end{XSSTable}
+\end{ThreePartTable}
+
+The format for the law data depends on the law. The length, $L$, of the law data array, \var{LDAT}, is determined from parameters with \var{LDAT}. The various \var{LDAT} arrays and their formats are given in the following tables. Laws 2 (\Tableref{tab:Law2}) and 4 (\Tableref{tab:Law4}) are used to describe spectra of secondary photons from neutron collisions. All laws---except for Law 2---are usd to describe the spectra of scattered neutrons. 
+
+In the following tables, we provide relative locations of data in the \var{LDAT} array rather than the absolute locations in the \XSS\ array. \Tableref{tab:EnergyDistributionArray} defines the starting location of the \var{LDAT} array within the \XSS\ array.
+
+\subsubsubsection{\var{LAW}=1---Tabular Equiprobable Energy Bins (From ENDF Law 1)}\label{sec:LAW1}
+\subsubsubsection{\var{LAW}=2---Discrete Photon Energy}\label{sec:LAW2}
+\subsubsubsection{\var{LAW}=3---Level Scattering}\label{sec:LAW3}
+\subsubsubsection{\var{LAW}=4---Continuous Tabular Distribution (From ENDF Law 1)}\label{sec:LAW4}
+\subsubsubsection{\var{LAW}=5---General Evaporation Spectrum (From ENDF-6, \MF=5, \var{LF}=5)}\label{sec:LAW5}
+\subsubsubsection{\var{LAW}=7---Simple Maxwell Fission Spectrum (From ENDF-6, \MF=5, \var{LF}=7)}\label{sec:LAW7}
+\subsubsubsection{\var{LAW}=9---Evaporation Spectrum (From ENDF-6, \MF=5, \var{LF}=9)}\label{sec:LAW9}
+\subsubsubsection{\var{LAW}=11---Energy Dependent Watt Spectrum (From ENDF-6, \MF=5, \var{LF}=11)}\label{sec:LAW11}
+\subsubsubsection{\var{LAW}=22---Tabular Linear Functions (From UK Law 2)}\label{sec:LAW22}
+\subsubsubsection{\var{LAW}=24---(From UK Law 6)}\label{sec:LAW24}
+\subsubsubsection{\var{LAW}=44---Kalbach-87 Formalism (From ENDF-6 \MF=6 \var{LAW}=1, \var{LANG}=2)}\label{sec:LAW44}
+\subsubsubsection{\var{LAW}=61---Like \var{LAW}=44, but tabular angular distribution instead of Kalbach-87}\label{sec:LAW61}
+\subsubsubsection{\var{LAW}=66---$N$-body phase space distribution (From ENDF-6 \MF=6 \var{LAW}=6)}\label{sec:LAW66}
+\subsubsubsection{\var{LAW}=67---Laboratory Angle-Energy Law (From ENDF-6 \MF=6 \var{LAW}=7)}\label{sec:LAW67}
+\subsubsubsection{Energy-Dependent Neutron Yields}
 
 \subsubsection{\Block{GPD}}\label{sec:GPDBlock}
 The \Block{GPD} contains the \emph{total} photon production cross section, tabulated on the energy grid given in the \Block{ESZ}, the size of which is given by \nxs{3}. The \Block{GPD} only exists if \jxs{12}$\neq0$. 

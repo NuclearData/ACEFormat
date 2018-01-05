@@ -5,7 +5,7 @@
 % This is really to clean up the main tex file and keep it simpler.
 % ==============================================================================
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{ACEFormat}[2017/12/13 v1.0 ACe Format]
+\ProvidesClass{ACEFormat}[2017/12/13 v1.0 ACE Format]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
 \ProcessOptions\relax
@@ -14,7 +14,38 @@
 \RequirePackage{array}
 \RequirePackage{xparse}
 
+\DeclareNewSectionCommand[
+  style=section,
+  counterwithin=subsubsection,
+  font=\normalsize,
+  afterskip=1.5ex plus .2ex,
+  beforeskip=-3.25ex plus -1ex minus -.2ex,
+  indent=0pt,
+  level=4,
+  tocstyle=section,
+  toclevel=4,
+  tocindent=10em,
+  tocnumwidth=5em
+]{subsubsubsection}
+\setcounter{secnumdepth}{\subsubsubsectionnumdepth}
+\setcounter{tocdepth}{\subsubsubsectiontocdepth}
+
+\RedeclareSectionCommand[
+  level=5,
+  counterwithin=subsubsubsection,
+  toclevel=5,
+  tocindent=12em,
+  tocnumwidth=6em
+]{paragraph}
+\RedeclareSectionCommand[
+  level=6,
+  toclevel=6,
+  tocindent=14em,
+  tocnumwidth=7em
+]{subparagraph}
+
 \newcommand{\MT}{\textsf{MT}}
+\newcommand{\MF}{\textsf{MF}}
 
 \newcommand{\var}[1]{\textsf{#1}}
 \NewDocumentCommand\LOC{mG{}}{\var{LOC#1}\textsubscript{#2}}
