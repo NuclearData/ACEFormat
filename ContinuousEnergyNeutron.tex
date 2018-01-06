@@ -381,43 +381,142 @@ The $i$-th array has the form shown in
   \item[$\ddagger$] \label{tn:EnergyDistributionInterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
   \item[$\ast$] \label{tn:EnergyDistributionProbability} If the particle energy $E<$(1), then $P(E)=P(1)$. If $E>E(N_{E})$, then $P(E)=P(N_{E})$. If more than one law is given, then \var{LAW}$_{1}$ is used only if $\xi<P(E)$ where $\xi$ is a random number between 0 and 1.
   \end{TableNotes}
-\begin{XSSTable}{Format for the secondary energy distribution.}
-  \var{JED}+\LOC{C}{i}-1                & \var{LNW}$_{1}$                  & Location of next law.\tnotex{tn:LNW} \\
-  \var{JED}+\LOC{C}{i}                  & \var{LAW}$_{1}$                  & Name of this law \\
-  \var{JED}+\LOC{C}{i}+1                & \var{IDAT}$_{1}$                 & Location of data for this law relative to \var{JED} \\
-  \var{JED}+\LOC{C}{i}+2                & $N_{R}$                          & Number of interpolation regions to define law applicability regime \\
-  \var{JED}+\LOC{C}{i}+3                & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
-  \var{JED}+\LOC{C}{i}+3+$N_{R}$        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:EnergyDistributionInterpolationScheme} \\
-  \var{JED}+\LOC{C}{i}+3+$2N_{R}$       & $N_{E}$                          & Number of energies \\
-  \var{JED}+\LOC{C}{i}+4+$2N_{R}$       & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
-  \var{JED}+\LOC{C}{i}+4+$2N_{R}+N_{E}$ & $P(l),l=1,\ldots,N_{E}$          & Probability of law validity\tnotex{tn:EnergyDistributionProbability} \\
-  \var{JED}+\var{IDAT}$_{1}-1$          & \var{LDAT}$(l),l,\ldots,L$       & Law data for \var{LAW}$_{1}$. \\
-  \var{JED}+\var{LNW}$_{1}-1$           & \var{LNW}$_{2}$                  & Location of next law \\
-  \var{JED}+\var{LNW}$_{1}$             & \var{LAW}$_{2}$                  & Name of this law \\
-  \var{JED}+\var{LNW}+1                 & \var{IDAT}$_{2}$                 & Location of data for this law relative to \var{JED} \\
-  \ldots
-  \label{tab:EnergyDistributionArray}
-\end{XSSTable}
+  \begin{XSSTable}{Format for the secondary energy distribution.}
+    \var{JED}+\LOC{C}{i}-1                & \var{LNW}$_{1}$                  & Location of next law.\tnotex{tn:LNW} \\
+    \var{JED}+\LOC{C}{i}                  & \var{LAW}$_{1}$                  & Name of this law \\
+    \var{JED}+\LOC{C}{i}+1                & \var{IDAT}$_{1}$                 & Location of data for this law relative to \var{JED} \\
+    \var{JED}+\LOC{C}{i}+2                & $N_{R}$                          & Number of interpolation regions to define law applicability regime \\
+    \var{JED}+\LOC{C}{i}+3                & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
+    \var{JED}+\LOC{C}{i}+3+$N_{R}$        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:EnergyDistributionInterpolationScheme} \\
+    \var{JED}+\LOC{C}{i}+3+$2N_{R}$       & $N_{E}$                          & Number of energies \\
+    \var{JED}+\LOC{C}{i}+4+$2N_{R}$       & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
+    \var{JED}+\LOC{C}{i}+4+$2N_{R}+N_{E}$ & $P(l),l=1,\ldots,N_{E}$          & Probability of law validity\tnotex{tn:EnergyDistributionProbability} \\
+    \var{JED}+\var{IDAT}$_{1}-1$          & \var{LDAT}$(l),l,\ldots,L$       & Law data for \var{LAW}$_{1}$. \\
+    \var{JED}+\var{LNW}$_{1}-1$           & \var{LNW}$_{2}$                  & Location of next law \\
+    \var{JED}+\var{LNW}$_{1}$             & \var{LAW}$_{2}$                  & Name of this law \\
+    \var{JED}+\var{LNW}+1                 & \var{IDAT}$_{2}$                 & Location of data for this law relative to \var{JED} \\
+    \ldots
+    \label{tab:EnergyDistributionArray}
+  \end{XSSTable}
 \end{ThreePartTable}
 
 The format for the law data depends on the law. The length, $L$, of the law data array, \var{LDAT}, is determined from parameters with \var{LDAT}. The various \var{LDAT} arrays and their formats are given in the following tables. Laws 2 (\Tableref{tab:Law2}) and 4 (\Tableref{tab:Law4}) are used to describe spectra of secondary photons from neutron collisions. All laws---except for Law 2---are usd to describe the spectra of scattered neutrons. 
 
 In the following tables, we provide relative locations of data in the \var{LDAT} array rather than the absolute locations in the \XSS\ array. \Tableref{tab:EnergyDistributionArray} defines the starting location of the \var{LDAT} array within the \XSS\ array.
 
-\subsubsubsection{\var{LAW}=1---Tabular Equiprobable Energy Bins (From ENDF Law 1)}\label{sec:LAW1}
+\subsubsubsection{\var{LAW}=1---Tabular Equiprobable Energy Bins}\label{sec:LAW1}
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:LAW1InterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
+    \item[$\ddagger$] \label{tn:EoutTables} $E_{\mathrm{out}}$ tables consist of \var{NET} boundaries of \var{NET}-1 equally likely energy intervals. Linear-linear interpolation is used between intervals.
+  \end{TableNotes}
+  \begin{LAWTable}{\var{LAW}=1 (From ENDF Law 1)}
+    \var{LDAT}(1)                 & $N_{R}$                                            & Interpolation scheme between tables of $E_{\mathrm{out}}$ \\
+    \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$                   & ENDF interpolation parameters \\
+    \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$                   & ENDF interpolation scheme\tnotex{tn:LAW1InterpolationScheme} \\
+    \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                                            & Number of incident energies tabulated \\
+    \var{LDAT}(3+$2N_{R}$)        & $E_{\mathrm{in}}(l),l=1,ldots,N_{E}$               & List of incident energies for which $E_{\mathrm{out}}$ is tabulated \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$)  & \var{NET}                                          & Number of outgoing energies in each $E_{\mathrm{out}}$ table \\
+    \var{LDAT}(4+$2*N_{R}+N_{E}$) & $E_{\mathrm{out}_{1}}(l),l=1,\ldots,\var{NET}$     &  $E_{\mathrm{out}}$ tables\tnotex{tn:EoutTables} \\
+                                  & $E_{\mathrm{out}_{2}}(l),l=1,\ldots,\var{NET}$     & \\
+                                  & \ldots \\
+                                  & $E_{\mathrm{out}_{N_{E}}}(l),l=1,\ldots,\var{NET}$ &
+    \label{tab:LAW1}
+  \end{LAWTable}
+\end{ThreePartTable}
+
 \subsubsubsection{\var{LAW}=2---Discrete Photon Energy}\label{sec:LAW2}
+\begin{ThreePartTable}
+\begin{LAWTable}{\var{LAW}=2---Discrete Photon Energy}
+  \var{LDAT}(1) & \var{LP} & Indicator of whether the photon is a primary or non-primary photon \\
+  \var{LDAT}(2)& \var{EG} & Photon energy or binding energy
+  \label{tab:LAW2}
+\end{LAWTable}
+\begin{tablenotes}
+  \note If \var{LP}=0 or \var{LP}=1, the photon energy is \var{EG}. If \var{LP}=2, the photon energy is 
+    \[\var{EG}+\left(\frac{\var{AWR}}{\var{AWR}+1}\right)E_{N}\]
+    where \var{AWR} is the atomic weight ratio and $E_{N}$ is the incident neutron energy.
+\end{tablenotes}
+\end{ThreePartTable}
+
 \subsubsubsection{\var{LAW}=3---Level Scattering}\label{sec:LAW3}
-\subsubsubsection{\var{LAW}=4---Continuous Tabular Distribution (From ENDF Law 1)}\label{sec:LAW4}
-\subsubsubsection{\var{LAW}=5---General Evaporation Spectrum (From ENDF-6, \MF=5, \var{LF}=5)}\label{sec:LAW5}
-\subsubsubsection{\var{LAW}=7---Simple Maxwell Fission Spectrum (From ENDF-6, \MF=5, \var{LF}=7)}\label{sec:LAW7}
-\subsubsubsection{\var{LAW}=9---Evaporation Spectrum (From ENDF-6, \MF=5, \var{LF}=9)}\label{sec:LAW9}
-\subsubsubsection{\var{LAW}=11---Energy Dependent Watt Spectrum (From ENDF-6, \MF=5, \var{LF}=11)}\label{sec:LAW11}
-\subsubsubsection{\var{LAW}=22---Tabular Linear Functions (From UK Law 2)}\label{sec:LAW22}
-\subsubsubsection{\var{LAW}=24---(From UK Law 6)}\label{sec:LAW24}
-\subsubsubsection{\var{LAW}=44---Kalbach-87 Formalism (From ENDF-6 \MF=6 \var{LAW}=1, \var{LANG}=2)}\label{sec:LAW44}
+\begin{align}
+  \var{LDAT}(1) &= \left( \frac{A+1}{A} \right)|Q| \\
+  \var{LDAT}(2) &= \left( \frac{A}{A+!} \right)^{2} \\
+  E_{\mathrm{out}}^{\mathrm{CM}} &= \var{LDAT}(2)*(E-\var{LDAT}(1))
+  \label{eq:LAW3}
+\end{align}
+where
+\begin{align*}
+  E_{\mathrm{out}}^{\mathrm{CM}} &= \textnormal{outgoing \CM\ energy} \\
+  E &= \textnormal{incident energy} \\
+  A &= \textnormal{atomic weight ratio} \\
+  Q &= Q-\textnormal{value}
+\end{align*}
+
+The outgoing neutron energy in the laboratory system is:
+\begin{equation}
+  E_{\mathrm{out}}^{\mathrm{LAB}} = E_{\mathrm{out}}^{\mathrm{CM}} +\left\{ E+2\mu_{\mathrm{CM}}(A+1)(EE_{\mathrm{out}}^{\mathrm{CM}})^{1/2} \right\}/(A+1)^{2}
+  \label{eq:Law3EoutLAB}
+\end{equation}
+where $\mu_{\mathrm{CM}}$ is the cosine of the \CM\ scattering angle
+\todo[inline]{What is $EE_{\mathrm{out}}^{\mathrm{CM}}$?}
+
+\subsubsubsection{\var{LAW}=4---Continuous Tabular Distribution}\label{sec:LAW4}
+\begin{LAWTable}{\var{LAW}=4 (From ENDF-6 \var{LAW}=1)}
+  \label{tab:LAW4}
+\end{LAWTable}
+
+\subsubsubsection{\var{LAW}=5---General Evaporation Spectrum}\label{sec:LAW5}
+\begin{LAWTable}{\var{LAW}=5 (From ENDF-6, \MF=5, \var{LF}=5)}
+  \label{tab:LAW5}
+\end{LAWTable}
+
+\subsubsubsection{\var{LAW}=7---Simple Maxwell Fission Spectrum}\label{sec:LAW7}
+\begin{LAWTable}{\var{LAW}=7 (From ENDF-6, \MF=5, \var{LF}=7)}
+  \label{tab:LAW7}
+\end{LAWTable}
+
+\subsubsubsection{\var{LAW}=9---Evaporation Spectrum}\label{sec:LAW9}
+\begin{LAWTable}{\var{LAW}=9 (From ENDF-6, \MF=5, \var{LF}=9)}
+  \label{tab:LAW9}
+\end{LAWTable}
+
+\subsubsubsection{\var{LAW}=11---Energy Dependent Watt Spectrum}\label{sec:LAW11}
+\begin{LAWTable}{\var{LAW}=11 (From ENDF-6, \MF=5, \var{LF}=11)}
+  \label{tab:LAW11}
+\end{LAWTable}
+
+\subsubsubsection{\var{LAW}=22---Tabular Linear Functions}\label{sec:LAW22}
+\begin{LAWTable}{\var{LAW}=22 (From UK Law 2)}
+  \label{tab:LAW22}
+\end{LAWTable}
+
+\subsubsubsection{\var{LAW}=24}\label{sec:LAW24}
+\begin{LAWTable}{\var{LAW}=24 (From UK Law 6)}
+  \label{tab:LAW24}
+\end{LAWTable}
+
+\subsubsubsection{\var{LAW}=44---Kalbach-87 Formalism}\label{sec:LAW44}
+\begin{LAWTable}{\var{LAW}=44 (From ENDF-6 \MF=6 \var{LAW}=1, \var{LANG}=2)}
+  \label{tab:LAW44}
+\end{LAWTable}
+
 \subsubsubsection{\var{LAW}=61---Like \var{LAW}=44, but tabular angular distribution instead of Kalbach-87}\label{sec:LAW61}
-\subsubsubsection{\var{LAW}=66---$N$-body phase space distribution (From ENDF-6 \MF=6 \var{LAW}=6)}\label{sec:LAW66}
-\subsubsubsection{\var{LAW}=67---Laboratory Angle-Energy Law (From ENDF-6 \MF=6 \var{LAW}=7)}\label{sec:LAW67}
+\begin{LAWTable}{\var{LAW}=61---Like \var{LAW}=44, but tabular angular distribution instead of Kalbach-87}
+  \label{tab:LAW61}
+\end{LAWTable}
+
+\subsubsubsection{\var{LAW}=66---$N$-body phase space distribution}\label{sec:LAW66}
+\begin{LAWTable}{\var{LAW}=66 (From ENDF-6 \MF=6 \var{LAW}=6)}
+  \label{tab:LAW66}
+\end{LAWTable}
+
+\subsubsubsection{\var{LAW}=67---Laboratory Angle-Energy Law}\label{sec:LAW67}
+\begin{LAWTable}{\var{LAW}=67 (From ENDF-6 \MF=6 \var{LAW}=7)}
+  \label{tab:LAW67}
+\end{LAWTable}
+
 \subsubsubsection{Energy-Dependent Neutron Yields}
 
 \subsubsection{\Block{GPD}}\label{sec:GPDBlock}

@@ -13,6 +13,7 @@
 \LoadClass{scrartcl}
 \RequirePackage{array}
 \RequirePackage{xparse}
+\RequirePackage{amsmath}
 
 \DeclareNewSectionCommand[
   style=section,
@@ -140,6 +141,30 @@
     \caption{#1 (continued)} \\[1.5ex]
     \toprule
     Location in \XSS\  & Parameter   & Description \\
+    \midrule
+\endhead
+    \bottomrule
+    \multicolumn{3}{r}{\emph{Continued on next page}}
+  \endfoot
+    \bottomrule
+    \ifcsempty{TPTL@body}{}{%test
+      \insertTableNotes 
+      \csgdef{TPTL@body}{}% delete the body
+    }
+  \endlastfoot
+}
+{\end{longtable}}
+
+\newenvironment{LAWTable}[1]{%
+  \begin{longtable}{llL}
+    \caption{#1.} \\[1.5ex]
+    \toprule
+    Location & Parameter & Description \\
+    \midrule
+  \endfirsthead
+    \caption{#1 (continued)} \\[1.5ex]
+    \toprule
+    Location\  & Parameter   & Description \\
     \midrule
 \endhead
     \bottomrule
