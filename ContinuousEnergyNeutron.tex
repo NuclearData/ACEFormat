@@ -415,7 +415,7 @@ In the following tables, we provide relative locations of data in the \var{LDAT}
     \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$                   & ENDF interpolation parameters \\
     \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$                   & ENDF interpolation scheme\tnotex{tn:LAW1InterpolationScheme} \\
     \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                                            & Number of incident energies tabulated \\
-    \var{LDAT}(3+$2N_{R}$)        & $E_{\mathrm{in}}(l),l=1,ldots,N_{E}$               & List of incident energies for which $E_{\mathrm{out}}$ is tabulated \\
+    \var{LDAT}(3+$2N_{R}$)        & $E_{\mathrm{in}}(l),l=1,\ldots,N_{E}$               & List of incident energies for which $E_{\mathrm{out}}$ is tabulated \\
     \var{LDAT}(3+$2N_{R}+N_{E}$)  & \var{NET}                                          & Number of outgoing energies in each $E_{\mathrm{out}}$ table \\
     \var{LDAT}(4+$2*N_{R}+N_{E}$) & $E_{\mathrm{out}_{1}}(l),l=1,\ldots,\var{NET}$     &  $E_{\mathrm{out}}$ tables\tnotex{tn:EoutTables} \\
                                   & $E_{\mathrm{out}_{2}}(l),l=1,\ldots,\var{NET}$     & \\
@@ -463,20 +463,96 @@ where $\mu_{\mathrm{CM}}$ is the cosine of the \CM\ scattering angle
 \todo[inline]{What is $EE_{\mathrm{out}}^{\mathrm{CM}}$?}
 
 \subsubsubsection{\var{LAW}=4---Continuous Tabular Distribution}\label{sec:LAW4}
-\begin{LAWTable}{\var{LAW}=4 (From ENDF-6 \var{LAW}=1)}
-  \label{tab:LAW4}
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:LAW4InterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
+    \item[$\ddagger$] \label{tn:Law4Locators} Relative to \jxs{11} (neutron reactions), \jxs{19} (photon-producing reactions), or \jxs{27} (delayed neutrons).
+  \end{TableNotes}
+  \begin{LAWTable}{\var{LAW}=4 (From ENDF-6 \var{LAW}=1)}
+    \var{LDAT}(1)                & $N_{R}$                          & Interpolation scheme between tables of $E_{\mathrm{out}}$ \\
+    \var{LDAT}(2)                & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
+    \var{LDAT}(2+$N_{R}$)        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:LAW4InterpolationScheme} \\
+    \var{LDAT}(2+$2N_{R}$)       & $N_{E}$                          & Number of energies at which distributions are tabulated \\
+    \var{LDAT}(3+$2N_{R}$)       & $E(l),l=1,\ldots,N_{E}$           & Incident neutron energies \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$) & $\var{L}(l),l=1,\ldots,N_{E}$           & Locations of distributions\tnotex{tn:Law4Locators} \\
+    \label{tab:LAW4}
+  \end{LAWTable}
+\end{ThreePartTable}
+
+The data associated with each incident neutron energy begins at the location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW4Distribution}, where for $E(1)$ let \var{K}=3+$2N_{R}+2N_{E}$. 
+\begin{LAWTable}{Secondary energy distribution for each incident energy in \var{LAW}=4.}
+  \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
+  \var{LDAT}(\var{K}) & $\var{INTT}'$ & Interpolation parameter \\
+  \var{LDAT}(\var{K}+1) & $N_{p}$ & Number of points in the distribution \\
+  \var{LDAT}(\var{K}+2) & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & outgoing energy grid \\
+  \var{LDAT}(\var{K}+$2$) & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & Outgoing energy grid \\
+  \var{LDAT}(\var{K}+$2+N_{p}$) & $\mathrm{PDF}(l),l=1,\ldots,N_{p}$ & Probability Density Function \\
+  \var{LDAT}(\var{K}+$2+2N_{p}$) & $\mathrm{CDF}(l),l=1,\ldots,N_{p}$ & Cumulative Density Function \\
+  \midrule
+  \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(2)}$}---same format for $E(1)$} \\
+  \multicolumn{3}{c}{\ldots} \\
+  \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(N_{E})}$}---same format for $E(1)$}
+  \label{tab:LAW4Distribution}
 \end{LAWTable}
 
+The first element in the data is $\var{INTT}'$ or the interpolation parameter, which is a combination of two other parameters:
+\begin{enumerate}
+  \item the number of discrete photon lines, $N_{D}$, and
+  \item the interpolation scheme for the subsequent data, $\var{INTT}$.
+\end{enumerate}
+\var{INTT} has two valid values:
+\begin{description}
+  \item[\var{INTT}=1] histogram distribution, and 
+  \item[\var{INTT}=2] linear-linear distribution.
+\end{description}
+If the value of $\var{INTT}'>10$, then
+\begin{equation*}
+  \var{INTT}' = 10N_{D}+\var{INTT}
+\end{equation*}
+where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_{p}$ points describe discrete photon lines. The remaining ($N_{p}-N_{D}$) values describe a continuous distribution. In this way, the distribution may be discrete, continuous, or a discrete distribution superimposed upon a continuous background.
+
 \subsubsubsection{\var{LAW}=5---General Evaporation Spectrum}\label{sec:LAW5}
-\begin{LAWTable}{\var{LAW}=5 (From ENDF-6, \MF=5, \var{LF}=5)}
-  \label{tab:LAW5}
-\end{LAWTable}
+  \begin{ThreePartTable}
+  \begin{LAWTable}{\var{LAW}=5 (From ENDF-6, \MF=5, \var{LF}=5)}
+    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{2}{*}{Interpolation scheme between $T$'s} \\
+    \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
+    \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
+    \cmidrule{1-3}
+    \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
+    \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $T(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
+    \var{LDAT}(3+$2N_{R}+2N_{E}$) & \var{NET}                        & Number of $X$'s tabulated \\
+    \var{LDAT}(4+$2N_{R}+2N_{E}$) & $X(l),l=1,\ldots,\var{NET}$      & Tabulated probabilistic function
+    \label{tab:LAW5}
+  \end{LAWTable}
+  \begin{tablenotes}
+    \note $E_{\mathrm{out}} = X(\xi)T(E)$ where $X(\xi)$ is a randomly sampled table of $X$'s and $E$ is the incident energy.
+  \end{tablenotes}
+\end{ThreePartTable}
 
 \subsubsubsection{\var{LAW}=7---Simple Maxwell Fission Spectrum}\label{sec:LAW7}
 \begin{LAWTable}{\var{LAW}=7 (From ENDF-6, \MF=5, \var{LF}=7)}
+    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{2}{*}{Interpolation scheme between $T$'s} \\
+    \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
+    \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
+    \cmidrule{1-3}
+    \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
+    \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $T(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
+    \var{LDAT}(3+$2N_{R}+2N_{E}$) & $U$                              & Restriction energy
   \label{tab:LAW7}
 \end{LAWTable}
 
+\begin{equation}
+  f(E\rightarrow E_{\mathrm{out}}) = C\sqrt{E_{\mathrm{out}}}\ e^{-E_{\mathrm{out}}/T(E)}
+  \label{eq:LAW7f}
+\end{equation}
+with restriction $0 \leq E_{\mathrm{out}} \leq E-U$
+\begin{equation}
+  C = T^{{-3/2}} \left[ \frac{\sqrt{\pi}}{2} \erf\left( \sqrt{(E-U)/T} \right) +-\sqrt{(E-U)/T}\ e^{-(E-U)/T} \right]^{-1}
+  \label{eq:LAW7C}
+\end{equation}
+\todo[inline]{\Equationref{eq:LAW7C} doesn't look correct. The $+-$ in the middle seems suspicious.}
 \subsubsubsection{\var{LAW}=9---Evaporation Spectrum}\label{sec:LAW9}
 \begin{LAWTable}{\var{LAW}=9 (From ENDF-6, \MF=5, \var{LF}=9)}
   \label{tab:LAW9}

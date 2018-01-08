@@ -45,6 +45,8 @@
   tocnumwidth=7em
 ]{subparagraph}
 
+\DeclareMathOperator\erf{erf}
+
 \newcommand{\MT}{\textsf{MT}}
 \newcommand{\MF}{\textsf{MF}}
 
@@ -128,6 +130,7 @@
 {\end{XSSTable}}
 
 \newcolumntype{J}{>{\arraybackslash}m{0.25\linewidth}}
+\newcolumntype{K}{>{\arraybackslash}m{0.35\linewidth}}
 \newcolumntype{L}{>{\arraybackslash}m{0.5\linewidth}}
 \newcolumntype{M}{>{\arraybackslash}m{0.65\linewidth}}
 
