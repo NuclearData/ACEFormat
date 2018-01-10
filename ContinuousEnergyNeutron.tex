@@ -400,7 +400,7 @@ The $i$-th array has the form shown in
   \end{XSSTable}
 \end{ThreePartTable}
 
-The format for the law data depends on the law. The length, $L$, of the law data array, \var{LDAT}, is determined from parameters with \var{LDAT}. The various \var{LDAT} arrays and their formats are given in the following tables. Laws 2 (\Tableref{tab:Law2}) and 4 (\Tableref{tab:Law4}) are used to describe spectra of secondary photons from neutron collisions. All laws---except for Law 2---are usd to describe the spectra of scattered neutrons. 
+The format for the law data depends on the law. The length, $L$, of the law data array, \var{LDAT}, is determined from parameters with \var{LDAT}. The various \var{LDAT} arrays and their formats are given in the following tables. Laws 2 (\Tableref{tab:LAW2}) and 4 (\Tableref{tab:LAW4}) are used to describe spectra of secondary photons from neutron collisions. All laws---except for Law 2---are usd to describe the spectra of scattered neutrons. 
 
 In the following tables, we provide relative locations of data in the \var{LDAT} array rather than the absolute locations in the \XSS\ array. \Tableref{tab:EnergyDistributionArray} defines the starting location of the \var{LDAT} array within the \XSS\ array.
 
@@ -532,7 +532,7 @@ where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_
 
 \subsubsubsection{\var{LAW}=7---Simple Maxwell Fission Spectrum}\label{sec:LAW7}
 \begin{LAWTable}{\var{LAW}=7 (From ENDF-6, \MF=5, \var{LF}=7)}
-    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{2}{*}{Interpolation scheme between $T$'s} \\
+    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{*}{Interpolation scheme between $T$'s} \\
     \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
     \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
     \cmidrule{1-3}
@@ -553,20 +553,93 @@ with restriction $0 \leq E_{\mathrm{out}} \leq E-U$
   \label{eq:LAW7C}
 \end{equation}
 \todo[inline]{\Equationref{eq:LAW7C} doesn't look correct. The $+-$ in the middle seems suspicious.}
+
 \subsubsubsection{\var{LAW}=9---Evaporation Spectrum}\label{sec:LAW9}
 \begin{LAWTable}{\var{LAW}=9 (From ENDF-6, \MF=5, \var{LF}=9)}
+    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{*}{Interpolation scheme between $T$'s} \\
+    \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
+    \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
+    \cmidrule{1-3}
+    \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
+    \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $T(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
+    \var{LDAT}(3+$2N_{R}+2N_{E}$) & $U$                              & Restriction energy
   \label{tab:LAW9}
 \end{LAWTable}
 
+
+\begin{equation}
+  f(E\rightarrow E_{\mathrm{out}}) = C\sqrt{E_{\mathrm{out}}}\ e^{-E_{\mathrm{out}}/T(E)}
+  \label{eq:LAW9f}
+\end{equation}
+with restriction $0 \leq E_{\mathrm{out}} \leq E-U$
+\begin{equation}
+  C = T^{{-3/2}} \left[ t-e^{(E-U)/T}\left( 1+(E-U)/T \right) \right]^{1/2}
+  \label{eq:LAW9C}
+\end{equation}
+\todo[inline]{These equations should also be double-checked.}
+
 \subsubsubsection{\var{LAW}=11---Energy Dependent Watt Spectrum}\label{sec:LAW11}
 \begin{LAWTable}{\var{LAW}=11 (From ENDF-6, \MF=5, \var{LF}=11)}
+  \var{LDAT}(1)                        & $N_{R_{a}}$                              & \multirow{3}{*}{Interpolation scheme between $a$'s} \\
+  \var{LDAT}(2)                        & \var{NBT}$_{a}(l), l=1,\ldots,N_{R_{a}}$ & \\
+  \var{LDAT}(2+$N_{R_{a}}$)            & \var{INT}$_{a}(l), l=1,\ldots,N_{R_{a}}$ & \\
+  \var{LDAT}(2+$2N_{R_{a}}$)           & $N_{E_{a}}$                              & Number of incident energies tabulated for $a(E_{\mathrm{in}})$ table \\
+  \var{LDAT}(3+$2N_{R_{a}}$)           & $E_{a}(l),l=1,\ldots,N_{E_{a}}$          & Incident energy table \\
+  \var{LDAT}(3+$2N_{R_{a}}+N_{E_{a}}$) & $a(l),l=1,\ldots,N_{E_{a}}$              & Tabulated $a$'s \\
+  \cmidrule{1-3}
+  \multicolumn{3}{l}{let $\var{L}=3+2\left( N_{R_{a}}+N_{E_{a}} \right)$} \\
+  \var{LDAT}(\var{L})                          & $N_{R_{b}}$                              & \multirow{3}{*}{Interpolation scheme between $b$'s} \\
+  \var{LDAT}(\var{L}+1)                        & \var{NBT}$_{b}(l), l=1,\ldots,N_{R_{b}}$ & \\
+  \var{LDAT}(\var{L}+1+$N_{R_{b}}$)            & \var{INT}$_{b}(l), l=1,\ldots,N_{R_{b}}$ & \\
+  \var{LDAT}(\var{L}+1+$2N_{R_{b}}$)           & $N_{E_{b}}$                              & Number of incident energies tabulated for $b(E_{\mathrm{in}})$ table \\
+  \var{LDAT}(\var{L}+2+$2N_{R_{b}}$)           & $E_{b}(l),l=1,\ldots,N_{E_{b}}$          & Incident energy table \\
+  \var{LDAT}(\var{L}+2+$2N_{R_{b}}+N_{E_{b}}$) & $b(l),l=1,\ldots,N_{E_{b}}$              & Tabulated $b$'s \\
+  \var{LDAT}(\var{L}+2+$2N_{R_{b}}+2N_{E_{b}}$ & $U$                                      & Rejection energy
   \label{tab:LAW11}
 \end{LAWTable}
 
+\begin{equation}
+  f\left( E\rightarrow E_{\mathrm{out}} \right) = C_{o}e^{-E_{\mathrm{out}}/a(E)}\sinh [b(E)E_{\mathrm{out}}]^{1/2}
+  \label{eq:LAW11f}
+\end{equation}
+with restriction $0\leq E_{\mathrm{out}}<E-U$.
+
 \subsubsubsection{\var{LAW}=22---Tabular Linear Functions}\label{sec:LAW22}
 \begin{LAWTable}{\var{LAW}=22 (From UK Law 2)}
+    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{*}{Interpolation parameters} \\
+    \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
+    \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
+    \cmidrule{1-3}
+    \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
+    \var{LDAT}(3+$2N_{R})$ & $E_{\mathrm{in}}(l),l=1,\ldots,N_{E}$ & Number of incdident energies for $E_{\mathrm{out}}$ tables \\
+    \var{LDAT}(3+$2N_{R}+N_{E})$ & $\LOC{E}(l),l=1,\ldots,N_{E}$ & Locators of $E_{\mathrm{out}}$ tables\\
+    \cmidrule{1-3}
+    \multicolumn{3}{l}{Data for $E_{\mathrm{in}}(1)$ Let $\var{L}=3+2N_{R}+2N_{E}$:} \\
+    \var{LDAT}(\var{L})                   & $\var{NF}_{1}$ \\
+    \var{LDAT}(\var{L}+1)                 & $P_{1}(K),K=1,\ldots,\var{NF}_{1}$ \\
+    \var{LDAT}(\var{L}+1+\var{NF}$_{1}$)  & $T_{1}(K),K=1,\ldots,\var{NF}_{1}$ \\
+    \var{LDAT}(\var{L}+1+2\var{NF}$_{1}$) & $C_{1}(K),K=1,\ldots,\var{NF}_{1}$ \\
+    \cmidrule{1-3}
+    \multicolumn{3}{l}{Data for $E_{\mathrm{in}}(2)$:} \\
+    \ldots
   \label{tab:LAW22}
 \end{LAWTable}
+\todo[inline]{The following equations seem very wrong, but they are no better in the original.}
+If
+\begin{equation}
+  E_{\mathrm{in}}(l) \leq E < E_{\mathrm{in}}(l+1)
+\end{equation}
+then, for a given random number, $\xi\in[0,1)$, if 
+\begin{equation}
+  \sum_{k=1}^{k=K} P_{i} < \xi \leq \sum_{k=1}^{k=K}P_{i}(k)
+  \label{eq:LAW22Sum}
+\end{equation}
+then 
+\begin{equation}
+  E_{\mathrm{out}} = C_{i}(K)\left( E-T_{i}(K) \right).
+  \label{eq:LAW22Eout}
+\end{equation}
 
 \subsubsubsection{\var{LAW}=24}\label{sec:LAW24}
 \begin{LAWTable}{\var{LAW}=24 (From UK Law 6)}
