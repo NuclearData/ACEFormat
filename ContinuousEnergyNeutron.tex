@@ -237,7 +237,7 @@ The \LOC{A}{i} values are given in the \Block{LSIG} and are all relative to \jxs
 \begin{XSSTable}{Cross section array for the $i$-th reaction.}
   \var{LXS} + \LOC{A}{i}-1                  & $\var{IE}_{i}$                                 & Energy grid index for reaction \MT$_{i}$ \\
   \var{LXS} + \LOC{A}{i}                    & $N_{E,i}$                                      & Number of consecutive entries for \MT$_{i}$ \\
-  \multirow{2}{*}{\var{LXS} + \LOC{A}{i}+1} & $\sigma_{i}[E(l)]$ for                         & \multirow{2}{*}{Cross section for reaction \MT$_{i}$} \\
+  \multirow{2}{*}{\var{LXS} + \LOC{A}{i}+1} & $\sigma_{i}[E(l)]$ for                         & \multirow{2}{0.65\linewidth}{Cross section for reaction \MT$_{i}$} \\
                                             & $l=\var{IE}_{i},\ldots,\var{IE}_{i}+N_{E,i}-1$ & 
   \label{tab:CrossSectionArray}
 \end{XSSTable}
@@ -351,6 +351,7 @@ The \Block{LDLW} exists if \nxs{5}$\neq0$ while the \Block{LDLWP} exists if \nxs
 
 All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array. The \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \Block{MTRP} for \Block{LDLWP}.
 \subsubsection{\Block{DLW \textnormal{\&} DLWP}}\label{sec:DLWBlock}
+\todo[inline]{Which of these formats really need to still be supported? ENDF has stopped supporting a number of these 30+ years ago.}
 The \Block{DLW} contains secondary energy distributions for all reactions producing secondary neutrons---expect for elastic scattering. The \Block{DLWP} contains secondary energy distribution for all photon-producing reactions. Both the \Block{DLW} and \Block{DLWP} have the same format. The energy distributions are given staring with a locator, \LOC{C}, which were given in the \Block{LDLW} and \Block{LDLWP}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions) is dependent on whether it is the \Block{DLW} or \Block{DLWP}. These values are given in \Tableref{tab:JED_NMT}.
 \begin{table}[h!] \centering
   \begin{tabular}{lll}
@@ -466,7 +467,7 @@ where $\mu_{\mathrm{CM}}$ is the cosine of the \CM\ scattering angle
 \begin{ThreePartTable}
   \begin{TableNotes}
     \item[$\dagger$] \label{tn:LAW4InterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
-    \item[$\ddagger$] \label{tn:Law4Locators} Relative to \jxs{11} (neutron reactions), \jxs{19} (photon-producing reactions), or \jxs{27} (delayed neutrons).
+    \item[$\ddagger$] \label{tn:LAW4Locators} Relative to \jxs{11} (neutron reactions), \jxs{19} (photon-producing reactions), or \jxs{27} (delayed neutrons).
   \end{TableNotes}
   \begin{LAWTable}{\var{LAW}=4 (From ENDF-6 \var{LAW}=1)}
     \var{LDAT}(1)                & $N_{R}$                          & Interpolation scheme between tables of $E_{\mathrm{out}}$ \\
@@ -474,7 +475,7 @@ where $\mu_{\mathrm{CM}}$ is the cosine of the \CM\ scattering angle
     \var{LDAT}(2+$N_{R}$)        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:LAW4InterpolationScheme} \\
     \var{LDAT}(2+$2N_{R}$)       & $N_{E}$                          & Number of energies at which distributions are tabulated \\
     \var{LDAT}(3+$2N_{R}$)       & $E(l),l=1,\ldots,N_{E}$           & Incident neutron energies \\
-    \var{LDAT}(3+$2N_{R}+N_{E}$) & $\var{L}(l),l=1,\ldots,N_{E}$           & Locations of distributions\tnotex{tn:Law4Locators} \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$) & $\var{L}(l),l=1,\ldots,N_{E}$           & Locations of distributions\tnotex{tn:LAW4Locators}
     \label{tab:LAW4}
   \end{LAWTable}
 \end{ThreePartTable}
@@ -485,7 +486,6 @@ The data associated with each incident neutron energy begins at the location $\v
   \var{LDAT}(\var{K}) & $\var{INTT}'$ & Interpolation parameter \\
   \var{LDAT}(\var{K}+1) & $N_{p}$ & Number of points in the distribution \\
   \var{LDAT}(\var{K}+2) & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & outgoing energy grid \\
-  \var{LDAT}(\var{K}+$2$) & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & Outgoing energy grid \\
   \var{LDAT}(\var{K}+$2+N_{p}$) & $\mathrm{PDF}(l),l=1,\ldots,N_{p}$ & Probability Density Function \\
   \var{LDAT}(\var{K}+$2+2N_{p}$) & $\mathrm{CDF}(l),l=1,\ldots,N_{p}$ & Cumulative Density Function \\
   \midrule
@@ -512,76 +512,90 @@ If the value of $\var{INTT}'>10$, then
 where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_{p}$ points describe discrete photon lines. The remaining ($N_{p}-N_{D}$) values describe a continuous distribution. In this way, the distribution may be discrete, continuous, or a discrete distribution superimposed upon a continuous background.
 
 \subsubsubsection{\var{LAW}=5---General Evaporation Spectrum}\label{sec:LAW5}
-  \begin{ThreePartTable}
-  \begin{LAWTable}{\var{LAW}=5 (From ENDF-6, \MF=5, \var{LF}=5)}
-    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{2}{*}{Interpolation scheme between $T$'s} \\
-    \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
-    \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
-    \cmidrule{1-3}
-    \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
-    \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
-    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $T(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
-    \var{LDAT}(3+$2N_{R}+2N_{E}$) & \var{NET}                        & Number of $X$'s tabulated \\
-    \var{LDAT}(4+$2N_{R}+2N_{E}$) & $X(l),l=1,\ldots,\var{NET}$      & Tabulated probabilistic function
-    \label{tab:LAW5}
-  \end{LAWTable}
-  \begin{tablenotes}
-    \note $E_{\mathrm{out}} = X(\xi)T(E)$ where $X(\xi)$ is a randomly sampled table of $X$'s and $E$ is the incident energy.
-  \end{tablenotes}
-\end{ThreePartTable}
+\begin{LAWTable}{\var{LAW}=5 (From ENDF-6, \MF=5, \var{LF}=5)}
+  \var{LDAT}(1)                 & $N_{R}$                          & \multirow{2}{0.65\linewidth}{Interpolation scheme between $T$'s} \\
+  \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
+  \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
+  \cmidrule{1-3}
+  \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
+  \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
+  \var{LDAT}(3+$2N_{R}+N_{E}$)  & $\theta(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
+  \var{LDAT}(3+$2N_{R}+2N_{E}$) & \var{NET}                        & Number of $X$'s tabulated \\
+  \var{LDAT}(4+$2N_{R}+2N_{E}$) & $X(l),l=1,\ldots,\var{NET}$      & Tabulated probabilistic function
+  \label{tab:LAW5}
+\end{LAWTable}
+\begin{equation}
+  E_{\mathrm{out}} = X(\xi)\theta(E)
+  \label{eq:LAW5}
+\end{equation}
+where:
+\begin{description}
+  \item[$X(\xi)$]  is a randomly sampled table of $X$'s, and
+  \item[$E$] is the incident energy.
+\end{description}
+\todo[inline]{This looks slightly different than the one in the ENDF-6 document. It may be similar, but we should double check.}
 
 \subsubsubsection{\var{LAW}=7---Simple Maxwell Fission Spectrum}\label{sec:LAW7}
 \begin{LAWTable}{\var{LAW}=7 (From ENDF-6, \MF=5, \var{LF}=7)}
-    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{*}{Interpolation scheme between $T$'s} \\
+  \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{0.65\linewidth}{Interpolation scheme between $T$'s} \\
     \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
     \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
     \cmidrule{1-3}
     \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
     \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
-    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $T(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $\theta(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
     \var{LDAT}(3+$2N_{R}+2N_{E}$) & $U$                              & Restriction energy
   \label{tab:LAW7}
 \end{LAWTable}
 
+The outgoing energy, $E_{\mathrm{out}}$, can be calculated as
 \begin{equation}
-  f(E\rightarrow E_{\mathrm{out}}) = C\sqrt{E_{\mathrm{out}}}\ e^{-E_{\mathrm{out}}/T(E)}
+  f(E\rightarrow E_{\mathrm{out}}) = \frac{\sqrt{E_{\mathrm{out}}}}{I}\ e^{-E_{\mathrm{out}}/\theta(E)}
   \label{eq:LAW7f}
 \end{equation}
-with restriction $0 \leq E_{\mathrm{out}} \leq E-U$
-\begin{equation}
-  C = T^{{-3/2}} \left[ \frac{\sqrt{\pi}}{2} \erf\left( \sqrt{(E-U)/T} \right) +-\sqrt{(E-U)/T}\ e^{-(E-U)/T} \right]^{-1}
-  \label{eq:LAW7C}
-\end{equation}
-\todo[inline]{\Equationref{eq:LAW7C} doesn't look correct. The $+-$ in the middle seems suspicious.}
+where:
+\begin{description}
+  \item[$I$] is the normalization constant
+    \begin{equation}
+      I = \theta^{{3/2}} \frac{\sqrt{\pi}}{2} \erf\left( \sqrt{(E-U)/\theta} \right) - \sqrt{(E-U)/\theta}\ e^{-(E-U)/\theta},
+      \label{eq:LAW7I}
+    \end{equation}
+  \item[$\theta$] is tabulated as a function of incident energy, $E$; and
+  \item[$U$] is a constant introduced to define the proper upper limit for the final particle energy such that $0\leq E_{\mathrm{out}} \leq (E-U)$.
+\end{description}
 
 \subsubsubsection{\var{LAW}=9---Evaporation Spectrum}\label{sec:LAW9}
 \begin{LAWTable}{\var{LAW}=9 (From ENDF-6, \MF=5, \var{LF}=9)}
-    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{*}{Interpolation scheme between $T$'s} \\
+  \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{0.65\linewidth}{Interpolation scheme between $T$'s} \\
     \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
     \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
     \cmidrule{1-3}
     \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
     \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
-    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $T(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $\theta(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
     \var{LDAT}(3+$2N_{R}+2N_{E}$) & $U$                              & Restriction energy
   \label{tab:LAW9}
 \end{LAWTable}
-
-
+The outgoing energy, $E_{\mathrm{out}}$, can be calculated as
 \begin{equation}
-  f(E\rightarrow E_{\mathrm{out}}) = C\sqrt{E_{\mathrm{out}}}\ e^{-E_{\mathrm{out}}/T(E)}
+  f(E\rightarrow E_{\mathrm{out}}) = \frac{\sqrt{E_{\mathrm{out}}}}{I}\ e^{-E_{\mathrm{out}}/\theta(E)}
   \label{eq:LAW9f}
 \end{equation}
-with restriction $0 \leq E_{\mathrm{out}} \leq E-U$
-\begin{equation}
-  C = T^{{-3/2}} \left[ t-e^{(E-U)/T}\left( 1+(E-U)/T \right) \right]^{1/2}
-  \label{eq:LAW9C}
-\end{equation}
-\todo[inline]{These equations should also be double-checked.}
+where:
+\begin{description}
+  \item[$I$] is the normalization constant
+    \begin{equation}
+      I = \theta^{2}\left[ 1-e^{-(E-U)/\theta}\left( 1+\frac{E-U}{\theta} \right) \right],
+      \label{eq:LAW9I}
+    \end{equation}
+  \item[$\theta$] is tabulated as a function of incident energy, $E$; and
+  \item[$U$] is a constant introduced to define the proper upper limit for the final particle energy such that $0\leq E_{\mathrm{out}} \leq (E-U)$.
+\end{description}
+\textbf{Note:} \Equationref{eq:LAW9f} is the same as \Equationref{eq:LAW7f}; just the definitions of $I$ in \Equationref{eq:LAW7I} and \Equationref{eq:LAW9I} are different.
 
 \subsubsubsection{\var{LAW}=11---Energy Dependent Watt Spectrum}\label{sec:LAW11}
 \begin{LAWTable}{\var{LAW}=11 (From ENDF-6, \MF=5, \var{LF}=11)}
-  \var{LDAT}(1)                        & $N_{R_{a}}$                              & \multirow{3}{*}{Interpolation scheme between $a$'s} \\
+  \var{LDAT}(1)                        & $N_{R_{a}}$                              & \multirow{3}{0.65\linewidth}{Interpolation scheme between $a$'s} \\
   \var{LDAT}(2)                        & \var{NBT}$_{a}(l), l=1,\ldots,N_{R_{a}}$ & \\
   \var{LDAT}(2+$N_{R_{a}}$)            & \var{INT}$_{a}(l), l=1,\ldots,N_{R_{a}}$ & \\
   \var{LDAT}(2+$2N_{R_{a}}$)           & $N_{E_{a}}$                              & Number of incident energies tabulated for $a(E_{\mathrm{in}})$ table \\
@@ -589,7 +603,7 @@ with restriction $0 \leq E_{\mathrm{out}} \leq E-U$
   \var{LDAT}(3+$2N_{R_{a}}+N_{E_{a}}$) & $a(l),l=1,\ldots,N_{E_{a}}$              & Tabulated $a$'s \\
   \cmidrule{1-3}
   \multicolumn{3}{l}{let $\var{L}=3+2\left( N_{R_{a}}+N_{E_{a}} \right)$} \\
-  \var{LDAT}(\var{L})                          & $N_{R_{b}}$                              & \multirow{3}{*}{Interpolation scheme between $b$'s} \\
+  \var{LDAT}(\var{L})                          & $N_{R_{b}}$                              & \multirow{3}{0.65\linewidth}{Interpolation scheme between $b$'s} \\
   \var{LDAT}(\var{L}+1)                        & \var{NBT}$_{b}(l), l=1,\ldots,N_{R_{b}}$ & \\
   \var{LDAT}(\var{L}+1+$N_{R_{b}}$)            & \var{INT}$_{b}(l), l=1,\ldots,N_{R_{b}}$ & \\
   \var{LDAT}(\var{L}+1+$2N_{R_{b}}$)           & $N_{E_{b}}$                              & Number of incident energies tabulated for $b(E_{\mathrm{in}})$ table \\
@@ -598,16 +612,26 @@ with restriction $0 \leq E_{\mathrm{out}} \leq E-U$
   \var{LDAT}(\var{L}+2+$2N_{R_{b}}+2N_{E_{b}}$ & $U$                                      & Rejection energy
   \label{tab:LAW11}
 \end{LAWTable}
-
+The outgoing energy, $E_{\mathrm{out}}$, can be calculated as
 \begin{equation}
-  f\left( E\rightarrow E_{\mathrm{out}} \right) = C_{o}e^{-E_{\mathrm{out}}/a(E)}\sinh [b(E)E_{\mathrm{out}}]^{1/2}
+  f(E\rightarrow E_{\mathrm{out}}) = \frac{e^{-E_{\mathrm{out}}/a}}{I} \sinh\left( \sqrt{bE_{\mathrm{out}}} \right)
   \label{eq:LAW11f}
 \end{equation}
-with restriction $0\leq E_{\mathrm{out}}<E-U$.
+where:
+\begin{description}[font=\textnormal]
+  \item[$I$] is the normalization constant
+    \begin{multline}
+      I = \frac{1}{2}\sqrt{\frac{\pi a^{3}b}{4}}e^{(ab/4)} \left[ \erf\left( \sqrt{\frac{E-U}{a}} - \sqrt{\frac{ab}{4}} \right) + \erf\left( \sqrt{\frac{E-U}{a}} + \sqrt{\frac{ab}{4}} \right) \right] \\
+      - a e^{-(E-U)/a} \sinh \sqrt{b(E-U)};
+      \label{eq:LAW11I}
+    \end{multline}
+  \item[$a$ and $b$] are tabulated energy-dependent parameters; and
+  \item[$U$] is a constant introduced to define the proper upper limit for the final particle energy such that $0\leq E_{\mathrm{out}} \leq (E-U)$.
+\end{description}
 
 \subsubsubsection{\var{LAW}=22---Tabular Linear Functions}\label{sec:LAW22}
 \begin{LAWTable}{\var{LAW}=22 (From UK Law 2)}
-    \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{*}{Interpolation parameters} \\
+  \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{0.65\linewidth}{Interpolation parameters} \\
     \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
     \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
     \cmidrule{1-3}
@@ -643,30 +667,244 @@ then
 
 \subsubsubsection{\var{LAW}=24}\label{sec:LAW24}
 \begin{LAWTable}{\var{LAW}=24 (From UK Law 6)}
+  \var{LDAT}(1)          & $N_{R}$                               & \multirow{3}{0.65\linewidth}{Interpolation scheme between $T$'s} \\
+    \var{LDAT}(2)          & \var{NBT}$(l), l=1,\ldots,N_{R}$      & \\
+    \var{LDAT}(2+$N_{R}$)  & \var{INT}$(l), l=1,\ldots,N_{R}$      & \\
+    \cmidrule{1-3}
+    \var{LDAT}(2+$2N_{R}$) & $N_{E}$                               & Number of incident energies tabulated \\
+    \var{LDAT}(3+$2N_{R}$) & $E_{\mathrm{in}}(l),l=1,\ldots,N_{E}$ & List of incident energies for which $T$ is tabulated \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$) & \var{NET} & Number of outgoing values in each table \\
+    \var{LDAT}(4+$2N_{R}+N_{E}$) & $T_{1}(l),l=1,\ldots,\var{NET}$ & \multirow{4}{0.65\linewidth}{Tables have \var{NET} boundaries with \var{NET}-1 equally likely intervals. Linear-linear interpolation is used between intervals.} \\
+                                 & $T_{2}(l),l=1,\ldots,\var{NET}$ & \\
+                                 & \ldots & \\
+                                 & $T_{N_{E}}(l),l=1,\ldots,\var{NET}$ & \\
   \label{tab:LAW24}
 \end{LAWTable}
+The outgoing energy, $E_{\mathrm{out}}$ can be calculated as:
+\begin{equation}
+  E_{\mathrm{out}} = T_{k}(l)*E
+  \label{eq:LAW24}
+\end{equation}
+where:
+\begin{description}
+  \item[$T_{k}(l)$]  is sampled from the tables and
+  \item[$E$] is the incident energy.
+\end{description}
 
 \subsubsubsection{\var{LAW}=44---Kalbach-87 Formalism}\label{sec:LAW44}
-\begin{LAWTable}{\var{LAW}=44 (From ENDF-6 \MF=6 \var{LAW}=1, \var{LANG}=2)}
-  \label{tab:LAW44}
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:LAW44InterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
+    \item[$\ddagger$] \label{tn:LAW44Locators} Relative to \jxs{11} (neutron reactions), \jxs{19} (photon-producing reactions), or \jxs{27} (delayed neutrons).
+  \end{TableNotes}
+  \begin{LAWTable}{\var{LAW}=44 (From ENDF-6 \MF=6 \var{LAW}=1, \var{LANG}=2)}
+    \var{LDAT}(1)                & $N_{R}$                          & Interpolation scheme between tables of $E_{\mathrm{out}}$ \\
+    \var{LDAT}(2)                & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
+    \var{LDAT}(2+$N_{R}$)        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:LAW44InterpolationScheme} \\
+    \var{LDAT}(2+$2N_{R}$)       & $N_{E}$                          & Number of energies at which distributions are tabulated \\
+    \var{LDAT}(3+$2N_{R}$)       & $E(l),l=1,\ldots,N_{E}$          & Incident neutron energies \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$) & $\var{L}(l),l=1,\ldots,N_{E}$    & Locations of distributions\tnotex{tn:LAW44Locators}
+    \label{tab:LAW44}
+  \end{LAWTable}
+\end{ThreePartTable}
+
+The data associated with each incident neutron energy begins at the location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW44Distribution}, where for $E(1)$ let \var{K}=3+$2N_{R}+2N_{E}$. 
+\begin{LAWTable}{Secondary energy distribution for each incident energy in \var{LAW}=44}
+  \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
+  \var{LDAT}(\var{K})            & $\var{INTT}'$                          & Interpolation parameter \\
+  \var{LDAT}(\var{K}+1)          & $N_{p}$                                & Number of points in the distribution \\
+  \var{LDAT}(\var{K}+2)          & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & outgoing energy grid \\
+  \var{LDAT}(\var{K}+$2+N_{p}$)  & $\mathrm{PDF}(l),l=1,\ldots,N_{p}$     & Probability Density Function \\
+  \var{LDAT}(\var{K}+$2+2N_{p}$) & $\mathrm{CDF}(l),l=1,\ldots,N_{p}$     & Cumulative Density Function \\
+  \var{LDAT}(\var{K}+$2+3N_{p}$) & $R(l),l=1,\ldots,N_{p}$                & Precompound fraciton $r$ \\
+  \var{LDAT}(\var{K}+$2+4N_{p}$) & $A(l),l=1,\ldots,N_{p}$                & Angular distribution slope value $a$ \\
+  \cmidrule{1-3}
+  \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(2)}$}---same format for $E(1)$} \\
+  \multicolumn{3}{c}{\ldots} \\
+  \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(N_{E})}$}---same format for $E(1)$}
+  \label{tab:LAW44Distribution}
 \end{LAWTable}
 
-\subsubsubsection{\var{LAW}=61---Like \var{LAW}=44, but tabular angular distribution instead of Kalbach-87}\label{sec:LAW61}
-\begin{LAWTable}{\var{LAW}=61---Like \var{LAW}=44, but tabular angular distribution instead of Kalbach-87}
-  \label{tab:LAW61}
+The first element in the data is $\var{INTT}'$ or the interpolation parameter, which is a combination of two other parameters:
+\begin{enumerate}
+  \item the number of discrete photon lines, $N_{D}$, and
+  \item the interpolation scheme for the subsequent data, $\var{INTT}$.
+\end{enumerate}
+\var{INTT} has two valid values:
+\begin{description}
+  \item[\var{INTT}=1] histogram distribution, and 
+  \item[\var{INTT}=2] linear-linear distribution.
+\end{description}
+If the value of $\var{INTT}'>10$, then
+\begin{equation*}
+  \var{INTT}' = 10N_{D}+\var{INTT}
+\end{equation*}
+where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_{p}$ points describe discrete photon lines. The remaining ($N_{p}-N_{D}$) values describe a continuous distribution. In this way, the distribution may be discrete, continuous, or a discrete distribution superimposed upon a continuous background.
+
+The angular distributions for neutrons are then sampled from:
+\begin{equation}
+  p(\mu,E_{\mathrm{in}},E_{\mathrm{out}}) = \frac{1}{2}\frac{A}{\sinh(A)}\left[ \cosh(A\mu)+R\sinh(A\mu) \right].
+  \label{eq:LAW44p}
+\end{equation}
+\todo[inline]{Is this equation specific to the format or to MCNP?}
+
+\subsubsubsection{\var{LAW}=61---Like \var{LAW}=61, but tabular angular distribution instead of Kalbach-87}\label{sec:LAW61}
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:LAW61InterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
+    \item[$\ddagger$] \label{tn:LAW61Locators} Relative to \jxs{11} (neutron reactions), \jxs{19} (photon-producing reactions), or \jxs{27} (delayed neutrons).
+  \end{TableNotes}
+  \begin{LAWTable}{\var{LAW}=61}
+    \var{LDAT}(1)                & $N_{R}$                          & Number of interpolation regions \\
+    \var{LDAT}(2)                & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
+    \var{LDAT}(2+$N_{R}$)        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:LAW61InterpolationScheme} \\
+    \var{LDAT}(2+$2N_{R}$)       & $N_{E}$                          & Number of energies at which distributions are tabulated \\
+    \var{LDAT}(3+$2N_{R}$)       & $E(l),l=1,\ldots,N_{E}$          & Incident neutron energies \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$) & $\var{L}(l),l=1,\ldots,N_{E}$    & Locations of distributions\tnotex{tn:LAW61Locators}
+    \label{tab:LAW61}
+  \end{LAWTable}
+\end{ThreePartTable}
+
+The data associated with each incident neutron energy begins at the location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW61Distribution}, where for $E(1)$ let \var{K}=3+$2N_{R}+2N_{E}$. 
+\begin{LAWTable}{Secondary energy distribution for each incident energy in \var{LAW}=61}
+  \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
+  \var{LDAT}(\var{K})            & $\var{INTT}'$                          & Interpolation parameter \\
+  \var{LDAT}(\var{K}+1)          & $N_{p}$                                & Number of points in the distribution \\
+  \var{LDAT}(\var{K}+2)          & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & outgoing energy grid \\
+  \var{LDAT}(\var{K}+$2+N_{p}$)  & $\mathrm{PDF}(l),l=1,\ldots,N_{p}$     & Probability Density Function \\
+  \var{LDAT}(\var{K}+$2+2N_{p}$) & $\mathrm{CDF}(l),l=1,\ldots,N_{p}$     & Cumulative Density Function \\
+  \var{LDAT}(\var{K}+$2+3N_{p}$) & $\var{LC}(l),l=1,\ldots,N_{p}$         & Location of tables associated with incident energies $E(l)$. See \Tableref{tab:LAW61AngularDistribution}\\
+  \cmidrule{1-3}
+  \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(2)}$}---same format for $E(1)$} \\
+  \multicolumn{3}{c}{\ldots} \\
+  \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(N_{E})}$}---same format for $E(1)$}
+  \label{tab:LAW61Distribution}
+\end{LAWTable}
+If the value of $\var{INTT}'>10$, then
+\begin{equation*}
+  \var{INTT}' = 10N_{D}+\var{INTT}
+\end{equation*}
+where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_{p}$ points describe discrete photon lines. The remaining ($N_{p}-N_{D}$) values describe a continuous distribution. In this way, the distribution may be discrete, continuous, or a discrete distribution superimposed upon a continuous background.
+
+The $J$-th array for the tabular angular distribution has the form shown in \Tableref{tab:LAW61AngularDistribution}. For the angular distribution, the locators \var{L} are relative to \jxs{11} for neutron reactions or \jxs{19} for photon-producing reactions. Thus, 
+\begin{align*}
+  \var{L} &= \jxs{11} + |\var{LC}(J)|-1\ \text{(for neutron reactions)}, \\
+  \var{L} &= \jxs{19} + |\var{LC}(J)|-1\ \text{(for photon-producing reactions)}. \\
+\end{align*}
+\begin{LAWTable}{Angular distribution for \var{LAW}=61}
+  \var{LDAT}(\var{L}+1)          & \var{JJ}                                & Interpolation flag \\
+  \var{LDAT}(\var{L}+2)          & $N_{P}$                                 & Number of points in the distribution \\
+  \var{LDAT}(\var{L}+3)          & $CS_{\mathrm{out}}(j),j=1,\ldots,N_{P}$ & Cosine scattering angular grid \\
+  \var{LDAT}(\var{L}+3+$N_{P}$)  & $\PDF(j),j=1,\ldots,N_{P}$              & Probability density function \\
+  \var{LDAT}(\var{L}+3+$2N_{P}$) & $\CDF(j),j=1,\ldots,N_{P}$              & Cumulative density function
+  \label{tab:LAW61AngularDistribution}
 \end{LAWTable}
 
 \subsubsubsection{\var{LAW}=66---$N$-body phase space distribution}\label{sec:LAW66}
 \begin{LAWTable}{\var{LAW}=66 (From ENDF-6 \MF=6 \var{LAW}=6)}
+  \var{LDAT}(1) & \var{NPSX} & Number of bodies in the phase space \\
+  \var{LDAT}(2) & $A_{P}$ & Total mass ratio for the \var{NPSX} particles.
   \label{tab:LAW66}
 \end{LAWTable}
 
+The outgoing energy is
+\begin{align}
+  E_{\mathrm{out}} &= T(\xi)E_{i}^{\mathrm{max}} \\
+  \intertext{where}
+  E_{i}^{\mathrm{max}} &= \frac{A_{p}-1}{A_{p}}\left( \frac{A}{A+1}E_{\mathrm{in}}+Q \right) \\
+  \intertext{and $T(\xi)$ is sampled from:}
+  P_{i}(\mu,E_{\mathrm{in}},T) &= C_{n}\sqrt{T}\left( E_{i}^{\mathrm{max}}-T \right)^{3n/2-4}
+  \label{eq:LAW66}
+\end{align}
+
 \subsubsubsection{\var{LAW}=67---Laboratory Angle-Energy Law}\label{sec:LAW67}
-\begin{LAWTable}{\var{LAW}=67 (From ENDF-6 \MF=6 \var{LAW}=7)}
-  \label{tab:LAW67}
-\end{LAWTable}
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:LAW67InterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
+    \item[$\ddagger$] \label{tn:LAW67Locators} Relative to \jxs{11} (neutron reactions), \jxs{19} (photon-producing reactions), or \jxs{27} (delayed neutrons).
+  \end{TableNotes}
+  \begin{LAWTable}{\var{LAW}=67 (From ENDF-6 \MF=6 \var{LAW}=7)}
+    \var{LDAT}(1)                & $N_{R}$                          & Interpolation scheme between tables of $E_{\mathrm{out}}$ \\
+    \var{LDAT}(2)                & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
+    \var{LDAT}(2+$N_{R}$)        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:LAW67InterpolationScheme} \\
+    \var{LDAT}(2+$2N_{R}$)       & $N_{E}$                          & Number of energies at which distributions are tabulated \\
+    \var{LDAT}(3+$2N_{R}$)       & $E(l),l=1,\ldots,N_{E}$          & Incident neutron energies \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$) & $\var{L}(l),l=1,\ldots,N_{E}$    & Locations of distributions\tnotex{tn:LAW67Locators}
+    \label{tab:LAW67}
+  \end{LAWTable}
+\end{ThreePartTable}
+
+The data associated with each distribution begins at location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW67AngularDistribution}, where for $E(1)$ let $\var{K}=3+2N_{R}+2N_{e}$.
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:LAW67AngularInterpolationScheme} 
+      \begin{description}
+        \item[\var{INTMU}=1] histogram distribution,
+        \item[\var{INTMU}=2] linear-linear distribution.
+      \end{description}
+  \end{TableNotes}
+  \begin{LAWTable}{Angular distribution for \var{LAW}=67}
+    \var{LDAT}(\var{K})   & \var{INTMU} & Interpolation scheme\tnotex{tn:LAW67AngularInterpolationScheme} \\
+    \var{LDAT}(\var{K}+1) & \var{NMU}   & Number of secondary cosines \\
+    \var{LDAT}(\var{K}+2) & $\var{XMU}(l),l=1,\ldots,\var{NMU}$ & Secondary cosins \\
+    \var{LDAT}(\var{K}+2+\var{NMU}) & $\var{LMU}(l),l=1,\ldots,\var{NMU}$ & Locations of data for each secondary cosine. See \Tableref{tab:LAW67EnergyDistribution}
+    \label{tab:LAW67AngularDistribution}
+  \end{LAWTable}
+\end{ThreePartTable}
+
+The format for the secondary energy distribution (for each cosine bin, \var{XMU}) is given in \Tableref{tab:LAW67EnergyDistribution}. For the energy distribution, the locators, \var{LMU}, are relative to \jxs{11} or \jxs{19}. Thus,
+\begin{align*}
+  \var{L}_{l} &= \jxs{11}+\var{LMU}(l)\ \text{(for neutron reactions)}, \\
+  \var{L}_{l} &= \jxs{19}+\var{LMU}(l)\ \text{(for photon-producing reactions)}.
+\end{align*}
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:LAW67EnergyInterpolationScheme} 
+      \begin{description}
+        \item[\var{INTEP}=1] histogram distribution,
+        \item[\var{INTEP}=2] linear-linear distribution.
+      \end{description}
+    \end{TableNotes}
+  \begin{LAWTable}{Secondary energy distribution for each cosine bin in \var{LAW}=67}
+    \var{LDAT}($\var{L}_{l}$) & \var{INTEP} & Interpolation parameter between secondary energies\tnotex{tn:LAW67EnergyInterpolationScheme} \\
+    \var{LDAT}($\var{L}_{l}+1$) & \var{NPEP} & Number of secondary energies \\
+    \var{LDAT}($\var{L}_{l}+2$) & $E_{P}(l),l=1,\ldots,\var{NPEP}$ & Secondary energy grid \\
+    \var{LDAT}($\var{L}_{l}+2+\var{NPEP}$) & $\PDF(l),l=1,\ldots,\var{NPEP}$ & Probability density function \\
+    \var{LDAT}($\var{L}_{l}+2+2\var{NPEP}$) & $\CDF(l),l=1,\ldots,\var{NPEP}$ & Cumulative density function
+    \label{tab:LAW67EnergyDistribution}
+  \end{LAWTable}
+\end{ThreePartTable}
 
 \subsubsubsection{Energy-Dependent Neutron Yields}
+There are additional numbers to be found for neutrons in the \Block{DLW} and \Block{DLWP}. For those reactions with entries in the \Block{TYR} that are greater than \num{100} in absolute value, there must be neutron yields, $Y(E)$ provided as a function of neutron energy. The neutron yields are handled similarly to the average number of neutrons per fission, $\nu(E)$ that is given for the fission reactions. These yields are a part of the coupled energy-angle distributions given in File6 of ENDF-6 data.
+
+% The location in \XSS is:
+% \begin{equation}
+% \var{JED} + |\var{TY}_{i}|-101\ \text{Neutron yield data for reaction}\MT_{i}
+%   \label{eq:NeutronYieldData}
+% \end{equation}
+% where
+% \begin{align*}
+%   \var{JED} &= \jxs{11} \\
+%   \intertext{and}
+%   i &\leq \text{number of reactions with negative angular distributions locators.}
+% \end{align*}
+
+The $i$-th array has the form given in \Tableref{tab:EnergyDependentNeutronYields}, where $\var{KY}=\var{JED}+|\var{TY}_{i}|-101$.
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:EDNYInterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
+  \end{TableNotes}
+  \begin{LAWTable}{Energy-Dependent Neutron Yields}
+    \var{KY}                 & $N_{R}$                          & Number of interpolation regions \\
+    \var{KY}+1               & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
+    \var{KY}+1+$N_{R}$       & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:EDNYInterpolationScheme} \\
+    \var{KY}+1+2$N_{R}$      & $N_{E}$                          & Number of energies \\
+    \var{KY}+2+2$N_{R}$      & $E(l),l=1,\ldots,N_{E}$          & Tabular energy points \\
+    \var{KY}+2+$N_{R}+N_{E}$ & $Y(l),l=1,\ldots,N_{E}$          & Corresponding energy-dependent yields
+    \label{tab:EnergyDependentNeutronYields}
+  \end{LAWTable}
+\end{ThreePartTable}
 
 \subsubsection{\Block{GPD}}\label{sec:GPDBlock}
 The \Block{GPD} contains the \emph{total} photon production cross section, tabulated on the energy grid given in the \Block{ESZ}, the size of which is given by \nxs{3}. The \Block{GPD} only exists if \jxs{12}$\neq0$. 
