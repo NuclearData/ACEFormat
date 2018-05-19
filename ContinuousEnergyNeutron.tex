@@ -380,7 +380,7 @@ The $i$-th array has the form shown in
   \begin{TableNotes}
   \item[$\dagger$] \label{tn:LNW} If \var{LNW}$_{i}=0$ then \var{LAW}$_{1}$ is used regardless of other circumstantes.
   \item[$\ddagger$] \label{tn:EnergyDistributionInterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
-  \item[$\ast$] \label{tn:EnergyDistributionProbability} If the particle energy $E<$(1), then $P(E)=P(1)$. If $E>E(N_{E})$, then $P(E)=P(N_{E})$. If more than one law is given, then \var{LAW}$_{1}$ is used only if $\xi<P(E)$ where $\xi$ is a random number between 0 and 1.
+  \item[$\ast$] \label{tn:EnergyDistributionProbability} If the particle energy $E<E(1)$, then $P(E)=P(1)$. If $E>E(N_{E})$, then $P(E)=P(N_{E})$. If more than one law is given, then \var{LAW}$_{1}$ is used only if $\xi<P(E)$ where $\xi$ is a random number between 0 and 1.
   \end{TableNotes}
   \begin{XSSTable}{Format for the secondary energy distribution.}
     \var{JED}+\LOC{C}{i}-1                & \var{LNW}$_{1}$                  & Location of next law.\tnotex{tn:LNW} \\
@@ -412,7 +412,7 @@ In the following tables, we provide relative locations of data in the \var{LDAT}
     \item[$\ddagger$] \label{tn:EoutTables} $E_{\mathrm{out}}$ tables consist of \var{NET} boundaries of \var{NET}-1 equally likely energy intervals. Linear-linear interpolation is used between intervals.
   \end{TableNotes}
   \begin{LAWTable}{\var{LAW}=1 (From ENDF Law 1)}
-    \var{LDAT}(1)                 & $N_{R}$                                            & Interpolation scheme between tables of $E_{\mathrm{out}}$ \\
+    \var{LDAT}(1)                 & $N_{R}$                                            & Number of interpolation regions between tables of $E_{\mathrm{out}}$ \\
     \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$                   & ENDF interpolation parameters \\
     \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$                   & ENDF interpolation scheme\tnotex{tn:LAW1InterpolationScheme} \\
     \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                                            & Number of incident energies tabulated \\
