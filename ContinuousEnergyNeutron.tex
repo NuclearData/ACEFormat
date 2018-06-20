@@ -356,7 +356,7 @@ The \Block{LDLW} exists if \nxs{5}$\neq0$ while the \Block{LDLWP} exists if \nxs
 All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array. The \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \Block{MTRP} for \Block{LDLWP}.
 \subsubsection{\Block{DLW \textnormal{\&} DLWP}}\label{sec:DLWBlock}
 \todo[inline]{Which of these formats really need to still be supported? ENDF has stopped supporting a number of these 30+ years ago.}
-The \Block{DLW} contains secondary energy distributions for all reactions producing secondary neutrons---expect for elastic scattering. The \Block{DLWP} contains secondary energy distribution for all photon-producing reactions. Both the \Block{DLW} and \Block{DLWP} have the same format. The energy distributions are given staring with a locator, \LOC{C}, which were given in the \Block{LDLW} and \Block{LDLWP}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions) is dependent on whether it is the \Block{DLW} or \Block{DLWP}. These values are given in \Tableref{tab:JED_NMT}.
+The \Block{DLW} contains secondary energy distributions for all reactions producing secondary neutrons---expect for elastic scattering. The \Block{DLWP} contains secondary energy distribution for all photon-producing reactions. Both the \Block{DLW} and \Block{DLWP} have the same format. The energy distributions are given starting with a locator, \LOC{C}, which were given in the \Block{LDLW} and \Block{LDLWP}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions) is dependent on whether it is the \Block{DLW} or \Block{DLWP}. These values are given in \Tableref{tab:JED_NMT}.
 \begin{table}[h!] \centering
   \begin{tabular}{lll}
     \toprule
@@ -384,7 +384,7 @@ The $i$-th array has the form shown in
   \begin{TableNotes}
   \item[$\dagger$] \label{tn:LNW} If \var{LNW}$_{i}=0$ then \var{LAW}$_{1}$ is used regardless of other circumstantes.
   \item[$\ddagger$] \label{tn:EnergyDistributionInterpolationScheme} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
-  \item[$\ast$] \label{tn:EnergyDistributionProbability} If the particle energy $E<$(1), then $P(E)=P(1)$. If $E>E(N_{E})$, then $P(E)=P(N_{E})$. If more than one law is given, then \var{LAW}$_{1}$ is used only if $\xi<P(E)$ where $\xi$ is a random number between 0 and 1.
+  \item[$\ast$] \label{tn:EnergyDistributionProbability} If the particle energy $E<E(1)$, then $P(E)=P(1)$. If $E>E(N_{E})$, then $P(E)=P(N_{E})$. If more than one law is given, then \var{LAW}$_{1}$ is used only if $\xi<P(E)$ where $\xi$ is a random number between 0 and 1.
   \end{TableNotes}
   \begin{XSSTable}{Format for the secondary energy distribution.}
     \var{JED}+\LOC{C}{i}-1                & \var{LNW}$_{1}$                  & Location of next law.\tnotex{tn:LNW} \\
@@ -416,7 +416,7 @@ In the following tables, we provide relative locations of data in the \var{LDAT}
     \item[$\ddagger$] \label{tn:EoutTables} $E_{\mathrm{out}}$ tables consist of \var{NET} boundaries of \var{NET}-1 equally likely energy intervals. Linear-linear interpolation is used between intervals.
   \end{TableNotes}
   \begin{LAWTable}{\var{LAW}=1 (From ENDF Law 1)}
-    \var{LDAT}(1)                 & $N_{R}$                                            & Interpolation scheme between tables of $E_{\mathrm{out}}$ \\
+    \var{LDAT}(1)                 & $N_{R}$                                            & Number of interpolation regions between tables of $E_{\mathrm{out}}$ \\
     \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$                   & ENDF interpolation parameters \\
     \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$                   & ENDF interpolation scheme\tnotex{tn:LAW1InterpolationScheme} \\
     \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                                            & Number of incident energies tabulated \\
