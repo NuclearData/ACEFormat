@@ -2,7 +2,7 @@
 \section{Continuous-Energy and Discrete Neutron Transport Tables}\label{sec:ContinuousEnergyNeutron}
 The format of individual blocks found on neutron transport tables is identical for continuous-energy and discrete-reaction \ACE\ Tables; the format for both are described in this section. The blocks of data are:
 \begin{enumerate}
-  \item \textbf{\Block{ESZ}}---contains the main energy gid for the Table and the total, absorption, and elastic cross sections as wella s the average heating numbers. The \Block{ESZ} block always exists. See \Sectionref{sec:ESZBlock}.
+  \item \textbf{\Block{ESZ}}---contains the main energy gid for the Table and the total, absorption, and elastic cross sections as well as the average heating numbers. The \Block{ESZ} block always exists. See \Sectionref{sec:ESZBlock}.
   \item \textbf{\Block{NU}}---contains prompt, delayed and/or total $\overline{\nu}$ as a function of incident neutron energy. The \Block{NU} exists only for fissionable isotopes; that is, if \jxs{2}$\neq0$. See \Sectionref{sec:NUBlock}.
   \item \textbf{\Block{MTR}}---contains a list of ENDF MT numbers for all neutron reactions other than elastic scattering. The \Block{MTR} exists for all isotopes that have reactions other than elastic scattering; that is, all isotopes with \nxs{4}$\neq0$. See \Sectionref{sec:MTRBlock}.
   \item \textbf{\Block{LQR}}---contains a list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LTR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:LQRBlock}.
@@ -100,10 +100,14 @@ The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
 \subsubsection{\Block{NU}}\label{sec:NUBlock}
 There are four possibilities for the \Block{NU}:
 \begin{enumerate}
-  \item No \Block{NU}. This happens when \jxs{2}=0.
-  \item Either prompt or total \nubar\ is given (but not both). The \aceArray{NU} array begins at location \xss{KNU} where \var{KNU}=\jxs{2}.
-  \item Both prompt and total \nubar\ are given. The prompt \aceArray{NU} array begins at \xss{KNU} where \var{KNU}=\jxs{2}; the total \aceArray{NU} array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}})+1}
-  \item Delayed \nubar\ is given. The delayed \nubar\ array begins at \xss{KNU} where\\ \var{KNU}=\jxs{24}. Delayed \nubar\ must be given in form b described below.
+  \item {\bfseries\sffamily No \Block{NU}.} \\
+    This happens when \jxs{2}=0.
+  \item {\bfseries\sffamily Either prompt or total \nubar\ is given (but not both).} \\
+    The \aceArray{NU} array begins at location \xss{KNU} where \var{KNU}=\jxs{2}.
+  \item {\bfseries\sffamily Both prompt and total \nubar\ are given.} \\
+    The prompt \aceArray{NU} array begins at \xss{KNU} where \var{KNU}=\jxs{2}; the total \aceArray{NU} array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}})+1}
+  \item {\bfseries\sffamily Delayed \nubar\ is given.} \\
+    The delayed \nubar\ array begins at \xss{KNU} where \var{KNU}=\jxs{24}. Delayed \nubar\ must be given in tabulated as described below in \Tableref{tab:NUBlockTabulated}.
 \end{enumerate}
 
 The format of the \Block{NU} has two forms (if it exists); polynomial (see \Tableref{tab:NUBlockPolynomial}) and tabulated (see \Tableref{tab:NUBlockTabulated}). The format is specified by the \var{LNU} flag located in the \XSS\ array at index \var{KNU} where \var{KNU} is defined above.
@@ -846,7 +850,7 @@ The data associated with each distribution begins at location $\var{L}(l)$. The 
   \begin{LAWTable}{Angular distribution for \var{LAW}=67}
     \var{LDAT}(\var{K})   & \var{INTMU} & Interpolation scheme\tnotex{tn:LAW67AngularInterpolationScheme} \\
     \var{LDAT}(\var{K}+1) & \var{NMU}   & Number of secondary cosines \\
-    \var{LDAT}(\var{K}+2) & $\var{XMU}(l),l=1,\ldots,\var{NMU}$ & Secondary cosins \\
+    \var{LDAT}(\var{K}+2) & $\var{XMU}(l),l=1,\ldots,\var{NMU}$ & Secondary cosines \\
     \var{LDAT}(\var{K}+2+\var{NMU}) & $\var{LMU}(l),l=1,\ldots,\var{NMU}$ & Locations of data for each secondary cosine. See \Tableref{tab:LAW67EnergyDistribution}
     \label{tab:LAW67AngularDistribution}
   \end{LAWTable}
@@ -876,7 +880,7 @@ The format for the secondary energy distribution (for each cosine bin, \var{XMU}
 \end{ThreePartTable}
 
 \subsubsubsection{Energy-Dependent Neutron Yields}
-There are additional numbers to be found for neutrons in the \Block{DLW} and \Block{DLWP}. For those reactions with entries in the \Block{TYR} that are greater than \num{100} in absolute value, there must be neutron yields, $Y(E)$ provided as a function of neutron energy. The neutron yields are handled similarly to the average number of neutrons per fission, $\nu(E)$ that is given for the fission reactions. These yields are a part of the coupled energy-angle distributions given in File6 of ENDF-6 data.
+There are additional numbers to be found for neutrons in the \Block{DLW} and \Block{DLWP}. For those reactions with entries in the \Block{TYR} that are greater than \num{100} in absolute value, there must be neutron yields, $Y(E)$ provided as a function of neutron energy. The neutron yields are handled similarly to the average number of neutrons per fission, $\nu(E)$ that is given for the fission reactions. These yields are a part of the coupled energy-angle distributions given in File 6 of ENDF-6 data.
 
 % The location in \XSS is:
 % \begin{equation}
