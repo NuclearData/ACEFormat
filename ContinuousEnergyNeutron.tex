@@ -720,7 +720,7 @@ The data associated with each incident neutron energy begins at the location $\v
   \var{LDAT}(\var{K}+2)          & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & outgoing energy grid \\
   \var{LDAT}(\var{K}+$2+N_{p}$)  & $\mathrm{PDF}(l),l=1,\ldots,N_{p}$     & Probability Density Function \\
   \var{LDAT}(\var{K}+$2+2N_{p}$) & $\mathrm{CDF}(l),l=1,\ldots,N_{p}$     & Cumulative Density Function \\
-  \var{LDAT}(\var{K}+$2+3N_{p}$) & $R(l),l=1,\ldots,N_{p}$                & Precompound fraciton $r$ \\
+  \var{LDAT}(\var{K}+$2+3N_{p}$) & $R(l),l=1,\ldots,N_{p}$                & Precompound fraction $r$ \\
   \var{LDAT}(\var{K}+$2+4N_{p}$) & $A(l),l=1,\ldots,N_{p}$                & Angular distribution slope value $a$ \\
   \cmidrule{1-3}
   \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(2)}$}---same format for $E(1)$} \\
@@ -750,7 +750,6 @@ The angular distributions for neutrons are then sampled from:
   p(\mu,E_{\mathrm{in}},E_{\mathrm{out}}) = \frac{1}{2}\frac{A}{\sinh(A)}\left[ \cosh(A\mu)+R\sinh(A\mu) \right].
   \label{eq:LAW44p}
 \end{equation}
-\todo[inline]{Is this equation specific to the format or to MCNP?}
 
 \subsubsubsection{\var{LAW}=61---Like \var{LAW}=44, but tabular angular distribution instead of Kalbach-87}\label{sec:LAW61}
 \begin{ThreePartTable}

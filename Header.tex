@@ -56,7 +56,7 @@ The Legacy Opening consists of several variables given over two 80-character lin
 
 \paragraph{2.0.1 Header Opening}
 \todo[inline]{Don't forget the 2.0.1 Header Opening}
-There is a limitation to the number of unique \ZA\ IDs for a given \ZA; 100 different IDs, in fact, for each class of \ACE\ Table. To overcome this limitation, a new Header Opening was developed in 2013\todo{check this} and updated a few years later to correct some errors.
+There is a limitation to the number of unique \ZA\ IDs for a given \ZA; 100 different IDs, in fact, for each class of \ACE\ Table. To overcome this limitation, a new Header Opening\cite{Conlin:2012Updat-0} was developed in 2012 and updated a few years later to correct some errors.
 
 \begin{table} \centering
   \begin{tabular}{rlll}
@@ -92,7 +92,7 @@ There is a limitation to the number of unique \ZA\ IDs for a given \ZA; 100 diff
   \label{fig:HeaderOpeningExample}
 \end{figure}
 
-Note that a Legacy Header Opening can be contained in the comment section of the 2.0.1 Header Opening. This was designed explicitly to allow backwards compatibility while application codes were modified to be able to handle. An example of this is shown in Figure~\ref{fig:HeaderExample}\todo{verify correctness}. Codes that cannot read the 2.0.1 Header can be told (typically via an xsdir\todo{provide reference} entry) to start reading the \ACE\ Table several lines after the beginning of the 2.0.1 Header.
+Note that a Legacy Header Opening can be contained in the comment section of the 2.0.1 Header Opening. This was designed explicitly to allow backwards compatibility while application codes were modified to be able to handle. An example of this is shown in Figure~\ref{fig:HeaderOpeningExample}\todo{verify correctness}. Codes that cannot read the 2.0.1 Header can be told (typically via an xsdir\cite{Conlin:2012Updat-0} entry) to start reading the \ACE\ Table several lines after the beginning of the 2.0.1 Header.
 
 Following the Opening of the Header are three arrays, \IZAW, \NXS, and \JXS\ respectively. They are each described below. Immediately following the \JXS\ array is the \XSS array.
 
