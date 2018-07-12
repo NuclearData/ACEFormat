@@ -28,55 +28,58 @@ The format of individual blocks found on neutron transport tables is identical f
 
 \subsection{\NXS\ Array}\label{sec:NXSContinuousEnergyNeutron}
 
-\begin{NXSTable}{continuous-energy neutron}
-    1        & ---    & Length of second block of data (\XSS\ array) \\
-    2        & ZA     & $1000*Z+A$ \\
-    3        & NES    & Number of energies \\
-    4        & NTR    & Number of reactions excluding elastic scattering \\
-    5        & NR     & Number of reactions having secondary neutrons excluding elastic scattering \\
-    6        & NTRP   & Number of photon production reactions \\
-             & \ldots & \\
-    8        & NPCR   & Number of delayed neutron precurser families \\
-             & \ldots & \\
-    15       & NT     & Number of PIKMT reaction \\
-    16       & ---    & 0=normal photon production \\
-             &        & -1=do not produce photons
-  \label{tab:NXSContinuousEnergyNeutron}
-\end{NXSTable}
-
-\todo[inline]{Does NXS[15] apply to every type of data, or just fast tables?}
+\begin{ThreePartTable}
+  \begin{TableNotes}
+  \item[$\dagger$] \label{tn:Reserved} These entries are reserved for the use of transport codes (i.e., MCNP).
+  \end{TableNotes}
+  \begin{NXSTable}{continuous-energy neutron}
+      1  & ---        & Length of second block of data (\XSS\ array) \\
+      2  & \var{ZA}   & $1000*Z+A$ \\
+      3  & \var{NES}  & Number of energies \\
+      4  & \var{NTR}  & Number of reactions excluding elastic scattering \\
+      5  & \var{NR}   & Number of reactions having secondary neutrons excluding elastic scattering \\
+      6  & \var{NTRP} & Number of photon production reactions \\
+         & \ldots     & \\
+      8  & \var{NPCR} & Number of delayed neutron precurser families \\
+         & \ldots     & \\
+      14 &            & Reserved\tnotex{tn:Reserved} \\
+      15 &            & Reserved\tnotex{tn:Reserved} \\
+      16 &            & Reserved\tnotex{tn:Reserved} \\
+    \label{tab:NXSContinuousEnergyNeutron}
+  \end{NXSTable}
+\end{ThreePartTable}
 
 \subsection{\JXS\ Array}\label{sec:JXSContinuousEnergyNeutron}
 \begin{JXSTable}{continuous-energy neutron}
-    1        & ESZ    & Energy table \\
-    2        & NU     & Fission $\nu$ data \\
-    3        & MTR    & \texttt{MT} array \\
-    4        & LQR    & $Q$-value array \\
-    5        & TYR    & Reaction type array \\
-    6        & LSIG   & Table of cross section locators \\
-    7        & SIG    & Cross sections \\
-    8        & LAND   & Table of angular distribution locators \\
-    9        & AND    & Angular distributions \\
-    10       & LDLW   & Table of energy distribution locators \\
-    11       & DLW    & Energy distributions \\
-    12       & GPD    & Photon production data \\
-    13       & MTRP   & Photon production \texttt{MT} array \\
-    14       & LSIGP  & Table of photon production cross section locators \\
-    15       & SIGP   & Photon production cross sections \\
-    16       & LANDP  & Table of photon production angular distribution locators \\
-    17       & ANDP   & Photon production angular distributions \\
-    18       & LDLWP  & Table of photon production energy distribution locators \\
-    19       & DLWP   & Photon production energy distributions \\
-    20       & YP     & Table of yield multipliers \\
-    21       & FIS    & Total fission cross section \\
-    22       & END    & Last word of this table \\
-    23       & LUNR   & Probability tables \\
-    24       & DNU    & Delayed $\overline{\nu}$ data \\
-    25       & BDD    & Basic delayed data ($\lambda$'s, probabilities) \\
-    26       & DNEDL  & Table of energy distribution locators \\
-    27       & DNED   & Energy distributions \\
-             & \ldots & \\
-    32       & ---    &
+    1  & \var{ESZ}   & Energy table \\
+    2  & \var{NU}    & Fission $\nu$ data \\
+    3  & \var{MTR}   & \texttt{MT} array \\
+    4  & \var{LQR}   & $Q$-value array \\
+    5  & \var{TYR}   & Reaction type array \\
+    6  & \var{LSIG}  & Table of cross section locators \\
+    7  & \var{SIG}   & Cross sections \\
+    8  & \var{LAND}  & Table of angular distribution locators \\
+    9  & \var{AND}   & Angular distributions \\
+    10 & \var{LDLW}  & Table of energy distribution locators \\
+    11 & \var{DLW}   & Energy distributions \\
+    12 & \var{GPD}   & Photon production data \\
+    13 & \var{MTRP}  & Photon production \texttt{MT} array \\
+    14 & \var{LSIGP} & Table of photon production cross section locators \\
+    15 & \var{SIGP}  & Photon production cross sections \\
+    16 & \var{LANDP} & Table of photon production angular distribution locators \\
+    17 & \var{ANDP}  & Photon production angular distributions \\
+    18 & \var{LDLWP} & Table of photon production energy distribution locators \\
+    19 & \var{DLWP}  & Photon production energy distributions \\
+    20 & \var{YP}    & Table of yield multipliers \\
+    21 & \var{FIS}   & Total fission cross section \\
+    22 & \var{END}   & Last word of this table \\
+    23 & \var{LUNR}  & Probability tables \\
+    24 & \var{DNU}   & Delayed $\overline{\nu}$ data \\
+    25 & \var{BDD}   & Basic delayed data ($\lambda$'s, probabilities) \\
+    26 & \var{DNEDL} & Table of energy distribution locators \\
+    27 & \var{DNED}  & Energy distributions \\
+       & \ldots      & \\
+    32 & ---         & 
   \label{tab:JXSContinuousEnergyNeutron}
 \end{JXSTable}
 
@@ -355,7 +358,6 @@ The \Block{LDLW} exists if \nxs{5}$\neq0$ while the \Block{LDLWP} exists if \nxs
 
 All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array. The \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \Block{MTRP} for \Block{LDLWP}.
 \subsubsection{\Block{DLW \textnormal{\&} DLWP}}\label{sec:DLWBlock}
-\todo[inline]{Which of these formats really need to still be supported? ENDF has stopped supporting a number of these 30+ years ago.}
 The \Block{DLW} contains secondary energy distributions for all reactions producing secondary neutrons---expect for elastic scattering. The \Block{DLWP} contains secondary energy distribution for all photon-producing reactions. Both the \Block{DLW} and \Block{DLWP} have the same format. The energy distributions are given starting with a locator, \LOC{C}, which were given in the \Block{LDLW} and \Block{LDLWP}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions) is dependent on whether it is the \Block{DLW} or \Block{DLWP}. These values are given in \Tableref{tab:JED_NMT}.
 \begin{table}[h!] \centering
   \begin{tabular}{lll}
@@ -461,11 +463,10 @@ where
 
 The outgoing neutron energy in the laboratory system is:
 \begin{equation}
-  E_{\mathrm{out}}^{\mathrm{LAB}} = E_{\mathrm{out}}^{\mathrm{CM}} +\left\{ E+2\mu_{\mathrm{CM}}(A+1)(EE_{\mathrm{out}}^{\mathrm{CM}})^{1/2} \right\}/(A+1)^{2}
+  E_{\mathrm{out}}^{\mathrm{LAB}} = E_{\mathrm{out}}^{\mathrm{CM}} +\left\{ E+2\mu_{\mathrm{CM}}(A+1)(E\cdot E_{\mathrm{out}}^{\mathrm{CM}})^{1/2} \right\}/(A+1)^{2}
   \label{eq:Law3EoutLAB}
 \end{equation}
 where $\mu_{\mathrm{CM}}$ is the cosine of the \CM\ scattering angle
-\todo[inline]{What is $EE_{\mathrm{out}}^{\mathrm{CM}}$?}
 
 \subsubsubsection{\var{LAW}=4---Continuous Tabular Distribution}\label{sec:LAW4}
 \begin{ThreePartTable}
@@ -537,7 +538,6 @@ where:
   \item[$X(\xi)$]  is a randomly sampled table of $X$'s, and
   \item[$E$] is the incident energy.
 \end{description}
-\todo[inline]{This looks slightly different than the one in the ENDF-6 document. It may be similar, but we should double check.}
 
 \subsubsubsection{\var{LAW}=7---Simple Maxwell Fission Spectrum}\label{sec:LAW7}
 \begin{LAWTable}{\var{LAW}=7 (From ENDF-6, \MF=5, \var{LF}=7)}
@@ -633,41 +633,41 @@ where:
   \item[$U$] is a constant introduced to define the proper upper limit for the final particle energy such that $0\leq E_{\mathrm{out}} \leq (E-U)$.
 \end{description}
 
-\subsubsubsection{\var{LAW}=22---Tabular Linear Functions}\label{sec:LAW22}
+\subsubsubsection{\var{LAW}=22---Tabular Linear Functions of Incident Energy Out}\label{sec:LAW22}
 \begin{LAWTable}{\var{LAW}=22 (From UK Law 2)}
   \var{LDAT}(1)                 & $N_{R}$                          & \multirow{3}{0.65\linewidth}{Interpolation parameters} \\
     \var{LDAT}(2)                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & \\
     \var{LDAT}(2+$N_{R}$)         & \var{INT}$(l), l=1,\ldots,N_{R}$ & \\
     \cmidrule{1-3}
     \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
-    \var{LDAT}(3+$2N_{R})$ & $E_{\mathrm{in}}(l),l=1,\ldots,N_{E}$ & Number of incdident energies for $E_{\mathrm{out}}$ tables \\
+    \var{LDAT}(3+$2N_{R})$ & $E_{\mathrm{in}}(l),l=1,\ldots,N_{E}$ & Tabulated incident energies for $E_{\mathrm{out}}$ tables \\
     \var{LDAT}(3+$2N_{R}+N_{E})$ & $\LOC{E}(l),l=1,\ldots,N_{E}$ & Locators of $E_{\mathrm{out}}$ tables\\
     \cmidrule{1-3}
     \multicolumn{3}{l}{Data for $E_{\mathrm{in}}(1)$ Let $\var{L}=3+2N_{R}+2N_{E}$:} \\
     \var{LDAT}(\var{L})                   & $\var{NF}_{1}$ \\
-    \var{LDAT}(\var{L}+1)                 & $P_{1}(K),K=1,\ldots,\var{NF}_{1}$ \\
-    \var{LDAT}(\var{L}+1+\var{NF}$_{1}$)  & $T_{1}(K),K=1,\ldots,\var{NF}_{1}$ \\
-    \var{LDAT}(\var{L}+1+2\var{NF}$_{1}$) & $C_{1}(K),K=1,\ldots,\var{NF}_{1}$ \\
+    \var{LDAT}(\var{L}+1)                 & $P_{1k}, k=1,\ldots,\var{NF}_{1}$ \\
+    \var{LDAT}(\var{L}+1+\var{NF}$_{1}$)  & $T_{1k}, k=1,\ldots,\var{NF}_{1}$ \\
+    \var{LDAT}(\var{L}+1+2\var{NF}$_{1}$) & $C_{1k}, k=1,\ldots,\var{NF}_{1}$ \\
     \cmidrule{1-3}
     \multicolumn{3}{l}{Data for $E_{\mathrm{in}}(2)$:} \\
     \ldots
   \label{tab:LAW22}
 \end{LAWTable}
-\todo[inline]{The following equations seem very wrong, but they are no better in the original.}
-If
+Tables of $P_{ik}, C_{ik}$, and $T_{ik}$ are given at a number of incident energies, $E_{\mathrm{in}}$. If
 \begin{equation}
   E_{\mathrm{in}}(l) \leq E < E_{\mathrm{in}}(l+1)
 \end{equation}
-then, for a given random number, $\xi\in[0,1)$, if 
+then the secondary neutron energy is:
 \begin{equation}
-  \sum_{k=1}^{k=K} P_{i} < \xi \leq \sum_{k=1}^{k=K}P_{i}(k)
-  \label{eq:LAW22Sum}
-\end{equation}
-then 
-\begin{equation}
-  E_{\mathrm{out}} = C_{i}(K)\left( E-T_{i}(K) \right).
+  E_{\mathrm{out}} = C_{ik}\left( E-T_{ik} \right),
   \label{eq:LAW22Eout}
 \end{equation}
+where $k$ is chosen according to
+\begin{equation}
+  \sum_{j=1}^{k} P_{ij} < \xi \leq \sum_{k=1}^{k+1}P_{ij}
+  \label{eq:LAW22Sum}
+\end{equation}
+for a given random number, $\xi\in[0,1)$.
 
 \subsubsubsection{\var{LAW}=24}\label{sec:LAW24}
 \begin{LAWTable}{\var{LAW}=24 (From UK Law 6)}
@@ -1009,7 +1009,6 @@ The format of the $i$-th cross section array has two possible forms depending on
 \end{XSSTable}
 
 \subsubsection{\Block{LANDP}}\label{sec:LANDPBlock}
-\todo[inline]{Should this section be merged with \Sectionref{sec:LANDBlock}? It is just a minor difference. The combination is done similarly in \Sectionref{sec:LDLWBlock}.}
 
 The \Block{LANDP} gives locator information for angular distribution arrays for photon production reactions and exists if $\nxs{6}\neq0$. All locators (\LOC{B}) in the \Block{LANDP} are \emph{relative} to \jxs{17}; that is, the angular distribution arrays begin at $\jxs{17}+\LOC{B}{i}$. The number of photon-producing reactions is \var{NMT}=\nxs{6}. The \LOC{B}{i} must be monotonically increasing. The \MT s are defined in the \Block{MTRP} (see \Sectionref{sec:MTRBlock}). The format of the \Block{LANDP} is given in \Tableref{tab:LANDPBlock}.
 

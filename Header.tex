@@ -82,17 +82,16 @@ There is a limitation to the number of unique \ZA\ IDs for a given \ZA; 100 diff
 
 \begin{figure}[h!] \centering
 \begin{Verbatim}[frame=single, fontsize=\footnotesize,commandchars=\\\{\}]
-\color{red}{2.0.0      1001.710nc               ENDFB-VII.1             }
-\color{red}{0.999167 2.5301E-08 12/17/12     3}
-\color{blue}{The next two lines are the first two lines of 'old-style' ACE.}
-\color{blue}{  1001.80c    0.999167  2.5301E-08   12/17/12}
-\color{blue}{H1 ENDF71x (jlconlin)  Ref. see jlconlin (ref 09/10/2012  10:00:53)      mat 125}
+\color{red}{2.0.1                    1001.800nc         ENDF/B-VIII.0-B1}
+\color{red}{    0.999167   2.5301e-08 2018-05-02    2}
+\color{blue}{  1001.00c    0.999167  2.5301E-08   05/02/18}
+\color{blue}{H1 Lib80x (jlconlin)  Ref. see jlconlin (ref 01/29/2018 07:54)           mat 125}
 \end{Verbatim}
 \caption{Header Opening example. The Legacy Opening is shown in {\color{blue}blue} while the 2.0.1 Opening consists of the {\color{red}red} and the {\color{blue}blue} portions.}
   \label{fig:HeaderOpeningExample}
 \end{figure}
 
-Note that a Legacy Header Opening can be contained in the comment section of the 2.0.1 Header Opening. This was designed explicitly to allow backwards compatibility while application codes were modified to be able to handle. An example of this is shown in Figure~\ref{fig:HeaderOpeningExample}\todo{verify correctness}. Codes that cannot read the 2.0.1 Header can be told (typically via an xsdir\cite{Conlin:2012Updat-0} entry) to start reading the \ACE\ Table several lines after the beginning of the 2.0.1 Header.
+Note that a Legacy Header Opening can be contained in the comment section of the 2.0.1 Header Opening. This was designed explicitly to allow backwards compatibility while application codes were modified to be able to handle. An example of this is shown in Figure~\ref{fig:HeaderOpeningExample}. Codes that cannot read the 2.0.1 Header can be told (typically via an xsdir\cite{Conlin:2012Updat-0} entry) to start reading the \ACE\ Table several lines after the beginning of the 2.0.1 Header.
 
 Following the Opening of the Header are three arrays, \IZAW, \NXS, and \JXS\ respectively. They are each described below. Immediately following the \JXS\ array is the \XSS array.
 
