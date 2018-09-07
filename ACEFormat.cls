@@ -14,6 +14,7 @@
 \RequirePackage{array}
 \RequirePackage{xparse}
 \RequirePackage{amsmath}
+\RequirePackage{collcell}
 
 \DeclareNewSectionCommand[
   style=section,
@@ -133,6 +134,7 @@
 \newcolumntype{K}{>{\arraybackslash}m{0.35\linewidth}}
 \newcolumntype{L}{>{\arraybackslash}m{0.5\linewidth}}
 \newcolumntype{M}{>{\arraybackslash}m{0.65\linewidth}}
+\newcolumntype{V}{>{\collectcell\var}{l}<{\endcollectcell}}
 
 \newenvironment{XSSTable}[1]{%
   \begin{longtable}{llL}

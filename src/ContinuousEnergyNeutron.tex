@@ -1,4 +1,4 @@
-%!TEX root = ACEFormat.tex
+%!TEX root = ../ACEFormat.tex
 \section{Continuous-Energy and Discrete Neutron Transport Tables}\label{sec:ContinuousEnergyNeutron}
 The format of individual blocks found on neutron transport tables is identical for continuous-energy and discrete-reaction \ACE\ Tables; the format for both are described in this section. The blocks of data are:
 \begin{enumerate}
@@ -373,7 +373,7 @@ The \Block{DLW} contains secondary energy distributions for all reactions produc
   \label{tab:JED_NMT}
 \end{table}
 
-\begin{LOCTable}{DLW}
+\begin{LOCTable}{\Block{DLW}}
   \var{JED}+\LOC{C}{1}-1 & Energy distribution array for reaction \MT$_{1}$ \\
   \var{JED}+\LOC{C}{2}-1 & Energy distribution array for reaction \MT$_{2}$ \\
   \ldots \\

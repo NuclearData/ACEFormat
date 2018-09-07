@@ -1,4 +1,4 @@
-%!TEX root = ACEFormat.tex
+%!TEX root = ../ACEFormat.tex
 \section{\ACE\ Tables}
 An \ACE\ Table consists of a Header followed by an array (\XSS) containing the actual data. The Header and \XSS\ array are the same regardless of whether the \ACE\ Table is \Type{1} or \Type{2}. Each line in a \Type{1} \ACE\ Table is \num{80} characters or less. 
 
@@ -36,17 +36,17 @@ There are two slightly different formats for the Header Opening. The most common
 
 The Legacy Opening consists of several variables given over two 80-character lines. The variables and the Fortran format for reading the variable is given in Table~\ref{tab:LegacyHeader}
 \begin{table} \centering
-  \begin{tabular}{rlll}
+  \begin{tabular}{rVll}
     \toprule
-    Line     & Variable & Format                      & Description\\
+    Line     & {Variable} & Format                      & Description\\
     \midrule
     1        & HZ       & \mintinline{Fortran}{A10}   & \ZAID\ (see Section~\ref{sec:ZAID})\\
-    1        & AW       & \mintinline{Fortran}{E12.0} & atomic weight ratio \\
-    1        & TZ       & \mintinline{Fortran}{E12.0} & temperature \\
+    1        & AW       & \mintinline{Fortran}{E12.0} & Atomic weight ratio \\
+    1        & TZ       & \mintinline{Fortran}{E12.0} & Temperature \\
     1        & ---      & \mintinline{Fortran}{1X}    & (blank space) \\
-    1        & HD       & \mintinline{Fortran}{A10}   & processing date \\
+    1        & HD       & \mintinline{Fortran}{A10}   & Processing date \\
     \cmidrule{1-4}
-    2        & HK       & \mintinline{Fortran}{A70}   & descriptive string \\
+    2        & HK       & \mintinline{Fortran}{A70}   & Descriptive string \\
     2        & HM       & \mintinline{Fortran}{A10}   & 10-character material identifier \\
     \bottomrule
   \end{tabular}
@@ -59,20 +59,20 @@ The Legacy Opening consists of several variables given over two 80-character lin
 There is a limitation to the number of unique \ZA\ IDs for a given \ZA; 100 different IDs, in fact, for each class of \ACE\ Table. To overcome this limitation, a new Header Opening\cite{Conlin:2012Updat-0} was developed in 2012 and updated a few years later to correct some errors.
 
 \begin{table} \centering
-  \begin{tabular}{rlll}
+  \begin{tabular}{rVll}
     \toprule
     Line     & Variable & Format                      & Description\\
     \midrule
-    1        & VERS     & \mintinline{Fortran}{A10}   & version format string \\
+    1        & VERS     & \mintinline{Fortran}{A10}   & Version format string \\
     1        & HZ       & \mintinline{Fortran}{A24}   & \SZAID\ (see Section~\ref{sec:SZAID})\\
-    1        & SRC      & \mintinline{Fortran}{???}   & evaluation source \\
+    1        & SRC      & \mintinline{Fortran}{???}   & Evaluation source \\
     \cmidrule{1-4}
-    2        & AW       & \mintinline{Fortran}{E12.0} & atomic weight ratio \\
-    2        & TZ       & \mintinline{Fortran}{E12.0} & temperature \\
+    2        & AW       & \mintinline{Fortran}{E12.0} & Atomic weight ratio \\
+    2        & TZ       & \mintinline{Fortran}{E12.0} & Temperature \\
     2        & ---      & \mintinline{Fortran}{1X}    & (blank space) \\
-    2        & HD       & \mintinline{Fortran}{A10}   & processing date \\
-    2        & N        & \mintinline{Fortran}{I10}   & number of comment lines to follow \\
-    3--(N+2) & ---      & \mintinline{Fortran}{A70}   & comment lines \\
+    2        & HD       & \mintinline{Fortran}{A10}   & Processing date \\
+    2        & N        & \mintinline{Fortran}{I10}   & Number of comment lines to follow \\
+    3--(\var{N}+2) & ---      & \mintinline{Fortran}{A70}   & \var{N} comment lines \\
     \bottomrule
   \end{tabular}
   \caption{Variables in the 2.0.1 Opening part of the \ACE\ Header.}
