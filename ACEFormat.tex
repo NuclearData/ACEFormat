@@ -28,28 +28,28 @@
 \setlist[itemize,1]{label=--}
 \setlist[description]{labelindent=1em}
 
-\addbibresource{References.bib}
+\addbibresource{./src/References.bib}
 
-\includeonly{
-  frontmatter,
-  Introduction,
-  Header,
-  UniqueIdentifier,
-  ContinuousEnergyNeutron,
-  % Dosimetry,
-  % ThermalScattering,
-  % ContinuousEnergyPhoton,
-  % backmatter
-}
+% \includeonly{
+%   frontmatter,
+%   Introduction,
+%   Header,
+%   UniqueIdentifier,
+%   ContinuousEnergyNeutron,
+%   % Dosimetry,
+%   % ThermalScattering,
+%   % ContinuousEnergyPhoton,
+%   % backmatter
+% }
 \begin{document}
-\include{frontmatter}
-\include{Introduction}
-\include{Header}
-\include{UniqueIdentifier}
-\include{ContinuousEnergyNeutron}
-\include{Dosimetry}
-\include{ThermalScattering}
-\include{ContinuousEnergyPhoton}
-\include{backmatter}
+\input{src/frontmatter}
+\input{src/Introduction}
+\input{src/Header}
+\input{src/UniqueIdentifier}
+\input{src/ContinuousEnergyNeutron}
+\input{src/Dosimetry}
+\input{src/ThermalScattering}
+\input{src/ContinuousEnergyPhoton}
+\input{src/backmatter}
 
 \end{document}
