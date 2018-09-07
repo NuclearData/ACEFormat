@@ -1,4 +1,4 @@
-# ACE&mdash;A Compact ENDF$mdash;ormat Specification
+# ACE&mdash;A Compact ENDF&mdash;Format Specification
 This repository contains the specification for the ACE format&mdash;as well as a few supporting formats. 
 
 The information contained in this document was formerly Appendix F of the MCNP5 manual, but has been put in its own document to enable wider distribution. Currently the specification only contains a portion of the full specification. More will be added in time.
