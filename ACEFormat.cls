@@ -63,7 +63,7 @@
 \newcommand{\XSS}{\aceArray{XSS}}
 \newcommand{\xss}[1]{\texttt{XSS(#1)}}
 
-\newcommand{\Block}[1]{{\sffamily #1} Block}
+\newcommand{\Block}[1]{\hyperref[sec:#1Block]{\textsf{#1} Block}}
 \newcommand{\startblock}[1]{\ensuremath{S_{\mathsf{#1}}}}
 \newcommand{\law}[1]{\textsf{law=#1}}
 
@@ -126,7 +126,7 @@
 {\end{longtable}}
 
 \newenvironment{BlockTable}[2][]{%
-  \begin{XSSTable}{\Block{#2}#1}
+  \begin{XSSTable}{\textsf{#2} Block#1}
   }
 {\end{XSSTable}}
 
