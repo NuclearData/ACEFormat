@@ -2,7 +2,7 @@
 \section{Continuous-Energy and Discrete Neutron Transport Tables}\label{sec:ContinuousEnergyNeutron}
 The format of individual blocks found on neutron transport tables is identical for continuous-energy and discrete-reaction \ACE\ Tables; the format for both are described in this section. The blocks of data are:
 \begin{enumerate}
-  \item \textbf{\Block{ESZ}}---contains the main energy gid for the Table and the total, absorption, and elastic cross sections as well as the average heating numbers. The \Block{ESZ} block always exists. See \Sectionref{sec:ESZBlock}.
+  \item \textbf{\Block{ESZ}}---contains the main energy grid for the Table and the total, absorption, and elastic cross sections as well as the average heating numbers. The \Block{ESZ} block always exists. See \Sectionref{sec:ESZBlock}.
   \item \textbf{\Block{NU}}---contains prompt, delayed and/or total $\overline{\nu}$ as a function of incident neutron energy. The \Block{NU} exists only for fissionable isotopes; that is, if \jxs{2}$\neq0$. See \Sectionref{sec:NUBlock}.
   \item \textbf{\Block{MTR}}---contains a list of ENDF MT numbers for all neutron reactions other than elastic scattering. The \Block{MTR} exists for all isotopes that have reactions other than elastic scattering; that is, all isotopes with \nxs{4}$\neq0$. See \Sectionref{sec:MTRBlock}.
   \item \textbf{\Block{LQR}}---contains a list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LTR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:LQRBlock}.
