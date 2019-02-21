@@ -525,9 +525,9 @@ where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_
   \cmidrule{1-3}
   \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
   \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
-  \var{LDAT}(3+$2N_{R}+N_{E}$)  & $\theta(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
+  \var{LDAT}(3+$2N_{R}+N_{E}$)  & $\theta(l),l=1,\ldots,N_{E}$     & Effective temperature tabulated on incident energies \\
   \var{LDAT}(3+$2N_{R}+2N_{E}$) & \var{NET}                        & Number of $X$'s tabulated \\
-  \var{LDAT}(4+$2N_{R}+2N_{E}$) & $X(l),l=1,\ldots,\var{NET}$      & Tabulated probabilistic function
+  \var{LDAT}(4+$2N_{R}+2N_{E}$) & $X(l),l=1,\ldots,\var{NET}$      & Equiprobable bins
   \label{tab:LAW5}
 \end{LAWTable}
 \begin{equation}
@@ -536,7 +536,8 @@ where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_
 \end{equation}
 where:
 \begin{description}
-  \item[$X(\xi)$]  is a randomly sampled table of $X$'s, and
+  \item[$X(\xi)$]  is a randomly sampled table of $X$'s; 
+  \item[$\theta(E)$] is the effective temperature tabulated on incident energy; and 
   \item[$E$] is the incident energy.
 \end{description}
 
@@ -548,7 +549,7 @@ where:
     \cmidrule{1-3}
     \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
     \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
-    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $\theta(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $\theta(l),l=1,\ldots,N_{E}$     & Effective temperature tabulated on incident energies \\
     \var{LDAT}(3+$2N_{R}+2N_{E}$) & $U$                              & Restriction energy
   \label{tab:LAW7}
 \end{LAWTable}
@@ -577,7 +578,7 @@ where:
     \cmidrule{1-3}
     \var{LDAT}(2+$2N_{R}$)        & $N_{E}$                          & Number of incident energies tabulated \\
     \var{LDAT}(3+$2N_{R}$)        & $E(l),l=1,\ldots,N_{E}$          & Incident energy table \\
-    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $\theta(l),l=1,\ldots,N_{E}$          & Tabulated function of incident energies \\
+    \var{LDAT}(3+$2N_{R}+N_{E}$)  & $\theta(l),l=1,\ldots,N_{E}$     & Effective temperature tabulated on incident energies \\
     \var{LDAT}(3+$2N_{R}+2N_{E}$) & $U$                              & Restriction energy
   \label{tab:LAW9}
 \end{LAWTable}
