@@ -974,7 +974,7 @@ The \Block{SIGP} contains the photon production cross section data. The format o
 
 The format of the $i$-th cross section array has two possible forms depending on the first number in the array, \var{MFTYPE}.
 \begin{enumerate}
-  \item If \var{MFTYPE}=12 or \var{MFTYPE}=16, yield data taken from ENDF File 12 or 6, respectively (see \Tableref{tab:PhotonProductionArray}). With this format, the photon production cross section can be constructed using \Equationref{eq:PhotonProductionConstruction};
+  \item If \var{MFTYPE}=12 or \var{MFTYPE}=16, yield data taken from ENDF File 12 or 6, respectively (see \Tableref{tab:PhotonProductionArray}). With this format, the photon production cross section can be constructed using \Equationref{eq:PhotonProductionConstruction}:
   \begin{equation}
     \sigma_{\gamma,i}(E) = Y(E)*\sigma_{\var{MTMULT}}(E).
     \label{eq:PhotonProductionConstruction}
