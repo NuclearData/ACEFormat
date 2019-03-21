@@ -26,11 +26,13 @@ The format of individual blocks found on neutron transport tables is identical f
   \item \textbf{\Block{UNR}}---contains the unresolved resonance range probability tables. The \Block{UNR} exists if \jxs{23}$\neq0$. See \Sectionref{sec:UNRBlock}.
 \end{enumerate}
 
+\clearpage
 \subsection{\NXS\ Array}\label{sec:NXSContinuousEnergyNeutron}
 
 \begin{ThreePartTable}
   \begin{TableNotes}
-  \item[$\dagger$] \label{tn:Reserved} These entries are reserved for the use of transport codes (i.e., MCNP).
+  \item[$\dagger$] \label{tn:2.0.0} These values were introduced with the new 2.0.0 Header\cite{Conlin:2012Updat-0}.
+  \item[$\ddagger$] \label{tn:Reserved} These entries are reserved for the use of transport codes (i.e., MCNP).
   \end{TableNotes}
   \begin{NXSTable}{continuous-energy neutron}
       1  & ---        & Length of second block of data (\XSS\ array) \\
@@ -41,6 +43,9 @@ The format of individual blocks found on neutron transport tables is identical f
       6  & \var{NTRP} & Number of photon production reactions \\
          & \ldots     & \\
       8  & \var{NPCR} & Number of delayed neutron precurser families \\
+      9  & \var{S} & Excited state\tnotex{tn:2.0.0} \\
+      10 & \var{Z} & Atomic number\tnotex{tn:2.0.0} \\ 
+      11 & \var{A} & Atomic mass number\tnotex{tn:2.0.0} \\ 
          & \ldots     & \\
       14 &            & Reserved\tnotex{tn:Reserved} \\
       15 &            & Reserved\tnotex{tn:Reserved} \\
@@ -49,6 +54,7 @@ The format of individual blocks found on neutron transport tables is identical f
   \end{NXSTable}
 \end{ThreePartTable}
 
+\clearpage
 \subsection{\JXS\ Array}\label{sec:JXSContinuousEnergyNeutron}
 \begin{JXSTable}{continuous-energy neutron}
     1  & \var{ESZ}   & Energy table \\
@@ -106,13 +112,12 @@ The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
 \subsubsection{\textsf{NU} Block}\label{sec:NUBlock}
 There are four possibilities for the \Block{NU}:
 \begin{enumerate}
-  \item {\bfseries\sffamily No \Block{NU}.} \\
-    This happens when \jxs{2}=0.
-  \item {\bfseries\sffamily Either prompt or total \nubar\ is given (but not both).} \\
+  \item {\bfseries\sffamily No \Block{NU}.} (\jxs{2}=0)
+  \item {\bfseries\sffamily Either prompt or total \nubar\ is given (but not both).} (\jxs{2} > 0) \\
     The \aceArray{NU} array begins at location \xss{KNU} where \var{KNU}=\jxs{2}.
-  \item {\bfseries\sffamily Both prompt and total \nubar\ are given.} \\
+  \item {\bfseries\sffamily Both prompt and total \nubar\ are given.} (\jxs{2} > 0) \\
     The prompt \aceArray{NU} array begins at \xss{KNU} where \var{KNU}=\jxs{2}; the total \aceArray{NU} array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}})+1}
-  \item {\bfseries\sffamily Delayed \nubar\ is given.} \\
+  \item {\bfseries\sffamily Delayed \nubar\ is given.} (\jxs{24} > 0) \\
     The delayed \nubar\ array begins at \xss{KNU} where \var{KNU}=\jxs{24}. Delayed \nubar\ must be given in tabulated as described below in \Tableref{tab:NUBlockTabulated}.
 \end{enumerate}
 
