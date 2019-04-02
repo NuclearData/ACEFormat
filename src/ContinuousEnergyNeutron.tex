@@ -400,7 +400,7 @@ The $i$-th array has the form shown in
   \begin{XSSTable}{Format for the secondary energy distribution.}
     \var{JED}+\LOC{C}{i}-1                & \var{LNW}$_{1}$                  & Location of next law.\tnotex{tn:LNW} \\
     \var{JED}+\LOC{C}{i}                  & \var{LAW}$_{1}$                  & Name of this law \\
-    \var{JED}+\LOC{C}{i}+1                & \var{IDAT}$_{1}$                 & Location of data for this law relative to \var{JED} \\
+    \var{JED}+\LOC{C}{i}+1                & \var{IDAT}$_{1}$                 & Location of data for this law relative to $\var{JED}+\LOC{C}{i}-1$ \\
     \var{JED}+\LOC{C}{i}+2                & $N_{R}$                          & Number of interpolation regions to define law applicability regime \\
     \var{JED}+\LOC{C}{i}+3                & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
     \var{JED}+\LOC{C}{i}+3+$N_{R}$        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:EnergyDistributionInterpolationScheme} \\
