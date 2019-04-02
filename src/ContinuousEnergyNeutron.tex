@@ -119,7 +119,7 @@ There are three possibilities for the \Block{NU}:
     The prompt \aceArray{NU} array begins at \xss{KNU} where \var{KNU}=\jxs{2}; the total \aceArray{NU} array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}})+1}
 \end{enumerate}
 
-In addition to prompt and/or total \nubar, delayed \nubar\ is given when $\jxs{24} > 0$. The delayed \nubar\ array begins at \xss{KNU} where \var{KNU}=\jxs{24}. Delayed \nubar\ must be given in tabulated as described below in \Tableref{tab:NUBlockTabulated}.
+In addition to prompt and/or total \nubar, delayed \nubar\ is given when $\jxs{24} > 0$. Delayed \nubar\ array begins at \xss{KNU} where \var{KNU}=\jxs{24}. Delayed \nubar\ must be given in tabulated as described below in \Tableref{tab:NUBlockTabulated}.
 
 The format of the \Block{NU} has two forms (if it exists); polynomial (see \Tableref{tab:NUBlockPolynomial}) and tabulated (see \Tableref{tab:NUBlockTabulated}). The format is specified by the \var{LNU} flag located in the \XSS\ array at index \var{KNU} where \var{KNU} is defined above.
 \begin{BlockTable}[---Polynomial function form]{NU}
@@ -837,7 +837,7 @@ The outgoing energy is
     \item[$\ddagger$] \label{tn:LAW67Locators} Relative to \jxs{11} (neutron reactions), \jxs{19} (photon-producing reactions), or \jxs{27} (delayed neutrons).
   \end{TableNotes}
   \begin{LAWTable}{\var{LAW}=67 (From ENDF-6 \MF=6 \var{LAW}=7)}
-    \var{LDAT}(1)                & $N_{R}$                          & Interpolation scheme between tables of $E_{\mathrm{out}}$ \\
+    \var{LDAT}(1)                & $N_{R}$                          & Number of interpolation regions \\
     \var{LDAT}(2)                & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters \\
     \var{LDAT}(2+$N_{R}$)        & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme\tnotex{tn:LAW67InterpolationScheme} \\
     \var{LDAT}(2+$2N_{R}$)       & $N_{E}$                          & Number of energies at which distributions are tabulated \\
