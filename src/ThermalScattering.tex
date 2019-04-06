@@ -1,9 +1,20 @@
 %!TEX root = ../ACEFormat.tex
 \section[Thermal Scattering]{Thermal Scattering \SaB}\label{sec:ThermalScattering}
 
+Data from thermal \SaB\ tables provide a complete representation of thermal neutron scattering by molecules and crystalline solids. Cross sections for (coherent and incoherent) elastic and (incoherent) inelastic scattering are found on the tables. A coupled energy/angle representation is used to describe the spectra of inelastically scattered neutrons. Angular distributions for elastic scattering are also provided.
+
+Four unique blocks of data are associated with \SaB\ tables. We now briefly describe each of the four data blocks and reference the sections in which their formats are detailed.
+
+\begin{enumerate}
+  \item \textbf{\Block{ITIE}}---contains the energy-dependent incoherent inelastic scattering cross sections. The \Block{ITIE}  always exists. See \Sectionref{sec:ITIEBlock}.
+  \item \textbf{\Block{ITCE}}---contains the energy-dependent elastic scattering cross sections. The \Block{ITCE} exists if the material has coherent or incoherent elastic scattering; that is, if \jxs{4}$\neq0$. See \Sectionref{sec:ITCEBlock}.
+  \item \textbf{\Block{ITXE}}---contains coupled energy/angle distributions for incoherent inelastic scattering. The \Block{ITXE} always exists. See \Sectionref{sec:ITXEBlock}.
+  \item \textbf{\Block{ITCA}}---contains angular distributions for elastic scattering. The \Block{ITCA} exists if \jxs{4}$\neq0$ and \nxs{6}$\neq-1$. See \Sectionref{sec:ITCABlock}.
+\end{enumerate}
+
 \subsection{\NXS\ Array}\label{sec:NXSThermalScattering}
 
-\begin{table} \centering
+\begin{table}[H] \centering
   \begin{tabular}{rll}
     \toprule
     Element  & Name   & Description \\
@@ -24,7 +35,7 @@
 \end{table}
 
 \subsection{\JXS\ Array}\label{sec:JXSThermalScattering}
-\begin{table} \centering
+\begin{table}[H] \centering
   \begin{tabular}{rll}
     \toprule
     Element  & Name   & Location Description \\
@@ -42,4 +53,11 @@
   \label{tab:JXSThermalScattering}
 \end{table}
 
+\subsection{Format of Individual Data Blocks}
+\subsubsection{\textsf{ITIE} Block}\label{sec:ITIEBlock}
 
+\subsubsection{\textsf{ITCE} Block}\label{sec:ITCEBlock}
+
+\subsubsection{\textsf{ITXE} Block}\label{sec:ITXEBlock}
+
+\subsubsection{\textsf{ITCA} Block}\label{sec:ITCABlock}
