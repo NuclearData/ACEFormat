@@ -218,7 +218,12 @@ The format of the \Block{TYR} is given in \Tableref{tab:TYRBlock}. The index at 
   \startblock{TYR}+\var{NMT}-1 & \var{TY}$_{\var{NMT}}$ & Neutron release for reaction \MT$_{\var{NMT}}$
   \label{tab:TYRBlock}
 \end{BlockTable}
-The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering: negative=\CM, positive=\LAB. Thus if \var{TY}$_{i}$=+3, three neutrons are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission. The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption (ENDF reactions \MT>100); no neutrons are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent neutron multiplicities. The number of secondary neutrons released is determined from the yield data found in the \Block{DLW}. The \MT$_{i}$s are given in the \Block{MTR}.
+The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering: 
+\begin{description}
+  \item[negative] \CM,
+  \item[positive] \LAB.
+\end{description}
+Thus if \var{TY}$_{i}$=+3, three neutrons are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission. The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption (ENDF reactions \MT>100); no neutrons are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent neutron multiplicities. The number of secondary neutrons released is determined from the yield data found in the \Block{DLW}. The \MT$_{i}$s are given in the \Block{MTR}.
 
 \subsubsection{\textsf{LSIG}\& \textsf{LSIGP} Blocks}\label{sec:LSIGBlock}\label{sec:LSIGPBlock}
 The \Block{LSIG} and \Block{LSIGP} give the locators for cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data. In this case, the data is the cross section values. The format of the \Block{LSIG} (for incident neutron cross sections) and \Block{LSIGP} (for photon production cross sections) is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}. The format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock}.
@@ -890,18 +895,6 @@ The format for the secondary energy distribution (for each cosine bin, \var{XMU}
 
 \subsubsubsection{Energy-Dependent Neutron Yields}
 There are additional numbers to be found for neutrons in the \Block{DLW} and \Block{DLWP}. For those reactions with entries in the \Block{TYR} that are greater than \num{100} in absolute value, there must be neutron yields, $Y(E)$ provided as a function of neutron energy. The neutron yields are handled similarly to the average number of neutrons per fission, $\nu(E)$ that is given for the fission reactions. These yields are a part of the coupled energy-angle distributions given in File 6 of ENDF-6 data.
-
-% The location in \XSS is:
-% \begin{equation}
-% \var{JED} + |\var{TY}_{i}|-101\ \text{Neutron yield data for reaction}\MT_{i}
-%   \label{eq:NeutronYieldData}
-% \end{equation}
-% where
-% \begin{align*}
-%   \var{JED} &= \jxs{11} \\
-%   \intertext{and}
-%   i &\leq \text{number of reactions with negative angular distributions locators.}
-% \end{align*}
 
 The $i$-th array has the form given in \Tableref{tab:EnergyDependentNeutronYields}, where $\var{KY}=\var{JED}+|\var{TY}_{i}|-101$.
 \begin{ThreePartTable}
