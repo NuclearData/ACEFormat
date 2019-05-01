@@ -112,11 +112,14 @@ The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
 \subsubsection{\textsf{NU} Block}\label{sec:NUBlock}
 There are three possibilities for the \Block{NU}:
 \begin{enumerate}
-  \item {\bfseries\sffamily No \Block{NU}.} (\jxs{2}=0)
+  \item {\bfseries\sffamily No NU Block.} (\jxs{2}=0)
   \item {\bfseries\sffamily Either prompt or total \nubar\ is given (but not both).} (\jxs{2} > 0) \\
-    The \aceArray{NU} array begins at location \xss{KNU} where \var{KNU}=\jxs{2}.
-  \item {\bfseries\sffamily Both prompt and total \nubar\ are given.} (\jxs{2} < 0) \\
-    The prompt \aceArray{NU} array begins at \xss{KNU} where \var{KNU}=\jxs{2}; the total \aceArray{NU} array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}})+1}
+    The \aceArray{NU} array begins at location \xss{KNU} where \var{KNU}=\jxs{2} + 1.
+  \item {\bfseries\sffamily Both prompt and total \nubar\ are given.} (\jxs{2} < 0).
+    \begin{itemize}
+      \item The prompt \aceArray{NU} array begins at \xss{KNU} where \var{KNU}=\jxs{2} + 1. 
+      \item The total \aceArray{NU} array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}})+1}.
+    \end{itemize}
 \end{enumerate}
 
 In addition to prompt and/or total \nubar, delayed \nubar\ is given when $\jxs{24} > 0$. Delayed \nubar\ array begins at \xss{KNU} where \var{KNU}=\jxs{24}. Delayed \nubar\ must be given in tabulated as described below in \Tableref{tab:NUBlockTabulated}.
