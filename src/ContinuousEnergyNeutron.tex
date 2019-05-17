@@ -917,9 +917,14 @@ The $i$-th array has the form given in \Tableref{tab:EnergyDependentNeutronYield
 \end{ThreePartTable}
 
 \subsubsection{\textsf{GPD} Block}\label{sec:GPDBlock}
-The \Block{GPD} contains the \emph{total} photon production cross section, tabulated on the energy grid given in the \Block{ESZ}, the size of which is given by \nxs{3}. The \Block{GPD} only exists if \jxs{12}$\neq0$. 
+The \Block{GPD} contains the \emph{total} photon production cross section, tabulated on the energy grid given in the \Block{ESZ}, the size of which is given by \nxs{3}. The \Block{GPD} only exists if \jxs{12}$\neq0$ and is shown in \Tableref{tab:GPDBlockTotaf}.
 
-There are \num{30} groups for the incident neutron energies, the boundaries of which are shown in \Tableref{tab:DiscreteNeutronEnergyBoundaries}. For each incident neutron energy group, the outgoing photon energies are discretized into \num{20} equiprobable energy groups, thus creating a $30\times20$ matrix. The outgoing energies are given in the \Block{GPD} as shown in \Tableref{tab:GPDBlock}. Note that this matrix is only used for older tables that do not provide expanded photon production data.
+\begin{BlockTable}{GPD}
+  \startblock{GPD} & $\sigma_{\gamma}(l),l=1,\ldots,\var{NES}$  & Total photon production cross section
+  \label{tab:GPDBlockTotal}
+\end{BlockTable}
+
+In addition to the total photon production cross section, the outgoing photon energies \emph{may} be given. There are \num{30} groups for the incident neutron energies, the boundaries of which are shown in \Tableref{tab:DiscreteNeutronEnergyBoundaries}.
 \begin{table}[h!] \centering
   \caption{Discrete neutron energy boundaries.}
   \begin{tabular}{rS[table-format = 1.3e1]|rS}
@@ -947,17 +952,17 @@ There are \num{30} groups for the incident neutron energies, the boundaries of w
   \label{tab:DiscreteNeutronEnergyBoundaries}
 \end{table}
 
-The format of this Block is given in \Tableref{tab:GPDBlock}. The \XSS\ array index at the start of the \Block{GPD}, \startblock{GPD}=\jxs{12}.
-\begin{BlockTable}{GPD}
-  \startblock{GPD} & $\sigma_{\gamma}(l),l=1,\ldots,\var{NES}$  & Total photon production cross section \\
+For each incident neutron energy group, the outgoing photon energies are discretized into \num{20} equiprobable energy groups, thus creating a $30\times20$ matrix. The outgoing energies are given in the \Block{GPD}, after the total photon production cross section as shown in \Tableref{tab:GPDBlockOutgoing}. Note that this matrix is only used for older tables that do not provide expanded photon production data.
+The format of this Block is given in \Tableref{tab:GPDBlockOutgoing}. The \XSS\ array index at the start of the \Block{GPD}, \startblock{GPD}=\jxs{12}.
+\begin{XSSTable}{Outgoing photon energies in \Block{GPD}.}
   \startblock{GPD}+\var{NES} & $E_{1}(K),K=1,20$ & \num{20} equiprobable outgoing photon energies for incident neutron $E<E_{N}(2)$ \\
   \startblock{GPD}+\var{NES}+20 & $E_{2}(K),K=1,20$ & \num{20} equiprobable outgoing photon energies for incident neutron $E_{N}(2) \leq E < E_{N}(3)$ \\
   \ldots \\
   \startblock{GPD}+\var{NES}+(i-1)*20 & $E_{i}(K),K=1,20$ & \num{20} equiprobable outgoing photon energies for incident neutron $E_{N}(i) \leq E < E_{N}(i+1)$ \\
   \ldots \\
   \startblock{GPD}+\var{NES}+(30-1)*20 & $E_{N}(K),K=1,20$ & \num{20} equiprobable outgoing photon energies for incident neutron $E \geq E_{N}(30)$
-  \label{tab:GPDBlock}
-\end{BlockTable}
+  \label{tab:GPDBlockOutgoing}
+\end{XSSTable}
 
 \subsubsection{\textsf{SIGP} Block}\label{sec:SIGPBlock}
 The \Block{SIGP} contains the photon production cross section data. The format of the \Block{SIGP} is given in \Tableref{tab:SIGPBlock}. The cross section data begins at the index specified by the locator, \LOC{A}{i}, given in the \Block{LSIG} (see \Sectionref{sec:LSIGBlock}). The \MT s are defined in the \Block{MTRP} (see \Sectionref{sec:MTRBlock}). All indices to the \XSS\ array are \emph{relative} to \jxs{15}. 
