@@ -917,14 +917,14 @@ The $i$-th array has the form given in \Tableref{tab:EnergyDependentNeutronYield
 \end{ThreePartTable}
 
 \subsubsection{\textsf{GPD} Block}\label{sec:GPDBlock}
-The \Block{GPD} contains the \emph{total} photon production cross section, tabulated on the energy grid given in the \Block{ESZ}, the size of which is given by \nxs{3}. The \Block{GPD} only exists if \jxs{12}$\neq0$ and is shown in \Tableref{tab:GPDBlockTotaf}.
+The \Block{GPD} contains the \emph{total} photon production cross section, tabulated on the energy grid given in the \Block{ESZ}, the size of which is given by \nxs{3}. The \Block{GPD} only exists if \jxs{12}$\neq0$ and is shown in \Tableref{tab:GPDBlockTotal}.
 
 \begin{BlockTable}{GPD}
   \startblock{GPD} & $\sigma_{\gamma}(l),l=1,\ldots,\var{NES}$  & Total photon production cross section
   \label{tab:GPDBlockTotal}
 \end{BlockTable}
 
-In addition to the total photon production cross section, the outgoing photon energies \emph{may} be given. There are \num{30} groups for the incident neutron energies, the boundaries of which are shown in \Tableref{tab:DiscreteNeutronEnergyBoundaries}.
+In addition to the total photon production cross section, the outgoing photon energies \emph{may} be given.\footnote{Note that this is an obsolete format. It only exists when $\jxs{12} \neq 0$ and $\jxs{13} = 0$.} There are \num{30} groups for the incident neutron energies, the boundaries of which are shown in \Tableref{tab:DiscreteNeutronEnergyBoundaries}.
 \begin{table}[h!] \centering
   \caption{Discrete neutron energy boundaries.}
   \begin{tabular}{rS[table-format = 1.3e1]|rS}
