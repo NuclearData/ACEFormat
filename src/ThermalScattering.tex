@@ -19,17 +19,17 @@ Four unique blocks of data are associated with \SaB\ tables. We now briefly desc
   \label{tab:NXSThermalScattering}
   \begin{tabular}{rll}
     \toprule
-    Element & Name   & Description                                                \\
+    Element & Name         & Description                                                \\
     \midrule
-    1       & ---    & Length of second block of data (\XSS\ array)               \\
-    2       & IDPNI  & Inelastic scattering mode                                  \\
-    3       & NIL    & Inelastic dimensioning parameter                           \\
-    4       & NIEB   & Number of inelastic exiting energies                       \\
-    5       & IDPNC  & Elastic scattering mode (coherent=4, incoherent$\ne$4)     \\
-    6       & NCL    & Elastic dimensioning parameter                             \\
-    7       & IFENG  & Secondary energy mode (discrete=0, skewed=1, continuous=2) \\
-            & \ldots &                                                            \\
-    16      & ---    &                                                            \\
+    1       & ---          & Length of second block of data (\XSS\ array)               \\
+    2       & \var{IDPNI}  & Inelastic scattering mode                                  \\
+    3       & \var{NIL}    & Inelastic dimensioning parameter                           \\
+    4       & \var{NIEB}   & Number of inelastic exiting energies                       \\
+    5       & \var{IDPNC}  & Elastic scattering mode (coherent=4, incoherent$\ne$4)     \\
+    6       & \var{NCL}    & Elastic dimensioning parameter                             \\
+    7       & \var{IFENG}  & Secondary energy mode (discrete=0, skewed=1, continuous=2) \\
+            & \ldots       &                                                            \\
+    16      & ---          &                                                            \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -77,7 +77,20 @@ The format of the \Block{ITCE} is given in \Tableref{tab:ITCEBlock}. The index a
   \label{tab:ITCEBlock}
 \end{BlockTable}
 
-For incoherent elastic scattering (\nxs{5}$\neq4$), $\sigma_{el}(E_{el}(l)) = P(l)$ with linear-linear interpolation between points. For coherent elastic scattering (\nxs{5}$=4$), $\sigma_{el}(E)=P(l)/E$ for $E_{el}(l) \le E < E_{el}(l+1)$. Note that in this case, $\sigma_{el}(E)=0$ below $E_{el}(1)$. However, above $E_{el}(N_{el})$, $\sigma_{el}(E) = P(N_{el})/E$.
+For incoherent elastic scattering (\nxs{5}$\neq4$),
+\begin{equation}
+  P(l) = \sigma_{el}(E_{el}(l))
+\end{equation}
+with linear-linear interpolation between points. For coherent elastic scattering (\nxs{5}$=4$),
+\begin{equation}
+  P(l) = E\cdot\sigma_{el}(E), \qquad E_{el}(l) \le E < E_{el}(l+1).
+  \label{eq:CoherentP}
+\end{equation}
+In this case, the energies $E_{el}(l)$ correspond to Bragg edges, and between two energies the cross section is determined by inverting \Equationref{eq:CoherentP}:
+\begin{equation}
+  \sigma_{el}(l) = \frac{P(l)}{E}, \qquad E_{el}(l) \le E < E_{el}(l+1).
+\end{equation}
+Also note that $\sigma_{el}(E)=0$ below $E_{el}(1)$. However, above $E_{el}(N_{el})$, $\sigma_{el}(E) = P(N_{el})/E$.
 
 \subsubsection{\textsf{ITXE} Block}\label{sec:ITXEBlock}
 
@@ -90,22 +103,29 @@ The format of the coupled energy/angle distribution for incoherent inelastic sca
 
 The format of the \Block{ITXE} for $\nxs{7}<2$ is given in \Tableref{tab:ITXEBlock}. The index at the start of the block is \startblock{ITXE}=\jxs{3}. For each incident energy from the \Block{ITIE}, $N'=$\nxs{4} discrete outgoing energies are given. For each pair of incident and outgoing energies, $N_\mu=$\nxs{3}+1 discrete cosines are given. The incident inelastic energy grid $E_{in}(l)$ is given in the \Block{ITIE}, and linear-linear interpolation is assumed between adjacent values of $E_{in}$.
 
-\begin{BlockTable}{ITXE}
-  \startblock{ITXE}                       & $E_1^{out}[E_{in}(1)]$                     & First of \nxs{4} outgoing energies for inelastic scattering at $E_{in}(1)$    \\
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:nieb} The number of outgoing energies \var{NIEB} is determined as \nxs{4}.
+  \end{TableNotes}
+  \begin{BlockTable}{ITXE}
+  \startblock{ITXE}                       & $E_1^{out}[E_{in}(1)]$                     & First of \var{NIEB}\tnotex{tn:nieb} outgoing energies for inelastic scattering at $E_{in}(1)$    \\
   \startblock{ITXE}+1                     & $\mu_l(1\rightarrow 1), l=1,\ldots,N_\mu$  & Discrete cosines for scattering from $E_{in}(1)$ to $E_1^{out}[E_{in}(1)]$    \\
-  \startblock{ITXE}+1+$N_\mu$             & $E_2^{out}[E_{in}(1)]$                     & Second of \nxs{4} outgoing energies for inelastic scattering at $E_{in}(1)$   \\
+  \startblock{ITXE}+1+$N_\mu$             & $E_2^{out}[E_{in}(1)]$                     & Second of \var{NIEB} outgoing energies for inelastic scattering at $E_{in}(1)$   \\
   \startblock{ITXE}+2+$N_\mu$             & $\mu_l(1\rightarrow 2), l=1,\ldots,N_\mu$  & Discrete cosines for scattering from $E_{in}(1)$ to $E_2^{out}[E_{in}(1)]$    \\
   \multicolumn{1}{c}{\vdots}              & \multicolumn{1}{c}{\vdots}                 & \multicolumn{1}{c}{\vdots}                                                    \\
-  \startblock{ITXE}+($N'$-1)(1+$N_\mu$)   & $E_{N'}^{out}[E_{in}(1)]$                  & Second of \nxs{4} outgoing energies for inelastic scattering at $E_{in}(1)$   \\
+  \startblock{ITXE}+($N'$-1)(1+$N_\mu$)   & $E_{N'}^{out}[E_{in}(1)]$                  & Second of \var{NIEB} outgoing energies for inelastic scattering at $E_{in}(1)$   \\
   \startblock{ITXE}+($N'$-1)(1+$N_\mu$)+1 & $\mu_l(1\rightarrow N'), l=1,\ldots,N_\mu$ & Discrete cosines for scattering from $E_{in}(1)$ to $E_{N'}^{out}[E_{in}(1)]$ \\
   \midrule
   \multicolumn{3}{l}{(Repeat for all remaining values of $E_{in}$)}
   \label{tab:ITXEBlock}
-\end{BlockTable}
+  \end{BlockTable}
+\end{ThreePartTable}
 
 When $\nxs{7}=0$, each of the \nxs{4} discrete outgoing energies for a given incident energy are equally probable. When $\nxs{7}=1$, the selection of the discrete outgoing energies is skewed such that the first two and last two outgoing energies have a lower probability of being selected than all other outgoing energies. The first and last energies have a relative probability of 1, the second and second-to-last energies have a relative probability of 4, and all other energies have a relative probability of 10.
 
 Because the use of discrete outgoing energies and cosines can result in unphysical spikes in the neutron flux spectrum at thermal energies, some Monte Carlo codes attempt to ``smear'' the outgoing energies and cosines to produce a smoother distribution (that more closely approximates a continuous distribution with $\nxs{7}=2$).
+
+\todo[inline]{Describe the format for $\nxs{7}=2$.}
 
 \subsubsection{\textsf{ITCA} Block}\label{sec:ITCABlock}
 
