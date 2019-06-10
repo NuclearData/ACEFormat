@@ -40,16 +40,16 @@ Four unique blocks of data are associated with \SaB\ tables. We now briefly desc
   \label{tab:JXSThermalScattering}
   \begin{tabular}{rll}
     \toprule
-    Element & Name   & Location Description                 \\
+    Element  & Name       & Location Description                 \\
     \midrule
-    1       & ITIE   & Inelastic energy table               \\
-    2       & ITIX   & Inelastic cross sections             \\
-    3       & ITXE   & Inelastic energy/angle distributions \\
-    4       & ITCE   & Elastic energy table                 \\
-    5       & ITCX   & Elastic cross sections               \\
-    6       & ITCA   & Elastic angular distributions        \\
-            & \ldots &                                      \\
-    32      & ---    &                                      \\
+    1        & \var{ITIE} & Inelastic energy table               \\
+    2        & \var{ITIX} & Inelastic cross sections             \\
+    3        & \var{ITXE} & Inelastic energy/angle distributions \\
+    4        & \var{ITCE} & Elastic energy table                 \\
+    5        & \var{ITCX} & Elastic cross sections               \\
+    6        & \var{ITCA} & Elastic angular distributions        \\
+             & \ldots     & \\
+    32       & ---        & \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -108,7 +108,7 @@ The format of the \Block{ITXE} for $\nxs{7}<2$ is given in \Tableref{tab:ITXEBlo
     \item[$\dagger$] \label{tn:nieb} The number of outgoing energies \var{NIEB} is determined as \nxs{4}.
   \end{TableNotes}
   \begin{BlockTable}{ITXE}
-  \startblock{ITXE}                       & $E_1^{out}[E_{in}(1)]$                     & First of \var{NIEB}\tnotex{tn:nieb} outgoing energies for inelastic scattering at $E_{in}(1)$    \\
+  \startblock{ITXE}                       & $E_1^{out}[E_{in}(1)]$                     & First of \var{NIEB}\tnotex{tn:nieb}\ outgoing energies for inelastic scattering at $E_{in}(1)$    \\
   \startblock{ITXE}+1                     & $\mu_l(1\rightarrow 1), l=1,\ldots,N_\mu$  & Discrete cosines for scattering from $E_{in}(1)$ to $E_1^{out}[E_{in}(1)]$    \\
   \startblock{ITXE}+1+$N_\mu$             & $E_2^{out}[E_{in}(1)]$                     & Second of \var{NIEB} outgoing energies for inelastic scattering at $E_{in}(1)$   \\
   \startblock{ITXE}+2+$N_\mu$             & $\mu_l(1\rightarrow 2), l=1,\ldots,N_\mu$  & Discrete cosines for scattering from $E_{in}(1)$ to $E_2^{out}[E_{in}(1)]$    \\
