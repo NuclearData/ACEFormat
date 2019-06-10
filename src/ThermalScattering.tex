@@ -1,45 +1,142 @@
 %!TEX root = ../ACEFormat.tex
 \section[Thermal Scattering]{Thermal Scattering \SaB}\label{sec:ThermalScattering}
 
+Data from thermal \SaB\ tables provide a complete representation of thermal neutron scattering by molecules and crystalline solids. Cross sections for (coherent and incoherent) elastic and (incoherent) inelastic scattering are found on the tables. A coupled energy/angle representation is used to describe the spectra of inelastically scattered neutrons. Angular distributions for elastic scattering are also provided.
+
+Four unique blocks of data are associated with \SaB\ tables. We now briefly describe each of the four data blocks and reference the sections in which their formats are detailed.
+
+\begin{enumerate}
+  \item \textbf{\Block{ITIE}}---contains the energy-dependent incoherent inelastic scattering cross sections. The \Block{ITIE}  always exists. See \Sectionref{sec:ITIEBlock}.
+  \item \textbf{\Block{ITCE}}---contains the energy-dependent elastic scattering cross sections. The \Block{ITCE} exists if the material has coherent or incoherent elastic scattering; that is, if \jxs{4}$\neq0$. See \Sectionref{sec:ITCEBlock}.
+  \item \textbf{\Block{ITXE}}---contains coupled energy/angle distributions for incoherent inelastic scattering. The \Block{ITXE} always exists. See \Sectionref{sec:ITXEBlock}.
+  \item \textbf{\Block{ITCA}}---contains angular distributions for elastic scattering. The \Block{ITCA} exists if \jxs{4}$\neq0$ and \nxs{6}$\neq-1$. See \Sectionref{sec:ITCABlock}.
+\end{enumerate}
+
 \subsection{\NXS\ Array}\label{sec:NXSThermalScattering}
 
-\begin{table} \centering
-  \begin{tabular}{rll}
-    \toprule
-    Element  & Name   & Description \\
-    \midrule
-    1        & ---    & Length of second block of data (\XSS\ array) \\
-    2        & IDPNI  & Inelastic scattering mode \\
-    3        & NIL    & Inelastic dimensioning parameter \\
-    4        & NIEB   & Number of inelastic exiting energies \\
-    5        & IDPNC  & Elastic scattering mode \\
-    6        & NCL    & Elastic dimensioning parameter \\
-    7        & IFENG  & Secondary energy mode \\
-             & \ldots & \\
-    16       & ---    & \\
-    \bottomrule
-  \end{tabular}
+\begin{table}[H] \centering
   \caption{\NXS\ array element definitions for thermal scattering \ACE\ Table.}
   \label{tab:NXSThermalScattering}
+  \begin{tabular}{rll}
+    \toprule
+    Element & Name         & Description                                                \\
+    \midrule
+    1       & ---          & Length of second block of data (\XSS\ array)               \\
+    2       & \var{IDPNI}  & Inelastic scattering mode                                  \\
+    3       & \var{NIL}    & Inelastic dimensioning parameter                           \\
+    4       & \var{NIEB}   & Number of inelastic exiting energies                       \\
+    5       & \var{IDPNC}  & Elastic scattering mode (coherent=4, incoherent$\ne$4)     \\
+    6       & \var{NCL}    & Elastic dimensioning parameter                             \\
+    7       & \var{IFENG}  & Secondary energy mode (discrete=0, skewed=1, continuous=2) \\
+            & \ldots       &                                                            \\
+    16      & ---          &                                                            \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
 \subsection{\JXS\ Array}\label{sec:JXSThermalScattering}
-\begin{table} \centering
-  \begin{tabular}{rll}
-    \toprule
-    Element  & Name   & Location Description \\
-    \midrule
-    1        & ITIE   & Inelastic energy table \\
-    2        & ITIX   & Inelastic cross sections \\
-    3        & ITXE   & Inelastic energy/angle distributions \\
-    4        & ITCX   & Elastic cross sections \\
-    5        & ITCA   & Elastic angular distributions \\
-             & \ldots & \\
-    32       & ---    & \\
-    \bottomrule
-  \end{tabular}
+\begin{table}[H] \centering
   \caption{\JXS\ array element definitions for thermal scattering \ACE\ Table.}
   \label{tab:JXSThermalScattering}
+  \begin{tabular}{rll}
+    \toprule
+    Element & Name   & Location Description                 \\
+    \midrule
+    1       & ITIE   & Inelastic energy table               \\
+    2       & ITIX   & Inelastic cross sections             \\
+    3       & ITXE   & Inelastic energy/angle distributions \\
+    4       & ITCE   & Elastic energy table                 \\
+    5       & ITCX   & Elastic cross sections               \\
+    6       & ITCA   & Elastic angular distributions        \\
+            & \ldots &                                      \\
+    32      & ---    &                                      \\
+    \bottomrule
+  \end{tabular}
 \end{table}
 
+\subsection{Format of Individual Data Blocks}
+\subsubsection{\textsf{ITIE} Block}\label{sec:ITIEBlock}
 
+The format of the \Block{ITIE} is given in \Tableref{tab:ITIEBlock}. The index at the start of the block is \startblock{ITIE}=\jxs{1}. Note that \jxs{2}=\jxs{1}+1+$N_{in}$. Linear-linear interpolation is assumed between adjacent energies.
+
+\begin{BlockTable}{ITIE}
+  \startblock{ITIE}            & $N_{in}$                           & Number of inelastic energies \\
+  \startblock{ITIE}+1          & $E_{in}(l),l=1,\ldots,N_{in}$      & Energies                     \\
+  \startblock{ITIE}+1+$N_{in}$ & $\sigma_{in}(l),l=1,\ldots,N_{in}$ & Inelastic cross sections
+  \label{tab:ITIEBlock}
+\end{BlockTable}
+
+\subsubsection{\textsf{ITCE} Block}\label{sec:ITCEBlock}
+
+The format of the \Block{ITCE} is given in \Tableref{tab:ITCEBlock}. The index at the start of the block is \startblock{ITCE}=\jxs{4}.
+
+\begin{BlockTable}{ITCE}
+  \startblock{ITCE}            & $N_{el}$                      & Number of elastic energies \\
+  \startblock{ITCE}+1          & $E_{el}(l),l=1,\ldots,N_{el}$ & Energies                   \\
+  \startblock{ITCE}+1+$N_{el}$ & $P(l),l=1,\ldots,N_{el}$      & (See below)
+  \label{tab:ITCEBlock}
+\end{BlockTable}
+
+For incoherent elastic scattering (\nxs{5}$\neq4$),
+\begin{equation}
+  P(l) = \sigma_{el}(E_{el}(l))
+\end{equation}
+with linear-linear interpolation between points. For coherent elastic scattering (\nxs{5}$=4$),
+\begin{equation}
+  P(l) = E\cdot\sigma_{el}(E), \qquad E_{el}(l) \le E < E_{el}(l+1).
+  \label{eq:CoherentP}
+\end{equation}
+In this case, the energies $E_{el}(l)$ correspond to Bragg edges, and between two energies the cross section is determined by inverting \Equationref{eq:CoherentP}:
+\begin{equation}
+  \sigma_{el}(l) = \frac{P(l)}{E}, \qquad E_{el}(l) \le E < E_{el}(l+1).
+\end{equation}
+Also note that $\sigma_{el}(E)=0$ below $E_{el}(1)$. However, above $E_{el}(N_{el})$, $\sigma_{el}(E) = P(N_{el})/E$.
+
+\subsubsection{\textsf{ITXE} Block}\label{sec:ITXEBlock}
+
+The format of the coupled energy/angle distribution for incoherent inelastic scattering is governed by the value of \nxs{7}. There are three possibilities:
+\begin{description}
+  \item[$\nxs{7}=0$] equally-likely discrete cosines and energies
+  \item[$\nxs{7}=1$] skewed distribution of discrete cosines and energies
+  \item[$\nxs{7}=2$] continuous distribution of energies and equally-likely discrete cosines
+\end{description}
+
+The format of the \Block{ITXE} for $\nxs{7}<2$ is given in \Tableref{tab:ITXEBlock}. The index at the start of the block is \startblock{ITXE}=\jxs{3}. For each incident energy from the \Block{ITIE}, $N'=$\nxs{4} discrete outgoing energies are given. For each pair of incident and outgoing energies, $N_\mu=$\nxs{3}+1 discrete cosines are given. The incident inelastic energy grid $E_{in}(l)$ is given in the \Block{ITIE}, and linear-linear interpolation is assumed between adjacent values of $E_{in}$.
+
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:nieb} The number of outgoing energies \var{NIEB} is determined as \nxs{4}.
+  \end{TableNotes}
+  \begin{BlockTable}{ITXE}
+  \startblock{ITXE}                       & $E_1^{out}[E_{in}(1)]$                     & First of \var{NIEB}\tnotex{tn:nieb} outgoing energies for inelastic scattering at $E_{in}(1)$    \\
+  \startblock{ITXE}+1                     & $\mu_l(1\rightarrow 1), l=1,\ldots,N_\mu$  & Discrete cosines for scattering from $E_{in}(1)$ to $E_1^{out}[E_{in}(1)]$    \\
+  \startblock{ITXE}+1+$N_\mu$             & $E_2^{out}[E_{in}(1)]$                     & Second of \var{NIEB} outgoing energies for inelastic scattering at $E_{in}(1)$   \\
+  \startblock{ITXE}+2+$N_\mu$             & $\mu_l(1\rightarrow 2), l=1,\ldots,N_\mu$  & Discrete cosines for scattering from $E_{in}(1)$ to $E_2^{out}[E_{in}(1)]$    \\
+  \multicolumn{1}{c}{\vdots}              & \multicolumn{1}{c}{\vdots}                 & \multicolumn{1}{c}{\vdots}                                                    \\
+  \startblock{ITXE}+($N'$-1)(1+$N_\mu$)   & $E_{N'}^{out}[E_{in}(1)]$                  & Second of \var{NIEB} outgoing energies for inelastic scattering at $E_{in}(1)$   \\
+  \startblock{ITXE}+($N'$-1)(1+$N_\mu$)+1 & $\mu_l(1\rightarrow N'), l=1,\ldots,N_\mu$ & Discrete cosines for scattering from $E_{in}(1)$ to $E_{N'}^{out}[E_{in}(1)]$ \\
+  \midrule
+  \multicolumn{3}{l}{(Repeat for all remaining values of $E_{in}$)}
+  \label{tab:ITXEBlock}
+  \end{BlockTable}
+\end{ThreePartTable}
+
+When $\nxs{7}=0$, each of the \nxs{4} discrete outgoing energies for a given incident energy are equally probable. When $\nxs{7}=1$, the selection of the discrete outgoing energies is skewed such that the first two and last two outgoing energies have a lower probability of being selected than all other outgoing energies. The first and last energies have a relative probability of 1, the second and second-to-last energies have a relative probability of 4, and all other energies have a relative probability of 10.
+
+Because the use of discrete outgoing energies and cosines can result in unphysical spikes in the neutron flux spectrum at thermal energies, some Monte Carlo codes attempt to ``smear'' the outgoing energies and cosines to produce a smoother distribution (that more closely approximates a continuous distribution with $\nxs{7}=2$).
+
+\todo[inline]{Describe the format for $\nxs{7}=2$.}
+
+\subsubsection{\textsf{ITCA} Block}\label{sec:ITCABlock}
+
+The format of the \Block{ITCA} is given in \Tableref{tab:ITCABlock}. The index at the start of the block is \startblock{ITCA}=\jxs{6}. For each incident energy from the \Block{ITCE}, $N_\mu=$\nxs{6}+1 discrete cosines are given.
+
+\begin{BlockTable}{ITCA}
+  \startblock{ITCA}                     & $\mu_l[E_{el}(1)], l=1,\ldots,N_\mu$      & Discrete cosines for elastic scattering at $E_{el}(1)$ \\
+  \startblock{ITCA}+$N_\mu$             & $\mu_l[E_{el}(2)], l=1,\ldots,N_\mu$      & Discrete cosines for elastic scattering at $E_{el}(2)$ \\
+  \multicolumn{1}{c}{\vdots}            & \multicolumn{1}{c}{\vdots}                & \multicolumn{1}{c}{\vdots}                             \\
+  \startblock{ITCA}+($N_{el}$-1)$N_\mu$ & $\mu_l[E_{el}(N_{el})], l=1,\ldots,N_\mu$ & Discrete cosines for elastic scattering at $E_{el}(N_{el})$
+  \label{tab:ITCABlock}
+\end{BlockTable}
+
+The incident elastic energy grid $E_{el}(l)$ is given in the \Block{ITCE}. Linear-linear interpolation is assumed between adjacent values of $E_{el}$.
