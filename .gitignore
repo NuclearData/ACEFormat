@@ -12,3 +12,4 @@ _minted*
 *.bcf
 *.blg
 *.run.xml
+*.synctex.gz
