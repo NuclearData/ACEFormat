@@ -1,6 +1,7 @@
-\documentclass[11pt,letter]{ACEFormat}
+\documentclass[11pt,paper=letter]{ACEFormat}
 \usepackage[T1]{fontenc}
 \usepackage[svgnames]{xcolor}
+\usepackage[hmargin=1in, vmargin=1.5in]{geometry}
 \usepackage{authblk}
 \usepackage{minted}
 \usepackage{enumitem}
@@ -17,9 +18,23 @@
 \usepackage{multirow}
 \usepackage{titlesec}
 \usepackage{float}
+\usepackage{fancyhdr}
 
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=RoyalBlue]{hyperref}
 \usepackage{footnotebackref}
+
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{%
+  \markboth{\thesection. #1}{}%
+}
+\fancypagestyle{front}{%
+  \fancyhead[L,C]{}%
+}
+\fancypagestyle{plain}{%
+  \renewcommand{\headrulewidth}{0pt}
+  \fancyhead{}%
+  \fancyfoot{}
+}
 
 \title{A Compact ENDF (ACE) Format Specification}
 \date{}
@@ -35,19 +50,9 @@
 
 \addbibresource{./src/References.bib}
 
-% \includeonly{
-%   frontmatter,
-%   Introduction,
-%   Header,
-%   UniqueIdentifier,
-%   ContinuousEnergyNeutron,
-%   % Dosimetry,
-%   % ThermalScattering,
-%   % ContinuousEnergyPhoton,
-%   % backmatter
-% }
 \begin{document}
 \input{src/frontmatter}
+\input{src/mainmatter}
 \input{src/Introduction}
 \input{src/Header}
 \input{src/UniqueIdentifier}
