@@ -465,12 +465,15 @@ In the following tables, we provide relative locations of data in the \var{LDAT}
 \end{ThreePartTable}
 
 \subsubsubsection{\var{LAW}=3---Level Scattering}\label{sec:LAW3}
-\begin{align}
-  \var{LDAT}(1) &= \left( \frac{A+1}{A} \right)|Q| \\
-  \var{LDAT}(2) &= \left( \frac{A}{A+1} \right)^{2} \\
-  E_{\mathrm{out}}^{\mathrm{CM}} &= \var{LDAT}(2)*(E-\var{LDAT}(1))
-  \label{eq:LAW3}
-\end{align}
+\begin{LAWTable}{\var{LAW}=3---Level Scattering}
+  \var{LDAT}(1) & & $ (A+1)/A|Q|$ \\
+  \var{LDAT}(2) & & $ (A/(A+1))^{2}$
+  \label{tab:LAW3}
+\end{LAWTable}
+The outgoing center-of-mass energy is calculated as:
+\begin{equation}
+  E_{\mathrm{out}}^{\mathrm{CM}} = \var{LDAT}(2)*(E-\var{LDAT}(1)),
+\end{equation}
 where
 \begin{align*}
   E_{\mathrm{out}}^{\mathrm{CM}} &= \textnormal{outgoing \CM\ energy} \\
