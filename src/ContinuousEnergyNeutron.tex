@@ -805,6 +805,11 @@ The data associated with each incident neutron energy begins at the location $\v
   \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(N_{E})}$}---same format for $E(1)$}
   \label{tab:LAW61Distribution}
 \end{LAWTable}
+\var{INTT} has two valid values:
+\begin{description}
+  \item[\var{INTT}=1] histogram distribution, and 
+  \item[\var{INTT}=2] linear-linear distribution.
+\end{description}
 If the value of $\var{INTT}'>10$, then
 \begin{equation*}
   \var{INTT}' = 10N_{D}+\var{INTT}
@@ -824,6 +829,11 @@ The $J$-th array for the tabular angular distribution has the form shown in \Tab
   \var{LDAT}(\var{L}+3+$2N_{P}$) & $\CDF(j),j=1,\ldots,N_{P}$              & Cumulative density function
   \label{tab:LAW61AngularDistribution}
 \end{LAWTable}
+Valid values for the interpolation flag, \var{JJ}, are (as for \var{INTT}):
+\begin{description}
+  \item[\var{JJ}=1] histogram distribution, and 
+  \item[\var{JJ}=2] linear-linear distribution.
+\end{description}
 
 \subsubsubsection{\var{LAW}=66---$N$-body phase space distribution}\label{sec:LAW66}
 \begin{LAWTable}{\var{LAW}=66 (From ENDF-6 \MF=6 \var{LAW}=6)}
