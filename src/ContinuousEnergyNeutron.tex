@@ -521,21 +521,22 @@ The data associated with each incident neutron energy begins at the location $\v
   \label{tab:LAW4Distribution}
 \end{LAWTable}
 
+\paragraph{Combined interpolation parameter.}\label{par:INTT}
 The first element in the data is $\var{INTT}'$ or the interpolation parameter, which is a combination of two other parameters:
 \begin{enumerate}
   \item the number of discrete photon lines, $N_{D}$, and
-  \item the interpolation scheme for the subsequent data, $\var{INTT}$.
+  \item the interpolation scheme for the subsequent data, \var{INTT}, which has two valid values:
+    \begin{description}
+      \item[\var{INTT}=1] histogram distribution, and 
+      \item[\var{INTT}=2] linear-linear distribution.
+    \end{description}
 \end{enumerate}
-\var{INTT} has two valid values:
-\begin{description}
-  \item[\var{INTT}=1] histogram distribution, and 
-  \item[\var{INTT}=2] linear-linear distribution.
-\end{description}
-If the value of $\var{INTT}'>10$, then
-\begin{equation*}
-  \var{INTT}' = 10N_{D}+\var{INTT}
-\end{equation*}
-where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_{p}$ points describe discrete photon lines. The remaining ($N_{p}-N_{D}$) values describe a continuous distribution. In this way, the distribution may be discrete, continuous, or a discrete distribution superimposed upon a continuous background.
+Given the definition of $N_{D}$ and \var{INTT}, the interpolation parameter, $\var{INTT}'$, is defined as the combination of $N_{D}$ and \var{INTT}:
+\begin{equation}
+  \var{INTT}' = 10N_{D}+\var{INTT}.
+  \label{eq::INTT'}
+\end{equation}
+Since $N_D$ describe the number of \emph{discrete} photon lines, the remaining ($N_{p}-N_{D}$) values describe a continuous distribution. In this way, the distribution may be discrete, continuous, or a discrete distribution superimposed upon a continuous background.
 
 \subsubsubsection{\var{LAW}=5---General Evaporation Spectrum}\label{sec:LAW5}
 \begin{LAWTable}{\var{LAW}=5 (From ENDF-6, \MF=5, \var{LF}=5)}
@@ -750,24 +751,9 @@ The data associated with each incident neutron energy begins at the location $\v
   \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(N_{E})}$}---same format for $E(1)$}
   \label{tab:LAW44Distribution}
 \end{LAWTable}
+The interpolation parameter, $\var{INTT}'$ has the same definition as in \var{LAW}=4, described in Paragraph~\ref{par:INTT}.
 
-The first element in the data is $\var{INTT}'$ or the interpolation parameter, which is a combination of two other parameters:
-\begin{enumerate}
-  \item the number of discrete photon lines, $N_{D}$, and
-  \item the interpolation scheme for the subsequent data, $\var{INTT}$.
-\end{enumerate}
-\var{INTT} has two valid values:
-\begin{description}
-  \item[\var{INTT}=1] histogram distribution, and 
-  \item[\var{INTT}=2] linear-linear distribution.
-\end{description}
-If the value of $\var{INTT}'>10$, then
-\begin{equation*}
-  \var{INTT}' = 10N_{D}+\var{INTT}
-\end{equation*}
-where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_{p}$ points describe discrete photon lines. The remaining ($N_{p}-N_{D}$) values describe a continuous distribution. In this way, the distribution may be discrete, continuous, or a discrete distribution superimposed upon a continuous background.
-
-The angular distributions for neutrons are then sampled from:
+The angular distributions for neutrons are sampled from:
 \begin{equation}
   p(\mu,E_{\mathrm{in}},E_{\mathrm{out}}) = \frac{1}{2}\frac{a}{\sinh(a)}\left[ \cosh(a\mu)+r\sinh(a\mu) \right].
   \label{eq:LAW44p}
@@ -805,16 +791,7 @@ The data associated with each incident neutron energy begins at the location $\v
   \multicolumn{3}{c}{{\bfseries Data for $\mathbf{E(N_{E})}$}---same format for $E(1)$}
   \label{tab:LAW61Distribution}
 \end{LAWTable}
-\var{INTT} has two valid values:
-\begin{description}
-  \item[\var{INTT}=1] histogram distribution, and 
-  \item[\var{INTT}=2] linear-linear distribution.
-\end{description}
-If the value of $\var{INTT}'>10$, then
-\begin{equation*}
-  \var{INTT}' = 10N_{D}+\var{INTT}
-\end{equation*}
-where \var{INTT} is the interpolation scheme and the first $N_{D}$ values of $N_{p}$ points describe discrete photon lines. The remaining ($N_{p}-N_{D}$) values describe a continuous distribution. In this way, the distribution may be discrete, continuous, or a discrete distribution superimposed upon a continuous background.
+The interpolation parameter, $\var{INTT}'$ has the same definition as in \var{LAW}=4, described in Paragraph~\ref{par:INTT}.
 
 The $J$-th array for the tabular angular distribution has the form shown in \Tableref{tab:LAW61AngularDistribution}. For the angular distribution, the locators \var{L} are relative to \jxs{11} for neutron reactions or \jxs{19} for photon-producing reactions. Thus, 
 \begin{align*}
@@ -829,7 +806,7 @@ The $J$-th array for the tabular angular distribution has the form shown in \Tab
   \var{LDAT}(\var{L}+3+$2N_{P}$) & $\CDF(j),j=1,\ldots,N_{P}$              & Cumulative density function
   \label{tab:LAW61AngularDistribution}
 \end{LAWTable}
-Valid values for the interpolation flag, \var{JJ}, are (as for \var{INTT}):
+Valid values for the interpolation flag, \var{JJ}, are the same as for \var{INTT}:
 \begin{description}
   \item[\var{JJ}=1] histogram distribution, and 
   \item[\var{JJ}=2] linear-linear distribution.
