@@ -14,45 +14,31 @@ Four unique blocks of data are associated with \SaB\ tables. We now briefly desc
 
 \subsection{\NXS\ Array}\label{sec:NXSThermalScattering}
 
-\begin{table}[H] \centering
-  \caption{\NXS\ array element definitions for thermal scattering \ACE\ Table.}
+\begin{NXSTable}{thermal scattering}
+  1  & ---         & Length of second block of data (\XSS\ array)               \\
+  2  & \var{IDPNI} & Inelastic scattering mode                                  \\
+  3  & \var{NIL}   & Inelastic dimensioning parameter                           \\
+  4  & \var{NIEB}  & Number of inelastic exiting energies                       \\
+  5  & \var{IDPNC} & Elastic scattering mode (coherent=4, incoherent$\ne$4)     \\
+  6  & \var{NCL}   & Elastic dimensioning parameter                             \\
+  7  & \var{IFENG} & Secondary energy mode (discrete=0, skewed=1, continuous=2) \\
+     & \ldots      & \\
+  16 & ---         & 
   \label{tab:NXSThermalScattering}
-  \begin{tabular}{rll}
-    \toprule
-    Element & Name         & Description                                                \\
-    \midrule
-    1       & ---          & Length of second block of data (\XSS\ array)               \\
-    2       & \var{IDPNI}  & Inelastic scattering mode                                  \\
-    3       & \var{NIL}    & Inelastic dimensioning parameter                           \\
-    4       & \var{NIEB}   & Number of inelastic exiting energies                       \\
-    5       & \var{IDPNC}  & Elastic scattering mode (coherent=4, incoherent$\ne$4)     \\
-    6       & \var{NCL}    & Elastic dimensioning parameter                             \\
-    7       & \var{IFENG}  & Secondary energy mode (discrete=0, skewed=1, continuous=2) \\
-            & \ldots       &                                                            \\
-    16      & ---          &                                                            \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+\end{NXSTable}
 
 \subsection{\JXS\ Array}\label{sec:JXSThermalScattering}
-\begin{table}[H] \centering
-  \caption{\JXS\ array element definitions for thermal scattering \ACE\ Table.}
+\begin{JXSTable}{thermal scattering}
+  1  & \var{ITIE} & Inelastic energy table               \\
+  2  & \var{ITIX} & Inelastic cross sections             \\
+  3  & \var{ITXE} & Inelastic energy/angle distributions \\
+  4  & \var{ITCE} & Elastic energy table                 \\
+  5  & \var{ITCX} & Elastic cross sections               \\
+  6  & \var{ITCA} & Elastic angular distributions        \\
+     & \ldots     & \\
+  32 & ---        &
   \label{tab:JXSThermalScattering}
-  \begin{tabular}{rll}
-    \toprule
-    Element  & Name       & Location Description                 \\
-    \midrule
-    1        & \var{ITIE} & Inelastic energy table               \\
-    2        & \var{ITIX} & Inelastic cross sections             \\
-    3        & \var{ITXE} & Inelastic energy/angle distributions \\
-    4        & \var{ITCE} & Elastic energy table                 \\
-    5        & \var{ITCX} & Elastic cross sections               \\
-    6        & \var{ITCA} & Elastic angular distributions        \\
-             & \ldots     & \\
-    32       & ---        & \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+\end{JXSTable}
 
 \subsection{Format of Individual Data Blocks}
 \subsubsection{\textsf{ITIE} Block}\label{sec:ITIEBlock}
