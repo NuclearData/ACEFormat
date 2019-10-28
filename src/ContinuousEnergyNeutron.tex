@@ -49,7 +49,7 @@ The format of individual blocks found on neutron transport tables is identical f
          & \ldots     & \\
       14 &            & Reserved\tnotex{tn:Reserved} \\
       15 &            & Reserved\tnotex{tn:Reserved} \\
-      16 &            & Reserved\tnotex{tn:Reserved} \\
+      16 &            & Reserved\tnotex{tn:Reserved}
     \label{tab:NXSContinuousEnergyNeutron}
   \end{NXSTable}
 \end{ThreePartTable}
@@ -1124,7 +1124,7 @@ The format of the \Block{UNR} is given in \Tableref{tab:UNRBlock}. The $P(i,j,k)
   \item $k=1,\ldots,M$,
 \end{itemize}
 are what make up the probability tables. The argument $j$ has special meaning depending on its value as shown in \Tableref{tab:Argumentj}.
-\begin{table}[h!bt] \centering
+\begin{table} \centering
   \caption{Possible values for the $j$ argument.}
   \begin{tabular}{ll}
     \toprule
@@ -1168,18 +1168,17 @@ The ordering of the probability table entries, $P(i,j,k)$ is given in \Tableref{
   \item[$\dagger$] \label{tn:CumulativeProbabilities} The cumulative probabilities are monotonically increasing from an implied (but not included) lower value of zero to the upper value of $P(i,1,k=M)=1.0$.
   \end{TableNotes}
 \begin{XSSTable}{Order of probability table elements $P(i,j,k)$}
-  \var{PTABLE}         & $\CDF_{1}$              & Cumulative probabilities\tnotex{tn:CumulativeProbabilities}\ for energy $i=1$ \\
-  \var{PTABLE}+$M$     & $\sigma_{t,1}$          & Total cross section/factors for energy $i=1$ \\
-  \var{PTABLE}+$2M$    & $\sigma_{s,1}$          & Elastic cross section/factors for energy $i=1$ \\
-  \var{PTABLE}+$3M$    & $\sigma_{f,1}$          & Fission cross section/factors for energy $i=1$ \\
-  \var{PTABLE}+$4M$    & $\sigma_{(n,\gamma),1}$ & $(n,\gamma)$ cross section/factors for energy $i=1$ \\
-  \var{PTABLE}+$5M$    & $H_{1}$                 & Heating number/factors for energy $i=1$ \\
-  \ldots \\
-  \var{PTABLE}         & \multirow{2}{*}{$\CDF_{i}$}              & \multirow{2}{*}{Cumulative probabilities for energy $i$} \\
-  \hfill+$(i-1)*6M$    &                         & \\
-  \ldots \\
-  \var{PTABLE}         & \multirow{2}{*}{$H_{N}$}                 & \multirow{2}{*}{Heating numbers/factors for energy $i=N$} \\
-  \hfill+$(N-1)*6M+5M$ &                         & 
+  \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
+  \var{PTABLE}         & $\CDF_{1}(l),l=1,\ldots,M$              & Cumulative probabilities\tnotex{tn:CumulativeProbabilities}\ for energy $i=1$ \\
+  \var{PTABLE}+$M$     & $\sigma_{t,1}(l),l=1,\ldots,M$          & Total cross section/factors for energy $i=1$ \\
+  \var{PTABLE}+$2M$    & $\sigma_{s,1}(l),l=1,\ldots,M$          & Elastic cross section/factors for energy $i=1$ \\
+  \var{PTABLE}+$3M$    & $\sigma_{f,1}(l),l=1,\ldots,M$          & Fission cross section/factors for energy $i=1$ \\
+  \var{PTABLE}+$4M$    & $\sigma_{(n,\gamma),1}(l),l=1,\ldots,M$ & $(n,\gamma)$ cross section/factors for energy $i=1$ \\
+  \var{PTABLE}+$5M$    & $H_{1}(l),l=1,\ldots,M$                 & Heating number/factors for energy $i=1$ \\
+  \cmidrule{1-3}
+  \multicolumn{3}{c}{\bfseries Data for incident energy 2---same format for $E(1)$} \\
+  \multicolumn{3}{c}{\ldots} \\
+  \multicolumn{3}{c}{\bfseries Data for incident energy $N$---same format for $E(1)$}
   \label{tab:PTableOrder}
 \end{XSSTable}
 \end{ThreePartTable}

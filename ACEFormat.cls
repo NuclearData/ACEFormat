@@ -16,6 +16,8 @@
 \RequirePackage{amsmath}
 \RequirePackage{collcell}
 
+\addtokomafont{section}{\clearpage}
+
 \DeclareNewSectionCommand[
   style=section,
   counterwithin=subsubsection,
