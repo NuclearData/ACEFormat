@@ -35,21 +35,21 @@ The format of individual blocks found on neutron transport tables is identical f
   \item[$\ddagger$] \label{tn:Reserved} These entries are reserved for the use of transport codes (i.e., MCNP).
   \end{TableNotes}
   \begin{NXSTable}{continuous-energy neutron}
-      1  & ---        & Length of second block of data (\XSS\ array) \\
-      2  & \var{ZA}   & $1000*Z+A$ \\
-      3  & \var{NES}  & Number of energies \\
-      4  & \var{NTR}  & Number of reactions excluding elastic scattering \\
-      5  & \var{NR}   & Number of reactions having secondary neutrons excluding elastic scattering \\
-      6  & \var{NTRP} & Number of photon production reactions \\
-         & \ldots     & \\
-      8  & \var{NPCR} & Number of delayed neutron precurser families \\
-      9  & \var{S} & Excited state\tnotex{tn:2.0.0} \\
-      10 & \var{Z} & Atomic number\tnotex{tn:2.0.0} \\ 
-      11 & \var{A} & Atomic mass number\tnotex{tn:2.0.0} \\ 
-         & \ldots     & \\
-      14 &            & Reserved\tnotex{tn:Reserved} \\
-      15 &            & Reserved\tnotex{tn:Reserved} \\
-      16 &            & Reserved\tnotex{tn:Reserved}
+      1  & ---         & Length of second block of data (\XSS\ array) \\
+      2  & \var{ZA}    & $1000*Z+A$ \\
+      3  & \var{NES}   & Number of energies \\
+      4  & \var{NTR}   & Number of reactions excluding elastic scattering \\
+      5  & \var{NR}    & Number of reactions having secondary neutrons excluding elastic scattering \\
+      6  & \var{NTRP}  & Number of photon production reactions \\
+      7  & \var{NTYPE} & Number of charged particle types for which production data is given \\
+      8  & \var{NPCR}  & Number of delayed neutron precurser families \\
+      9  & \var{S}     & Excited state\tnotex{tn:2.0.0} \\
+      10 & \var{Z}     & Atomic number\tnotex{tn:2.0.0} \\ 
+      11 & \var{A}     & Atomic mass number\tnotex{tn:2.0.0} \\ 
+         & \ldots      & \\
+      14 &             & Reserved\tnotex{tn:Reserved} \\
+      15 &             & Reserved\tnotex{tn:Reserved} \\
+      16 &             & Reserved\tnotex{tn:Reserved}
     \label{tab:NXSContinuousEnergyNeutron}
   \end{NXSTable}
 \end{ThreePartTable}
@@ -85,7 +85,9 @@ The format of individual blocks found on neutron transport tables is identical f
     26 & \var{DNEDL} & Table of delayed neutron energy distribution locators \\
     27 & \var{DNED}  & Delayed neutron energy distributions \\
        & \ldots      & \\
-    32 & ---         & 
+    30 & \var{PTYPE} & \\
+    31 & \var{NTRO}  & \\
+    32 & \var{IXS}   & 
   \label{tab:JXSContinuousEnergyNeutron}
 \end{JXSTable}
 
