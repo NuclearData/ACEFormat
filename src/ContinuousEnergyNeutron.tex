@@ -25,6 +25,7 @@ The format of individual blocks found on neutron transport tables is identical f
   \item \textbf{\Block{FIS}}---contains the total fission cross section tabulated on the ESZ energy grid. The \Block{FIS} exists if \jxs{21}$\neq0$. See \Sectionref{sec:FISBlock}.
   \item \textbf{\Block{UNR}}---contains the unresolved resonance range probability tables. The \Block{UNR} exists if \jxs{23}$\neq0$. See \Sectionref{sec:UNRBlock}.
   \item \textbf{\Block{PTYPE}}---contains a list of particle types for which production data will be given. The \Block{PTYPE} exists if \jxs{30}$\neq0$. See \Sectionref{sec:PTYPEBlock}.
+  \item \textbf{\Block{NTRO}}---contains the number of reactions that produce the corresponding particle type given in the \Block{PTYPE}. The \Block{NTRO} exists if \jxs{31}$\neq0$. See \Sectionref{sec:NTROBlock}.
 \end{enumerate}
 
 \clearpage
@@ -87,7 +88,7 @@ The format of individual blocks found on neutron transport tables is identical f
     27 & \var{DNED}  & Delayed neutron energy distributions \\
        & \ldots      & \\
     30 & \var{PTYPE} & Particle type array \\
-    31 & \var{NTRO}  & \\
+    31 & \var{NTRO}  & Array containing the number of particle production reactions \\
     32 & \var{IXS}   & 
   \label{tab:JXSContinuousEnergyNeutron}
 \end{JXSTable}
@@ -1213,3 +1214,17 @@ $\var{IP}_{1},\ldots,\var{IP}_{\var{NMT}}$ are particle identifiers given as fol
   \item $\var{IP} = 33$ for helions
   \item $\var{IP} = 34$ for aphas
 \end{itemize}
+
+\subsubsection{\textsf{NTRO} Block}\label{sec:NTROBlock}
+
+The \Block{NTRO} is gives the number of reactions for each of the particle types defined in the \Block{PTYPE}. If the \Block{NTRO} is present, the \Block{NTRO} starts at the index \var{LTYPE} = \jxs{31}.
+
+The format of the \Block{NTRO} is given in \Tableref{tab:NTROBlock}.
+
+\begin{BlockTable}{NTRO}
+  \var{LTYPE}               & \var{NP}$_{1}$         & Number of reactions producing the first particle type \\
+  \var{LTYPE}+1             & \var{NP}$_{2}$         & Number of reactions producing the second particle type \\
+  \ldots \\
+  \var{LTYPE}+\var{NTYPE}-1 & \var{NP}$_{\var{NMT}}$ & Number of reactions producing the last particle type
+  \label{tab:PTYPEBlock}
+\end{BlockTable}
