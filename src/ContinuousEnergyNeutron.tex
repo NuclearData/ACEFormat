@@ -109,7 +109,7 @@ The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
   \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{NU} \& \textsf{DNU} Block}\label{sec:NUBlock}\label{sec:DNUBlock}
+\subsubsection{\textsf{NU} and \textsf{DNU} Block}\label{sec:NUBlock}\label{sec:DNUBlock}
 
 The \Block{NU} is used to specify prompt and/or total \nubar\ and is present only if \jxs{2} > 0. Delayed \nubar\ data is specified in the \Block{DNU} (which is only present if \jxs{24} > 0) but it shares some of the tables defined in this section.
 
@@ -184,7 +184,7 @@ The \Block{BDD} is used to specify basic delayed neutron precursor data and is p
 
 The \Block{BDD} is followed by the \Block{DNEDL} and the \Block{DNED} blocks which gives the locators (\Block{DNEDL}) and the delayed neutron energy distributions (\Block{DNEDL}) for every delayed neutron precursor group.
 
-\subsubsection{\textsf{MTR} \& \textsf{MTRP} Blocks}\label{sec:MTRBlock}\label{sec:MTRPBlock}
+\subsubsection{\textsf{MTR} and \textsf{MTRP} Blocks}\label{sec:MTRBlock}\label{sec:MTRPBlock}
 The format of the \Block{MTR} (for incident neutron reactions) and \Block{MTRP} (for photon production reactions) is given in \Tableref{tab:MTRBlock}. The starting index depends on whether it is the \Block{MTR} or \Block{MTRP} and are given in \Tableref{tab:LMT_NMT}.
 \begin{table}[h!] \centering
   \begin{tabular}[h]{lll}
@@ -238,7 +238,7 @@ The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$
 \end{description}
 Thus if \var{TY}$_{i}$=+3, three neutrons are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission. The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption (ENDF reactions \MT>100); no neutrons are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent neutron multiplicities. The number of secondary neutrons released is determined from the yield data found in the \Block{DLW}. The \MT$_{i}$s are given in the \Block{MTR}.
 
-\subsubsection{\textsf{LSIG}\& \textsf{LSIGP} Blocks}\label{sec:LSIGBlock}\label{sec:LSIGPBlock}
+\subsubsection{\textsf{LSIG} and \textsf{LSIGP} Blocks}\label{sec:LSIGBlock}\label{sec:LSIGPBlock}
 The \Block{LSIG} and \Block{LSIGP} give the locators for cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data. In this case, the data is the cross section values. The format of the \Block{LSIG} (for incident neutron cross sections) and \Block{LSIGP} (for photon production cross sections) is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}. The format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock}.
 
 All locators are relative to \jxs{7} for the \Block{LSIG} or \jxs{15} for the \Block{LSIGP}. That is, \var{LXS}=\jxs{6} for the \Block{LSIG} and \var{LXS}=\jxs{14} for the \Block{LSIGP}. So the actual cross section data begins at the index \LOC{A}+\var{LXS}. The \MT s are given in the \Block{MTR} and the \Block{MTRP} for the \Block{LSIG} and the \Block{LSIGP} respectively. \LOC{A}{i} must be monotonically increasing.
@@ -351,7 +351,7 @@ Note: \textbf{All $L_{C}$ locators point to data \emph{relative} to \jxs{9}.}
 \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{LDLW} \& \textsf{LDLWP} \& \textsf{DNEDL} Blocks}\label{sec:LDLWBlock}\label{sec:LDLWPBlock}\label{sec:DNEDLBlock}
+\subsubsection{\textsf{LDLW}, \textsf{LDLWP} and \textsf{DNEDL} Blocks}\label{sec:LDLWBlock}\label{sec:LDLWPBlock}\label{sec:DNEDLBlock}
 
 The \Block{LDLW} and \Block{LDLW} give the locators for the energy distribution for every reaction that produces secondary neutrons or secondary photons (respectively). The \Block{DNEDL} on the other hand gives the locators for the delayed neutron energy distribution for each precursor group.
 
@@ -390,7 +390,7 @@ The corresponding \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \
  
 \textbf{All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array.}
 
-\subsubsection{\textsf{DLW} \& \textsf{DLWP} \& \textsf{DNED} Blocks}\label{sec:DLWBlock}\label{sec:DLWPBlock}\label{sec:DNEDBlock}
+\subsubsection{\textsf{DLW}, \textsf{DLWP} and \textsf{DNED} Blocks}\label{sec:DLWBlock}\label{sec:DLWPBlock}\label{sec:DNEDBlock}
 
 The \Block{DLW} contains secondary energy distributions for all reactions producing secondary neutrons---except for elastic scattering, the \Block{DLWP} contains secondary energy distributions for all photon-producing reactions and the \Block{DNED} contains the energy distributions for the delayed neutrons. The \Block{DLW}, \Block{DLWP} and \Block{DNED} block have the same format. The energy distributions are given starting with a locator, \LOC{C}, which were given in the \Block{LDLW}, \Block{LDLWP} or \Block{LDNED}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions or the number of delayed precursor groups) is dependent on whether it is the \Block{DLW}, \Block{DLWP} or \Block{DNED}. These values are given in \Tableref{tab:JED_NMT}.
 
