@@ -109,9 +109,9 @@ The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
   \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{NU} Block}\label{sec:NUBlock}
+\subsubsection{\textsf{NU} \& \textsf{DNU} Block}\label{sec:NUBlock}\label{sec:DNUBlock}
 
-The \Block{NU} is used to specify prompt and/or total \nubar and is present only if \jxs{2} > 0. Delayed \nubar data is specified in the \Block{DNU} (which is only present if \jxs{24} > 0) but shares some of the tables defined in this section.
+The \Block{NU} is used to specify prompt and/or total \nubar and is present only if \jxs{2} > 0. Delayed \nubar data is specified in the \Block{DNU} (which is only present if \jxs{24} > 0) but it shares some of the tables defined in this section.
 
 When it is present, there are two possibilities for the \Block{NU}:
 \begin{enumerate}
@@ -157,33 +157,32 @@ where the energy, $E$, is given in \si{\MeV}.
   \end{BlockTable}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{DNU} Block}\label{sec:DNUBlock}
-
-The \Block{DNU} is used to specify delayed \nubar and is present only if \jxs{24} > 0. The delayed \nubar\ array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{24}}. Delayed \nubar\ must be given in the tabulated form as described in \Tableref{tab:NUBlockTabulated}.
+For the \Block{DNU}, the delayed \nubar\ array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{24}}. Delayed \nubar\ must be given in the tabulated form as described in \Tableref{tab:NUBlockTabulated}. The polynomial form is not allowed in the \Block{DNU}.
 
 \subsubsection{\textsf{BDD} Block}\label{sec:BDDBlock}
 
-The \Block{BDD} is used to specify basic delayed neutron precursor data and is present only if \jxs{25} > 0.
+The \Block{BDD} is used to specify basic delayed neutron precursor data and is present only if \jxs{25} > 0. For every precursor group (the total number of precursor groups is given in \nxs{8}), a decay constant is given along with the partial probability that a delayed fission neutron is born from the current group. This data is given in the format given in table \Tableref{tab:DelayedPrecursorDistribution}.
 
-If delayed neutron data exist (when \jxs{25}>0), the precursor distribution format is given as in \Tableref{tab:DelayedPrecursorDistribution}. The decay constant for the first group \var{DEC}$_{1}$ is given at \xss{\jxs{25}}. The precursor distribution immediately follows as described in \Tableref{tab:DelayedPrecursorDistribution}. The indices (locators) of the \XSS\ array where each precursor distribution begins (\startblock{DNU}) can found using the format described in \Sectionref{sec:LDLWBlock} and \Sectionref{sec:DLWBlock}, where \var{LED}=\jxs{26} and \var{NMT}=\nxs{8}.
 \begin{ThreePartTable}
   \begin{TableNotes}
     \item[$\dagger$] \label{tn:schemeDelayedPrecursors} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
   \end{TableNotes}
   \begin{XSSTable}{Delayed \nubar\ precursor distribution.}
-    \startblock{DNU}                   & \var{DEC}$_{i}$                  & Decay constant for the $i$-th group \\
-    \startblock{DNU}+1                 & $N_{R}$                          & Number of interpolation regions \\
-    \startblock{KNU}+2                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters\tnotex{tn:schemeDelayedPrecursors} \\
-    \startblock{KNU}+2+$N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme \\
-    \startblock{DNU}+2+$2N_{R}$       & $N_{E}$                          & Number of energies \\
-    \startblock{DNU}+3+$2N_{R}$       & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
-    \startblock{DNU}+3+$2N_{R}+N_{E}$ & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities
+    \var{KNU}                   & \var{DEC}$_{i}$                  & Decay constant for the $i$-th group \\
+    \var{KNU}+1                 & $N_{R}$                          & Number of interpolation regions \\
+    \var{KNU}+2                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters\tnotex{tn:schemeDelayedPrecursors} \\
+    \var{KNU}+2+$N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme \\
+    \var{KNU}+2+$2N_{R}$        & $N_{E}$                          & Number of energies \\
+    \var{KNU}+3+$2N_{R}$        & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
+    \var{KNU}+3+$2N_{R}+N_{E}$  & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities
     \label{tab:DelayedPrecursorDistribution}
   \end{XSSTable}
   \begin{tablenotes}
-    \note \startblock{DNU} is the index of the \XSS\ array where the delayed \nubar\ precursor distribution begins; the first one is at \startblock{DNU}=\jxs{25}.
+    \note \var{KNU} is the index of the \XSS\ array where the delayed \nubar\ precursor data for each group begins; the first one is at \var{DNU} = \jxs{25}.
   \end{tablenotes}
 \end{ThreePartTable}
+
+The \Block{BDD} is followed by the \Block{DNEDL} and the \Block{DNED} blcoks which gives the locators (\Block{DNEDL}) and the delayed neutron energy distributions (\Block{DNEDL}) for every delayed neutron precursor group.
 
 \subsubsection{\textsf{MTR} \& \textsf{MTRP} Blocks}\label{sec:MTRBlock}\label{sec:MTRPBlock}
 The format of the \Block{MTR} (for incident neutron reactions) and \Block{MTRP} (for photon production reactions) is given in \Tableref{tab:MTRBlock}. The starting index depends on whether it is the \Block{MTR} or \Block{MTRP} and are given in \Tableref{tab:LMT_NMT}.
@@ -352,10 +351,13 @@ Note: \textbf{All $L_{C}$ locators point to data \emph{relative} to \jxs{9}.}
 \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{LDLW} \& \textsf{LDLWP} Blocks}\label{sec:LDLWBlock}\label{sec:LDLWPBlock}
-The \Block{LDLW} and \Block{LDLW} give the locators for the energy distribution for every reaction that produces secondary neutrons or secondary photons (respectively). The format of the \Block{LDLW} (for secondary neutrons) and \Block{LDLW} (for secondary photons) is given in \Tableref{tab:LDLWBlock}. The locators for the delayed neutron precursors (see \Sectionref{sec:NUBlock}) also use the same format. The format for the distribution arrays is given in \Sectionref{sec:DLWBlock}.
+\subsubsection{\textsf{LDLW} \& \textsf{LDLWP} \& \textsf{DNEDL} Blocks}\label{sec:LDLWBlock}\label{sec:LDLWPBlock}\label{sec:DNEDLBlock}
 
-The \Block{LDLW} exists if \nxs{5}$\neq0$ while the \Block{LDLWP} exists if \nxs{6}$\neq0$. The starting index, \var{LED}, depends on what data is being read; the starting values and the number of locators, \var{NMT}, are given in \Tableref{tab:LEDNMT}.
+The \Block{LDLW} and \Block{LDLW} give the locators for the energy distribution for every reaction that produces secondary neutrons or secondary photons (respectively). The \Block{DNEDL} on the other hand gives the locators for the delayed neutron energy distribution for each precursor group.
+
+The format of the \Block{LDLW} (for secondary neutrons), the \Block{LDLW} (for secondary photons) and the \Block{DNEDL} (for delayed neutrons) is given in \Tableref{tab:LDLWBlock}. The format for the distributions is given in \Sectionref{sec:DLWBlock}.
+
+The \Block{LDLW} exists only if \nxs{5}$\neq0$, the \Block{LDLWP} exists only if \nxs{6}$\neq0$ and the \Block{LDLW} exists only if \nxs{8}$\neq0$. The starting index in these tables, \var{LED}, depends on what data is being read; the starting values and the number of locators, \var{NMT}, are given in \Tableref{tab:LEDNMT}.
 
 \begin{table}[h!] \centering
   \begin{tabular}{lll}
@@ -367,7 +369,7 @@ The \Block{LDLW} exists if \nxs{5}$\neq0$ while the \Block{LDLWP} exists if \nxs
     delayed neutrons & \jxs{26}  & \nxs{8} \\
     \bottomrule
   \end{tabular}
-  \caption{LED and NMT values for the \Block{LDLW} and \Block{LDLWP}.}
+  \caption{LED and NMT values for the \Block{LDLW}, the \Block{LDLWP} and \Block{DNEDL}.}
   \label{tab:LEDNMT}
 \end{table}
 
@@ -384,10 +386,14 @@ The \Block{LDLW} exists if \nxs{5}$\neq0$ while the \Block{LDLWP} exists if \nxs
 \end{tablenotes}
 \end{ThreePartTable}
 
-\textbf{All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array.} The \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \Block{MTRP} for \Block{LDLWP}.
+The corresponding \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \Block{MTRP} for \Block{LDLWP}.
+ 
+\textbf{All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array.}
 
-\subsubsection{\textsf{DLW} \& \textsf{DLWP} Blocks}\label{sec:DLWBlock}\label{sec:DLWPBlock}
-The \Block{DLW} contains secondary energy distributions for all reactions producing secondary neutrons---expect for elastic scattering. The \Block{DLWP} contains secondary energy distribution for all photon-producing reactions. Both the \Block{DLW} and \Block{DLWP} have the same format. The energy distributions are given starting with a locator, \LOC{C}, which were given in the \Block{LDLW} and \Block{LDLWP}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions) is dependent on whether it is the \Block{DLW} or \Block{DLWP}. These values are given in \Tableref{tab:JED_NMT}.
+\subsubsection{\textsf{DLW} \& \textsf{DLWP} \& \textsf{DNED} Blocks}\label{sec:DLWBlock}\label{sec:DLWPBlock}\label{sec:DNEDBlock}
+
+The \Block{DLW} contains secondary energy distributions for all reactions producing secondary neutrons---except for elastic scattering, the \Block{DLWP} contains secondary energy distributions for all photon-producing reactions and the \Block{DNED} contains the energy distributions for the delayed neutrons. The \Block{DLW}, \Block{DLWP} and \Block{DNED} block have the same format. The energy distributions are given starting with a locator, \LOC{C}, which were given in the \Block{LDLW}, \Block{LDLWP} or \Block{LDNED}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions or the number of delayed precursor groups) is dependent on whether it is the \Block{DLW}, \Block{DLWP} or \Block{DNED}. These values are given in \Tableref{tab:JED_NMT}.
+
 \begin{table}[h!] \centering
   \begin{tabular}{lll}
     \toprule
@@ -403,10 +409,10 @@ The \Block{DLW} contains secondary energy distributions for all reactions produc
 \end{table}
 
 \begin{LOCTable}{\Block{DLW}}
-  \var{JED}+\LOC{C}{1}-1 & Energy distribution array for reaction \MT$_{1}$ \\
-  \var{JED}+\LOC{C}{2}-1 & Energy distribution array for reaction \MT$_{2}$ \\
+  \var{JED}+\LOC{C}{1}-1 & Energy distribution array for reaction \MT$_{1}$ or group 1 (if delayed neutron) \\
+  \var{JED}+\LOC{C}{2}-1 & Energy distribution array for reaction \MT$_{2}$ or group 2 (if delayed neutron) \\
   \ldots \\
-  \var{JED}+\LOC{C}{\var{NMT}}-1 & Energy distribution array for reaction \MT$_{\var{NMT}}$
+  \var{JED}+\LOC{C}{\var{NMT}}-1 & Energy distribution array for reaction \MT$_{\var{NMT}}$ or group \var{NMT} (if delayed neutron)
   \label{tab:DLWBlock}
 \end{LOCTable}
 
