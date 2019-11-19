@@ -110,28 +110,31 @@ The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
 \end{ThreePartTable}
 
 \subsubsection{\textsf{NU} Block}\label{sec:NUBlock}
-There are three possibilities for the \Block{NU}:
+
+The \Block{NU} is used to specify prompt and/or total \nubar and is present only if \jxs{2} > 0. Delayed \nubar data is specified in the \Block{DNU} (which is only present if \jxs{24} > 0) but shares some of the tables defined in this section.
+
+When it is present, there are two possibilities for the \Block{NU}:
 \begin{enumerate}
-  \item {\bfseries\sffamily No NU Block.} (\jxs{2}=0)
-  \item {\bfseries\sffamily Either prompt or total \nubar\ is given (but not both).} (\jxs{2} > 0) \\
-    The \aceArray{NU} array begins at location \xss{KNU} where \var{KNU}=\jxs{2} + 1.
-  \item {\bfseries\sffamily Both prompt and total \nubar\ are given.} (\jxs{2} < 0).
+  \item {\bfseries\sffamily Either prompt or total \nubar\ is given (but not both).} (\xss{\jxs{2}} > 0) \\
+    A single \nubar array is given and it begins at location \xss{KNU} where {\sffamily \var{KNU} = \jxs{2}}.
+  \item {\bfseries\sffamily Both prompt and total \nubar\ are given.} (\xss{\jxs{2}} < 0).
+    Two \nubar arrays are given, one for prompt \nubar and another for total \nubar. The absolute value of \xss{\jxs{2}} is the location of the total \nubar array so that the locations for the two \nubar arrays are as follows:
     \begin{itemize}
-      \item The prompt \aceArray{NU} array begins at \xss{KNU} where \var{KNU}=\jxs{2} + 1. 
-      \item The total \aceArray{NU} array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}})+1}.
+      \item The prompt \nubar array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + 1}. 
+      \item The total \nubar array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}}) + 1}.
     \end{itemize}
 \end{enumerate}
 
-In addition to prompt and/or total \nubar, delayed \nubar\ is given when $\jxs{24} > 0$. Delayed \nubar\ array begins at \xss{KNU} where \var{KNU}=\jxs{24}. Delayed \nubar\ must be given in tabulated as described below in \Tableref{tab:NUBlockTabulated}.
+There are two possible forms for these \nubar arrays; either polynomial (see \Tableref{tab:NUBlockPolynomial}) or tabulated (see \Tableref{tab:NUBlockTabulated}). The format is specified by the \var{LNU} flag located in the \XSS\ array at index \var{KNU} where \var{KNU} is defined above.
 
-The format of the \Block{NU} has two forms (if it exists); polynomial (see \Tableref{tab:NUBlockPolynomial}) and tabulated (see \Tableref{tab:NUBlockTabulated}). The format is specified by the \var{LNU} flag located in the \XSS\ array at index \var{KNU} where \var{KNU} is defined above.
 \begin{BlockTable}[---Polynomial function form]{NU}
   \var{KNU}   & \var{LNU}=1                     & Polynomial function flag \\
   \var{KNU}+1 & $N_{C}$                   & Number of coefficients \\
   \var{KNU}+2 & $C(l), l=1,\ldots, N_{C}$ & Coefficients
   \label{tab:NUBlockPolynomial}
 \end{BlockTable}
-When using the polynomial function form of the \aceArray{NU} array, \nubar\ is reconstructed as
+
+When using the polynomial function form of the \nubar array, \nubar\ is reconstructed as
 \begin{equation}
   \nubar(E) = \sum_{l=1}^{N_{C}} C(l)E^{l-1},
   \label{eq:nubarPolynomialReconstruction}
@@ -154,7 +157,15 @@ where the energy, $E$, is given in \si{\MeV}.
   \end{BlockTable}
 \end{ThreePartTable}
 
-If delayed neutron data exist (when \jxs{24}>0), the precursor distribution format is given as in \Tableref{tab:DelayedPrecursorDistribution}. The decay constant for the first group \var{DEC}$_{1}$ is given at \xss{\jxs{25}}. The precursor distribution immediately follows as described in \Tableref{tab:DelayedPrecursorDistribution}. The indices (locators) of the \XSS\ array where each precursor distribution begins (\startblock{DNU}) can found using the format described in \Sectionref{sec:LDLWBlock} and \Sectionref{sec:DLWBlock}, where \var{LED}=\jxs{26} and \var{NMT}=\nxs{8}.
+\subsubsection{\textsf{DNU} Block}\label{sec:DNUBlock}
+
+The \Block{DNU} is used to specify delayed \nubar and is present only if \jxs{24} > 0. The delayed \nubar\ array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{24}}. Delayed \nubar\ must be given in the tabulated form as described in \Tableref{tab:NUBlockTabulated}.
+
+\subsubsection{\textsf{BDD} Block}\label{sec:BDDBlock}
+
+The \Block{BDD} is used to specify basic delayed neutron precursor data and is present only if \jxs{25} > 0.
+
+If delayed neutron data exist (when \jxs{25}>0), the precursor distribution format is given as in \Tableref{tab:DelayedPrecursorDistribution}. The decay constant for the first group \var{DEC}$_{1}$ is given at \xss{\jxs{25}}. The precursor distribution immediately follows as described in \Tableref{tab:DelayedPrecursorDistribution}. The indices (locators) of the \XSS\ array where each precursor distribution begins (\startblock{DNU}) can found using the format described in \Sectionref{sec:LDLWBlock} and \Sectionref{sec:DLWBlock}, where \var{LED}=\jxs{26} and \var{NMT}=\nxs{8}.
 \begin{ThreePartTable}
   \begin{TableNotes}
     \item[$\dagger$] \label{tn:schemeDelayedPrecursors} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
@@ -511,7 +522,7 @@ The data associated with each incident neutron energy begins at the location $\v
   \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
   \var{LDAT}(\var{K}) & $\var{INTT}'$ & Interpolation parameter \\
   \var{LDAT}(\var{K}+1) & $N_{p}$ & Number of points in the distribution \\
-  \var{LDAT}(\var{K}+2) & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & outgoing energy grid \\
+  \var{LDAT}(\var{K}+2) & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & Outgoing energy grid \\
   \var{LDAT}(\var{K}+$2+N_{p}$) & $\mathrm{PDF}(l),l=1,\ldots,N_{p}$ & Probability Density Function \\
   \var{LDAT}(\var{K}+$2+2N_{p}$) & $\mathrm{CDF}(l),l=1,\ldots,N_{p}$ & Cumulative Density Function \\
   \midrule
@@ -740,7 +751,7 @@ The data associated with each incident neutron energy begins at the location $\v
   \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
   \var{LDAT}(\var{K})            & $\var{INTT}'$                          & Interpolation parameter \\
   \var{LDAT}(\var{K}+1)          & $N_{p}$                                & Number of points in the distribution \\
-  \var{LDAT}(\var{K}+2)          & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & outgoing energy grid \\
+  \var{LDAT}(\var{K}+2)          & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & Outgoing energy grid \\
   \var{LDAT}(\var{K}+$2+N_{p}$)  & $\mathrm{PDF}(l),l=1,\ldots,N_{p}$     & Probability Density Function \\
   \var{LDAT}(\var{K}+$2+2N_{p}$) & $\mathrm{CDF}(l),l=1,\ldots,N_{p}$     & Cumulative Density Function \\
   \var{LDAT}(\var{K}+$2+3N_{p}$) & $R(l),l=1,\ldots,N_{p}$                & Precompound fraction $r$ \\
@@ -781,7 +792,7 @@ The data associated with each incident neutron energy begins at the location $\v
   \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
   \var{LDAT}(\var{K})            & $\var{INTT}'$                          & Interpolation parameter \\
   \var{LDAT}(\var{K}+1)          & $N_{p}$                                & Number of points in the distribution \\
-  \var{LDAT}(\var{K}+2)          & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & outgoing energy grid \\
+  \var{LDAT}(\var{K}+2)          & $E_{\mathrm{out}}(l),l=1,\ldots,N_{p}$ & Outgoing energy grid \\
   \var{LDAT}(\var{K}+$2+N_{p}$)  & $\mathrm{PDF}(l),l=1,\ldots,N_{p}$     & Probability Density Function \\
   \var{LDAT}(\var{K}+$2+2N_{p}$) & $\mathrm{CDF}(l),l=1,\ldots,N_{p}$     & Cumulative Density Function \\
   \var{LDAT}(\var{K}+$2+3N_{p}$) & $\var{LC}(l),l=1,\ldots,N_{p}$         & Location of tables associated with incident energies $E(l)$. See \Tableref{tab:LAW61AngularDistribution}\\
@@ -813,11 +824,25 @@ Valid values for the interpolation flag, \var{JJ}, are the same as for \var{INTT
 \end{description}
 
 \subsubsubsection{\var{LAW}=66---$N$-body phase space distribution}\label{sec:LAW66}
-\begin{LAWTable}{\var{LAW}=66 (From ENDF-6 \MF=6 \var{LAW}=6)}
-  \var{LDAT}(1) & \var{NPSX} & Number of bodies in the phase space \\
-  \var{LDAT}(2) & $A_{P}$ & Total mass ratio for the \var{NPSX} particles.
-  \label{tab:LAW66}
-\end{LAWTable}
+\begin{ThreePartTable}
+  \begin{TableNotes}
+    \item[$\dagger$] \label{tn:LAW66InterpolationScheme} 
+      \begin{description}
+        \item[\var{INTT}=1] histogram distribution,
+        \item[\var{INTT}=2] linear-linear distribution.
+      \end{description}
+  \end{TableNotes}
+  \begin{LAWTable}{\var{LAW}=66 (From ENDF-6 \MF=6 \var{LAW}=6)}
+    \var{LDAT}(1) & \var{NPSX} & Number of bodies in the phase space \\
+    \var{LDAT}(2) & $A_{P}$ & Total mass ratio for the \var{NPSX} particles.
+    \var{LDAT}(3)          & $\var{INTT}$                              & Interpolation parameter\tnotex{tn:LAW66InterpolationScheme} \\
+    \var{LDAT}(4)          & $N_{P}$                                   & Number of points in the distribution \\
+    \var{LDAT}(5)          & $\xi_{\mathrm{out}}(j),j=1,\ldots,N_{P}$  & $\xi$ grid (between 0 and 1) \\
+    \var{LDAT}(5+$N_{P}$)  & $\PDF(j),j=1,\ldots,N_{P}$                & Probability density function \\
+    \var{LDAT}(5+$2N_{P}$) & $\CDF(j),j=1,\ldots,N_{P}$                & Cumulative density function
+    \label{tab:LAW66}
+  \end{LAWTable}
+\end{ThreePartTable}
 
 The outgoing energy is
 \begin{align}
@@ -828,6 +853,8 @@ The outgoing energy is
   P_{i}(\mu,E_{\mathrm{in}},T) &= C_{n}\sqrt{T}\left( E_{i}^{\mathrm{max}}-T \right)^{3n/2-4}
   \label{eq:LAW66}
 \end{align}
+
+While MCNP will only use the values for \var{NPSX} and $A_{P}$ (given in \var{LDAT}(1) and \var{LDAT}(2)), NJOY does add the derived probability density function and cumulative density function for $T(\xi)$ starting at \var{LDAT}(3).
 
 \subsubsubsection{\var{LAW}=67---Laboratory Angle-Energy Law}\label{sec:LAW67}
 \begin{ThreePartTable}
