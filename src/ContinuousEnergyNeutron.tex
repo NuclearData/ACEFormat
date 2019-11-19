@@ -24,6 +24,7 @@ The format of individual blocks found on neutron transport tables is identical f
   \item \textbf{\Block{YP}}---contains a list of MT identifiers of neutron reaction cross sections required as photon production yield multipliers. The \Block{YP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:YPBlock}.
   \item \textbf{\Block{FIS}}---contains the total fission cross section tabulated on the ESZ energy grid. The \Block{FIS} exists if \jxs{21}$\neq0$. See \Sectionref{sec:FISBlock}.
   \item \textbf{\Block{UNR}}---contains the unresolved resonance range probability tables. The \Block{UNR} exists if \jxs{23}$\neq0$. See \Sectionref{sec:UNRBlock}.
+  \item \textbf{\Block{PTYPE}}---contains a list of particle types for which production data will be given. The \Block{PTYPE} exists if \jxs{30}$\neq0$. See \Sectionref{sec:PTYPEBlock}.
 \end{enumerate}
 
 \clearpage
@@ -41,7 +42,7 @@ The format of individual blocks found on neutron transport tables is identical f
       4  & \var{NTR}   & Number of reactions excluding elastic scattering \\
       5  & \var{NR}    & Number of reactions having secondary neutrons excluding elastic scattering \\
       6  & \var{NTRP}  & Number of photon production reactions \\
-      7  & \var{NTYPE} & Number of charged particle types for which production data is given \\
+      7  & \var{NTYPE} & Number of particle types for which production data is given \\
       8  & \var{NPCR}  & Number of delayed neutron precurser families \\
       9  & \var{S}     & Excited state\tnotex{tn:2.0.0} \\
       10 & \var{Z}     & Atomic number\tnotex{tn:2.0.0} \\ 
@@ -85,7 +86,7 @@ The format of individual blocks found on neutron transport tables is identical f
     26 & \var{DNEDL} & Table of delayed neutron energy distribution locators \\
     27 & \var{DNED}  & Delayed neutron energy distributions \\
        & \ldots      & \\
-    30 & \var{PTYPE} & \\
+    30 & \var{PTYPE} & Particle type array \\
     31 & \var{NTRO}  & \\
     32 & \var{IXS}   & 
   \label{tab:JXSContinuousEnergyNeutron}
@@ -1184,3 +1185,31 @@ The ordering of the probability table entries, $P(i,j,k)$ is given in \Tableref{
   \label{tab:PTableOrder}
 \end{XSSTable}
 \end{ThreePartTable}
+
+\subsubsection{\textsf{PTYPE} Block}\label{sec:PTYPEBlock}
+
+The \Block{PTYPE} is the first of the particle production blocks used for neutron and charged particle production data. These particle production blocks are given only if the number of particles \var{NTYPE} = \nxs{7} is different from zero. If the \Block{PTYPE} is present, the \Block{PTYPE} starts at the index \var{LTYPE} = \jxs{30}.
+
+{\color{red}\textbf{Question:} The particle type can be neutron, when is this actually used?}
+
+The \Block{PTYPE} gives a list of particle types for which particle production data is available. This includes cross section data (given in the {\color{red}\textbf{ADD BLOCK NAMES HERE}}), angular distribution data (given in the {\color{red}\textbf{ADD BLOCK NAMES HERE}}) and secondary particle energy distribution data (given in the {\color{red}\textbf{ADD BLOCK NAMES HERE}}).
+
+The format of the \Block{PTYPE} is given in \Tableref{tab:PTYPEBlock}.
+
+\begin{BlockTable}{PTYPE}
+  \var{LTYPE}               & \var{IP}$_{1}$         & First particle type \\
+  \var{LTYPE}+1             & \var{IP}$_{2}$         & Second particle type \\
+  \ldots \\
+  \var{LTYPE}+\var{NTYPE}-1 & \var{IP}$_{\var{NMT}}$ & Last particle type
+  \label{tab:PTYPEBlock}
+\end{BlockTable}
+
+$\var{IP}_{1},\ldots,\var{IP}_{\var{NMT}}$ are particle identifiers given as follows:
+\begin{itemize}
+  \item $\var{IP} = 1$ for neutrons
+  \item $\var{IP} = 9$ for protons
+  \item $\var{IP} = 31$ for deuterons
+  \item $\var{IP} = 32$ for tritons
+  \item $\var{IP} = 33$ for helions
+  \item $\var{IP} = 34$ for aphas
+\end{itemize}
