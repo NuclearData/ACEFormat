@@ -1217,7 +1217,7 @@ $\var{IP}_{1},\ldots,\var{IP}_{\var{NMT}}$ are particle identifiers given as fol
 
 \subsubsection{\textsf{NTRO} Block}\label{sec:NTROBlock}
 
-The \Block{NTRO} is gives the number of reactions for each of the particle types defined in the \Block{PTYPE}. If the \Block{NTRO} is present, the \Block{NTRO} starts at the index \var{LTYPE} = \jxs{31}.
+The \Block{NTRO} gives the number of reactions for each of the particle types defined in the \Block{PTYPE}. If the \Block{NTRO} is present, the \Block{NTRO} starts at the index \var{LTYPE} = \jxs{31}.
 
 The format of the \Block{NTRO} is given in \Tableref{tab:NTROBlock}.
 
@@ -1228,3 +1228,7 @@ The format of the \Block{NTRO} is given in \Tableref{tab:NTROBlock}.
   \var{LTYPE}+\var{NTYPE}-1 & \var{NP}$_{\var{NMT}}$ & Number of reactions producing the last particle type
   \label{tab:PTYPEBlock}
 \end{BlockTable}
+
+\subsubsection{\textsf{IXS} Block}\label{sec:IXSBlock}
+
+The \Block{IXS} gives 10 particle production locators for each of the particle types defined in the \Block{PTYPE}. If the \Block{IXS} is present, the \Block{IXS} starts at the index \var{LTYPE} = \jxs{32}. The \Block{IXS} serves a similar function as the \Block{JXS}, in that it provides locators for individual blocks of data.
