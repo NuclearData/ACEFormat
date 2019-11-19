@@ -830,25 +830,11 @@ Valid values for the interpolation flag, \var{JJ}, are the same as for \var{INTT
 \end{description}
 
 \subsubsubsection{\var{LAW}=66---$N$-body phase space distribution}\label{sec:LAW66}
-\begin{ThreePartTable}
-  \begin{TableNotes}
-    \item[$\dagger$] \label{tn:LAW66InterpolationScheme} 
-      \begin{description}
-        \item[\var{INTT}=1] histogram distribution,
-        \item[\var{INTT}=2] linear-linear distribution.
-      \end{description}
-  \end{TableNotes}
-  \begin{LAWTable}{\var{LAW}=66 (From ENDF-6 \MF=6 \var{LAW}=6)}
-    \var{LDAT}(1) & \var{NPSX} & Number of bodies in the phase space \\
-    \var{LDAT}(2) & $A_{P}$ & Total mass ratio for the \var{NPSX} particles.
-    \var{LDAT}(3)          & $\var{INTT}$                              & Interpolation parameter\tnotex{tn:LAW66InterpolationScheme} \\
-    \var{LDAT}(4)          & $N_{P}$                                   & Number of points in the distribution \\
-    \var{LDAT}(5)          & $\xi_{\mathrm{out}}(j),j=1,\ldots,N_{P}$  & $\xi$ grid (between 0 and 1) \\
-    \var{LDAT}(5+$N_{P}$)  & $\PDF(j),j=1,\ldots,N_{P}$                & Probability density function \\
-    \var{LDAT}(5+$2N_{P}$) & $\CDF(j),j=1,\ldots,N_{P}$                & Cumulative density function
-    \label{tab:LAW66}
-  \end{LAWTable}
-\end{ThreePartTable}
+\begin{LAWTable}{\var{LAW}=66 (From ENDF-6 \MF=6 \var{LAW}=6)}
+  \var{LDAT}(1) & \var{NPSX} & Number of bodies in the phase space \\
+  \var{LDAT}(2) & $A_{P}$ & Total mass ratio for the \var{NPSX} particles.
+  \label{tab:LAW66}
+\end{LAWTable}
 
 The outgoing energy is
 \begin{align}
@@ -859,8 +845,6 @@ The outgoing energy is
   P_{i}(\mu,E_{\mathrm{in}},T) &= C_{n}\sqrt{T}\left( E_{i}^{\mathrm{max}}-T \right)^{3n/2-4}
   \label{eq:LAW66}
 \end{align}
-
-While MCNP will only use the values for \var{NPSX} and $A_{P}$ (given in \var{LDAT}(1) and \var{LDAT}(2)), NJOY does add the derived probability density function and cumulative density function for $T(\xi)$ starting at \var{LDAT}(3).
 
 \subsubsubsection{\var{LAW}=67---Laboratory Angle-Energy Law}\label{sec:LAW67}
 \begin{ThreePartTable}
