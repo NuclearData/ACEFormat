@@ -111,21 +111,21 @@ The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
 
 \subsubsection{\textsf{NU} \& \textsf{DNU} Block}\label{sec:NUBlock}\label{sec:DNUBlock}
 
-The \Block{NU} is used to specify prompt and/or total \nubar and is present only if \jxs{2} > 0. Delayed \nubar data is specified in the \Block{DNU} (which is only present if \jxs{24} > 0) but it shares some of the tables defined in this section.
+The \Block{NU} is used to specify prompt and/or total \nubar\ and is present only if \jxs{2} > 0. Delayed \nubar\ data is specified in the \Block{DNU} (which is only present if \jxs{24} > 0) but it shares some of the tables defined in this section.
 
 When it is present, there are two possibilities for the \Block{NU}:
 \begin{enumerate}
   \item {\bfseries\sffamily Either prompt or total \nubar\ is given (but not both).} (\xss{\jxs{2}} > 0) \\
-    A single \nubar array is given and it begins at location \xss{KNU} where {\sffamily \var{KNU} = \jxs{2}}.
+    A single \nubar\ array is given and it begins at location \xss{KNU} where {\sffamily \var{KNU} = \jxs{2}}.
   \item {\bfseries\sffamily Both prompt and total \nubar\ are given.} (\xss{\jxs{2}} < 0).
-    Two \nubar arrays are given, one for prompt \nubar and another for total \nubar. The absolute value of \xss{\jxs{2}} is the location of the total \nubar array so that the locations for the two \nubar arrays are as follows:
+    Two \nubar\ arrays are given, one for prompt \nubar\ and another for total \nubar. The absolute value of \xss{\jxs{2}} is the location of the total \nubar\ array so that the locations for the two \nubar\ arrays are as follows:
     \begin{itemize}
-      \item The prompt \nubar array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + 1}. 
-      \item The total \nubar array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}}) + 1}.
+      \item The prompt \nubar\ array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + 1}. 
+      \item The total \nubar\ array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}}) + 1}.
     \end{itemize}
 \end{enumerate}
 
-There are two possible forms for these \nubar arrays; either polynomial (see \Tableref{tab:NUBlockPolynomial}) or tabulated (see \Tableref{tab:NUBlockTabulated}). The format is specified by the \var{LNU} flag located in the \XSS\ array at index \var{KNU} where \var{KNU} is defined above.
+There are two possible forms for these \nubar\ arrays; either polynomial (see \Tableref{tab:NUBlockPolynomial}) or tabulated (see \Tableref{tab:NUBlockTabulated}). The format is specified by the \var{LNU} flag located in the \XSS\ array at index \var{KNU} where \var{KNU} is defined above.
 
 \begin{BlockTable}[---Polynomial function form]{NU}
   \var{KNU}   & \var{LNU}=1                     & Polynomial function flag \\
@@ -134,7 +134,7 @@ There are two possible forms for these \nubar arrays; either polynomial (see \Ta
   \label{tab:NUBlockPolynomial}
 \end{BlockTable}
 
-When using the polynomial function form of the \nubar array, \nubar\ is reconstructed as
+When using the polynomial function form of the \nubar\ array, \nubar\ is reconstructed as
 \begin{equation}
   \nubar(E) = \sum_{l=1}^{N_{C}} C(l)E^{l-1},
   \label{eq:nubarPolynomialReconstruction}
