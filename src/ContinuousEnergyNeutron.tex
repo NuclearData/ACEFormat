@@ -44,8 +44,8 @@ The format of individual blocks found on neutron transport tables is identical f
          & \ldots     & \\
       8  & \var{NPCR} & Number of delayed neutron precurser families \\
       9  & \var{S} & Excited state\tnotex{tn:2.0.0} \\
-      10 & \var{Z} & Atomic number\tnotex{tn:2.0.0} \\ 
-      11 & \var{A} & Atomic mass number\tnotex{tn:2.0.0} \\ 
+      10 & \var{Z} & Atomic number\tnotex{tn:2.0.0} \\
+      11 & \var{A} & Atomic mass number\tnotex{tn:2.0.0} \\
          & \ldots     & \\
       14 &            & Reserved\tnotex{tn:Reserved} \\
       15 &            & Reserved\tnotex{tn:Reserved} \\
@@ -85,7 +85,7 @@ The format of individual blocks found on neutron transport tables is identical f
     26 & \var{DNEDL} & Table of delayed neutron energy distribution locators \\
     27 & \var{DNED}  & Delayed neutron energy distributions \\
        & \ldots      & \\
-    32 & ---         & 
+    32 & ---         &
   \label{tab:JXSContinuousEnergyNeutron}
 \end{JXSTable}
 
@@ -120,7 +120,7 @@ When it is present, there are two possibilities for the \Block{NU}:
   \item {\bfseries\sffamily Both prompt and total \nubar\ are given.} (\xss{\jxs{2}} < 0).
     Two \nubar\ arrays are given, one for prompt \nubar\ and another for total \nubar. The absolute value of \xss{\jxs{2}} is the location of the total \nubar\ array so that the locations for the two \nubar\ arrays are as follows:
     \begin{itemize}
-      \item The prompt \nubar\ array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + 1}. 
+      \item The prompt \nubar\ array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + 1}.
       \item The total \nubar\ array begins at \xss{KNU} where {\sffamily \var{KNU} = \jxs{2} + ABS(\xss{\jxs{2}}) + 1}.
     \end{itemize}
 \end{enumerate}
@@ -161,25 +161,26 @@ For the \Block{DNU}, the delayed \nubar\ array begins at \xss{KNU} where {\sffam
 
 \subsubsection{\textsf{BDD} Block}\label{sec:BDDBlock}
 
-The \Block{BDD} is used to specify basic delayed neutron precursor data and is present only if \jxs{25} > 0. For every precursor group (the total number of precursor groups is given in \nxs{8}), a decay constant is given along with the partial probability that a delayed fission neutron is born from the current group. This data is given in the format given in table \Tableref{tab:DelayedPrecursorDistribution}.
+The \Block{BDD} is used to specify basic delayed neutron precursor data and is present only if \var{KNU} = \jxs{25} > 0. For every precursor group (the total number of precursor groups is given in \nxs{8}), a decay constant is given along with the partial probability that a delayed fission neutron is born from the current group. This data is given in the format given in table \Tableref{tab:DelayedPrecursorDistribution}.
 
 \begin{ThreePartTable}
   \begin{TableNotes}
     \item[$\dagger$] \label{tn:schemeDelayedPrecursors} If $N_{R}=0$, \var{NBT} and \var{INT} are omitted and linear-linear interpolation is assumed.
   \end{TableNotes}
   \begin{XSSTable}{Delayed \nubar\ precursor distribution.}
-    \var{KNU}                   & \var{DEC}$_{i}$                  & Decay constant for the $i$-th group \\
-    \var{KNU}+1                 & $N_{R}$                          & Number of interpolation regions \\
-    \var{KNU}+2                 & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters\tnotex{tn:schemeDelayedPrecursors} \\
-    \var{KNU}+2+$N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme \\
-    \var{KNU}+2+$2N_{R}$        & $N_{E}$                          & Number of energies \\
-    \var{KNU}+3+$2N_{R}$        & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
-    \var{KNU}+3+$2N_{R}+N_{E}$  & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities
+  \multicolumn{3}{c}{\bfseries Data for precursor group 1} \\
+    $\var{KNU}$                 & \var{DEC}$_{1}$                  & Decay constant for the group 1 \\
+    $\var{KNU}+1$               & $N_{R}$                          & Number of interpolation regions \\
+    $\var{KNU}+2$               & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters\tnotex{tn:schemeDelayedPrecursors} \\
+    $\var{KNU}+2+N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme \\
+    $\var{KNU}+2+2N_{R}$        & $N_{E}$                          & Number of energies \\
+    $\var{KNU}+3+2N_{R}$        & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
+    $\var{KNU}+3+2N_{R}+N_{E}$  & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities \\
+    \multicolumn{3}{c}{\bfseries Data for precursor group 2---same format as for group 1} \\
+    \multicolumn{3}{c}{\ldots} \\
+    \multicolumn{3}{c}{\bfseries Data for precursor group \var{NPCR} = \nxs{8}---same format as for group 1}
     \label{tab:DelayedPrecursorDistribution}
   \end{XSSTable}
-  \begin{tablenotes}
-    \note \var{KNU} is the index of the \XSS\ array where the delayed \nubar\ precursor data for each group begins; the first one is at \var{DNU} = \jxs{25}.
-  \end{tablenotes}
 \end{ThreePartTable}
 
 The \Block{BDD} is followed by the \Block{DNEDL} and the \Block{DNED} blocks which gives the locators (\Block{DNEDL}) and the delayed neutron energy distributions (\Block{DNEDL}) for every delayed neutron precursor group.
@@ -231,7 +232,7 @@ The format of the \Block{TYR} is given in \Tableref{tab:TYRBlock}. The index at 
   \startblock{TYR}+\var{NMT}-1 & \var{TY}$_{\var{NMT}}$ & Neutron release for reaction \MT$_{\var{NMT}}$
   \label{tab:TYRBlock}
 \end{BlockTable}
-The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering: 
+The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering:
 \begin{description}
   \item[negative] \CM,
   \item[positive] \LAB.
@@ -271,7 +272,7 @@ The \LOC{A}{i} values are given in the \Block{LSIG} and are all relative to \jxs
   \var{LXS} + \LOC{A}{i}-1                  & $\var{IE}_{i}$                                 & Energy grid index for reaction \MT$_{i}$ \\
   \var{LXS} + \LOC{A}{i}                    & $N_{E,i}$                                      & Number of consecutive entries for \MT$_{i}$ \\
   \multirow{2}{*}{\var{LXS} + \LOC{A}{i}+1} & $\sigma_{i}[E(l)]$ for                         & \multirow{2}{0.65\linewidth}{Cross section for reaction \MT$_{i}$} \\
-                                            & $l=\var{IE}_{i},\ldots,\var{IE}_{i}+N_{E,i}-1$ & 
+                                            & $l=\var{IE}_{i},\ldots,\var{IE}_{i}+N_{E,i}-1$ &
   \label{tab:CrossSectionArray}
 \end{XSSTable}
 \begin{tablenotes}
@@ -295,7 +296,7 @@ The \Block{LAND} contains locators for the angular distributions for all reactio
 \end{ThreePartTable}
 
 \subsubsection{\textsf{AND} Block}\label{sec:ANDBlock}
-The \Block{AND} contains angular distribution data for all reactions that produce secondary neutrons. The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}. If \LOC{B}{i}=0 (given in the \Block{LAND}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR}. If \LOC{B}{i}=-1 no angular distribution data are given for reaction $i$ in the \Block{AND}. The angular distribution data are specified through \law{44} in the \Block{DLW}. 
+The \Block{AND} contains angular distribution data for all reactions that produce secondary neutrons. The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}. If \LOC{B}{i}=0 (given in the \Block{LAND}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR}. If \LOC{B}{i}=-1 no angular distribution data are given for reaction $i$ in the \Block{AND}. The angular distribution data are specified through \law{44} in the \Block{DLW}.
 
 \begin{ThreePartTable}
 \begin{LOCTable}{\Block{AND}}
@@ -322,7 +323,7 @@ The angular distribution arrays (\Tableref{tab:AngularDistributionArray}) contai
   \item if $L_{C}(l)<0$, then $L_{C}(l)$ points to a tabulated angular distribution (see \Tableref{tab:TabulatedAngularDistribution});
   \item if $L_{C}(l)=0$, then distribution is isotropic and no further data is needed.
 \end{itemize}
-Note: \textbf{All $L_{C}$ locators point to data \emph{relative} to \jxs{9}.} 
+Note: \textbf{All $L_{C}$ locators point to data \emph{relative} to \jxs{9}.}
 
 \begin{XSSTable}{Format for the 32 equiprobable bin distribution}
   \multirow{2}{*}{\jxs{9}+$|L_{C}(l)|-1$} & $P(1,K)$        & 32 equiprobable cosine bins for scattering  \\
@@ -387,7 +388,7 @@ The \Block{LDLW} exists only if \nxs{5}$\neq0$, the \Block{LDLWP} exists only if
 \end{ThreePartTable}
 
 The corresponding \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \Block{MTRP} for \Block{LDLWP}.
- 
+
 \textbf{All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array.}
 
 \subsubsection{\textsf{DLW}, \textsf{DLWP} and \textsf{DNED} Blocks}\label{sec:DLWBlock}\label{sec:DLWPBlock}\label{sec:DNEDBlock}
@@ -416,7 +417,7 @@ The \Block{DLW} contains secondary neutron energy distributions for all reaction
   \label{tab:DLWBlock}
 \end{LOCTable}
 
-The $i$-th array has the form shown in 
+The $i$-th array has the form shown in
 \begin{ThreePartTable}
   \begin{TableNotes}
   \item[$\dagger$] \label{tn:LNW} If \var{LNW}$_{i}=0$ then \var{LAW}$_{1}$ is used regardless of other circumstances.
@@ -442,7 +443,7 @@ The $i$-th array has the form shown in
   \end{XSSTable}
 \end{ThreePartTable}
 
-The format for the law data depends on the law. The length, $L$, of the law data array, \var{LDAT}, is determined from parameters with \var{LDAT}. The various \var{LDAT} arrays and their formats are given in the following tables. Laws 2 (\Tableref{tab:LAW2}) and 4 (\Tableref{tab:LAW4}) are used to describe spectra of secondary photons from neutron collisions. All laws---except for Law 2---are usd to describe the spectra of scattered neutrons. 
+The format for the law data depends on the law. The length, $L$, of the law data array, \var{LDAT}, is determined from parameters with \var{LDAT}. The various \var{LDAT} arrays and their formats are given in the following tables. Laws 2 (\Tableref{tab:LAW2}) and 4 (\Tableref{tab:LAW4}) are used to describe spectra of secondary photons from neutron collisions. All laws---except for Law 2---are usd to describe the spectra of scattered neutrons.
 
 In the following tables, we provide relative locations of data in the \var{LDAT} array rather than the absolute locations in the \XSS\ array. \Tableref{tab:EnergyDistributionArray} defines the starting location of the \var{LDAT} array within the \XSS\ array.
 
@@ -475,7 +476,7 @@ In the following tables, we provide relative locations of data in the \var{LDAT}
   \label{tab:LAW2}
 \end{LAWTable}
 \begin{tablenotes}
-  \note If \var{LP}=0 or \var{LP}=1, the photon energy is \var{EG}. If \var{LP}=2, the photon energy is 
+  \note If \var{LP}=0 or \var{LP}=1, the photon energy is \var{EG}. If \var{LP}=2, the photon energy is
     \[\var{EG}+\left(\frac{\var{AWR}}{\var{AWR}+1}\right)E_{N}\]
     where \var{AWR} is the atomic weight ratio and $E_{N}$ is the incident neutron energy.
 \end{tablenotes}
@@ -523,7 +524,7 @@ where $\mu_{\mathrm{CM}}$ is the cosine of the \CM\ scattering angle
   \end{LAWTable}
 \end{ThreePartTable}
 
-The data associated with each incident neutron energy begins at the location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW4Distribution}, where for $E(1)$ let \var{K}=3+$2N_{R}+2N_{E}$. 
+The data associated with each incident neutron energy begins at the location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW4Distribution}, where for $E(1)$ let \var{K}=3+$2N_{R}+2N_{E}$.
 \begin{LAWTable}{Secondary energy distribution for each incident energy in \var{LAW}=4.}
   \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
   \var{LDAT}(\var{K}) & $\var{INTT}'$ & Interpolation parameter \\
@@ -544,7 +545,7 @@ The first element in the data is $\var{INTT}'$ or the interpolation parameter, w
   \item the number of discrete photon lines, $N_{D}$, and
   \item the interpolation scheme for the subsequent data, \var{INTT}, which has two valid values:
     \begin{description}
-      \item[\var{INTT}=1] histogram distribution, and 
+      \item[\var{INTT}=1] histogram distribution, and
       \item[\var{INTT}=2] linear-linear distribution.
     \end{description}
 \end{enumerate}
@@ -574,8 +575,8 @@ Since $N_D$ describe the number of \emph{discrete} photon lines, the remaining (
 \end{equation}
 where:
 \begin{description}
-  \item[$X(\xi)$]  is a randomly sampled table of $X$'s; 
-  \item[$\theta(E)$] is the effective temperature tabulated on incident energy; and 
+  \item[$X(\xi)$]  is a randomly sampled table of $X$'s;
+  \item[$\theta(E)$] is the effective temperature tabulated on incident energy; and
   \item[$E$] is the incident energy.
 \end{description}
 
@@ -752,7 +753,7 @@ where:
   \end{LAWTable}
 \end{ThreePartTable}
 
-The data associated with each incident neutron energy begins at the location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW44Distribution}, where for $E(1)$ let \var{K}=3+$2N_{R}+2N_{E}$. 
+The data associated with each incident neutron energy begins at the location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW44Distribution}, where for $E(1)$ let \var{K}=3+$2N_{R}+2N_{E}$.
 \begin{LAWTable}{Secondary energy distribution for each incident energy in \var{LAW}=44}
   \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
   \var{LDAT}(\var{K})            & $\var{INTT}'$                          & Interpolation parameter \\
@@ -793,7 +794,7 @@ The angular distributions for neutrons are sampled from:
   \end{LAWTable}
 \end{ThreePartTable}
 
-The data associated with each incident neutron energy begins at the location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW61Distribution}, where for $E(1)$ let \var{K}=3+$2N_{R}+2N_{E}$. 
+The data associated with each incident neutron energy begins at the location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW61Distribution}, where for $E(1)$ let \var{K}=3+$2N_{R}+2N_{E}$.
 \begin{LAWTable}{Secondary energy distribution for each incident energy in \var{LAW}=61}
   \multicolumn{3}{c}{\bfseries Data for $\mathbf{E(1)}$} \\
   \var{LDAT}(\var{K})            & $\var{INTT}'$                          & Interpolation parameter \\
@@ -810,7 +811,7 @@ The data associated with each incident neutron energy begins at the location $\v
 \end{LAWTable}
 The interpolation parameter, $\var{INTT}'$ has the same definition as in \var{LAW}=4, described in Paragraph~\ref{par:INTT}.
 
-The $J$-th array for the tabular angular distribution has the form shown in \Tableref{tab:LAW61AngularDistribution}. For the angular distribution, the locators \var{L} are relative to \jxs{11} for neutron reactions or \jxs{19} for photon-producing reactions. Thus, 
+The $J$-th array for the tabular angular distribution has the form shown in \Tableref{tab:LAW61AngularDistribution}. For the angular distribution, the locators \var{L} are relative to \jxs{11} for neutron reactions or \jxs{19} for photon-producing reactions. Thus,
 \begin{align*}
   \var{L} &= \jxs{11} + |\var{LC}(J)|-1\ \text{(for neutron reactions)}, \\
   \var{L} &= \jxs{19} + |\var{LC}(J)|-1\ \text{(for photon-producing reactions)}. \\
@@ -825,7 +826,7 @@ The $J$-th array for the tabular angular distribution has the form shown in \Tab
 \end{LAWTable}
 Valid values for the interpolation flag, \var{JJ}, are the same as for \var{INTT}:
 \begin{description}
-  \item[\var{JJ}=1] histogram distribution, and 
+  \item[\var{JJ}=1] histogram distribution, and
   \item[\var{JJ}=2] linear-linear distribution.
 \end{description}
 
@@ -866,7 +867,7 @@ The outgoing energy is
 The data associated with each distribution begins at location $\var{L}(l)$. The format for the data is given in \Tableref{tab:LAW67AngularDistribution}, where for $E(1)$ let $\var{K}=3+2N_{R}+2N_{e}$.
 \begin{ThreePartTable}
   \begin{TableNotes}
-    \item[$\dagger$] \label{tn:LAW67AngularInterpolationScheme} 
+    \item[$\dagger$] \label{tn:LAW67AngularInterpolationScheme}
       \begin{description}
         \item[\var{INTMU}=1] histogram distribution,
         \item[\var{INTMU}=2] linear-linear distribution.
@@ -888,7 +889,7 @@ The format for the secondary energy distribution (for each cosine bin, \var{XMU}
 \end{align*}
 \begin{ThreePartTable}
   \begin{TableNotes}
-    \item[$\dagger$] \label{tn:LAW67EnergyInterpolationScheme} 
+    \item[$\dagger$] \label{tn:LAW67EnergyInterpolationScheme}
       \begin{description}
         \item[\var{INTEP}=1] histogram distribution,
         \item[\var{INTEP}=2] linear-linear distribution.
@@ -972,7 +973,7 @@ The format of this Block is given in \Tableref{tab:GPDBlockOutgoing}. The \XSS\ 
 \end{XSSTable}
 
 \subsubsection{\textsf{SIGP} Block}\label{sec:SIGPBlock}
-The \Block{SIGP} contains the photon production cross section data. The format of the \Block{SIGP} is given in \Tableref{tab:SIGPBlock}. The cross section data begins at the index specified by the locator, \LOC{A}{i}, given in the \Block{LSIG} (see \Sectionref{sec:LSIGBlock}). The \MT s are defined in the \Block{MTRP} (see \Sectionref{sec:MTRBlock}). All indices to the \XSS\ array are \emph{relative} to \jxs{15}. 
+The \Block{SIGP} contains the photon production cross section data. The format of the \Block{SIGP} is given in \Tableref{tab:SIGPBlock}. The cross section data begins at the index specified by the locator, \LOC{A}{i}, given in the \Block{LSIG} (see \Sectionref{sec:LSIGBlock}). The \MT s are defined in the \Block{MTRP} (see \Sectionref{sec:MTRBlock}). All indices to the \XSS\ array are \emph{relative} to \jxs{15}.
 \begin{ThreePartTable}
 \begin{BlockTable}{SIGP}
   \jxs{15}+\LOC{A}{1}-1         & \var{MFTYPE}$_{1}$ & Cross section array for reaction \MT$_{1}$ \\
@@ -1012,10 +1013,10 @@ The format of the $i$-th cross section array has two possible forms depending on
   \jxs{15}+\LOC{A}{i}+3   & \multirow{2}{*}{$E(l),l=1,\ldots,N_{E}$}          & \multirow{2}{*}{Energies} \\
   \hfill +$2*N_{R}$       &                                                   & \\
   \jxs{15}+\LOC{A}{i}+3   & \multirow{2}{*}{$Y(l),l=1,\ldots,N_{E}$ }         & \multirow{2}{*}{Yields} \\
-  \hfill +$2*N_{R}+N_{E}$ &                                                   & 
+  \hfill +$2*N_{R}+N_{E}$ &                                                   &
   \label{tab:PhotonProductionArray}
 \end{XSSTable}
-  
+
 \end{ThreePartTable}
 
 \begin{ThreePartTable}
@@ -1024,7 +1025,7 @@ The format of the $i$-th cross section array has two possible forms depending on
   \jxs{15}+\LOC{A}{i}                    & \var{IE}                              & Energy grid index \\
   \jxs{15}+\LOC{A}{i}+1                  & $N_{E}$                               & Number of consecutive entries \\
   \multirow{2}{*}{\jxs{15}+\LOC{A}{i}+2} & $\sigma_{\gamma,i}[E(K)],$            & \multirow{2}{*}{Photon production cross sections for reaction \MT$_{i}$} \\
-                                         & $K=\var{IE},\ldots,\var{IE}+N_{E}-1$ & 
+                                         & $K=\var{IE},\ldots,\var{IE}+N_{E}-1$ &
   \label{tab:PhotonProductionCrossSectionArray}
 \end{XSSTable}
 \begin{tablenotes}
@@ -1050,7 +1051,7 @@ The \Block{LANDP} gives locator information for angular distribution arrays for 
 \end{ThreePartTable}
 
 \subsubsection{\textsf{ANDP} Block}\label{sec:ANDPBlock}
-The \Block{ANDP} contains angular distribution data for all photon-producing reactions and exists if $\nxs{6}\neq0$. The format of the \Block{ANDP} is given in \Tableref{tab:ANDPBlock}; the format of each angular distribution array is given in \Tableref{tab:SecondaryPhotonAngularDistribution}. The angular distribution data begins at the index specified by the locator, \LOC{B}, from the \Block{LANDP}; if $\LOC{B}{i}=0$, there are no angular distribution data given for reaction $i$ and isotropic scattering is assumed in the \LAB\ system. 
+The \Block{ANDP} contains angular distribution data for all photon-producing reactions and exists if $\nxs{6}\neq0$. The format of the \Block{ANDP} is given in \Tableref{tab:ANDPBlock}; the format of each angular distribution array is given in \Tableref{tab:SecondaryPhotonAngularDistribution}. The angular distribution data begins at the index specified by the locator, \LOC{B}, from the \Block{LANDP}; if $\LOC{B}{i}=0$, there are no angular distribution data given for reaction $i$ and isotropic scattering is assumed in the \LAB\ system.
 \begin{ThreePartTable}
 \begin{LOCTable}{ANDP}
   \jxs{17}+\LOC{B}{1}-1         & Angular distribution array for reaction \MT$_{1}$ \\
@@ -1111,20 +1112,20 @@ The format of the \Block{FIS} is given in \Tableref{tab:FISBlock}.
 The \Block{UNR} contains the unresolved resonance range probability tables. It exists if $\jxs{23}\neq0$ and begins at location \jxs{23} in \texttt{XSS}. The \Block{UNR} has several flags that have special meaning:
 
 \begin{description}[labelindent=1em]
-  \item[\var{ILF}] The \var{ILF} flag is the inelastic competition flag.% If this flag is less than zero, the inelastic cross section is zero within the entire unresolved energy range. If this flag 
+  \item[\var{ILF}] The \var{ILF} flag is the inelastic competition flag.% If this flag is less than zero, the inelastic cross section is zero within the entire unresolved energy range. If this flag
     \begin{description}
       \item[$\var{ILF}<0$] The inelastic cross section is zero within the entire unresolved energy range.
-      \item[$\var{ILF}>0$] The value of \var{ILF} is a special \MT\ number whose tabulation is the sum of the inelastic levels. 
+      \item[$\var{ILF}>0$] The value of \var{ILF} is a special \MT\ number whose tabulation is the sum of the inelastic levels.
       \item[$\var{ILF}=0$] The sum of the contribution of the inelastic reactions will be made using a balance relationship involving the smooth cross sections.
     \end{description}
     An exception to this scheme is typically made when there is only one inelastic level within the unresolved energy range, because the flag can then just be set to its \MT\ number and the special tabulation is not needed.
   \item[\var{IOA}] The \var{IOA} is the other absorption flag for determining the contribution of ``other absorptions'' (no neutron out or destruction reactions).
     \begin{description}
-      \item[$\var{IOA}<0$] The ``other absorption'' cross section is zero within the entire unresolved resonance range. 
-      \item[$\var{IOA}>0$] The value of \var{IOA} is a special \MT\ number whose tabulation is the sum of the ``other absorption'' reactions. 
+      \item[$\var{IOA}<0$] The ``other absorption'' cross section is zero within the entire unresolved resonance range.
+      \item[$\var{IOA}>0$] The value of \var{IOA} is a special \MT\ number whose tabulation is the sum of the ``other absorption'' reactions.
       \item[$\var{IOA}=0$] The sum of the contribution of the ``other absorption'' reactions will be made using a balanced relationship involving the smooth cross sections.
     \end{description}
-    An exception to this scheme is typically made when there is only one ``other absorption'' reaction within the unresolved energy range, because the flag can then just be set to its \MT\ number and the special tabulation is not needed. 
+    An exception to this scheme is typically made when there is only one ``other absorption'' reaction within the unresolved energy range, because the flag can then just be set to its \MT\ number and the special tabulation is not needed.
   \item[\var{IFF}] The \var{IFF} is the factors flag.
     \begin{description}
       \item[$\var{IFF}=0$] The tabulations in the probability tables are cross sections.
@@ -1160,7 +1161,7 @@ are what make up the probability tables. The argument $j$ has special meaning de
 
 \begin{ThreePartTable}
   \begin{TableNotes}
-  \item[$\dagger$] \label{tn:UNRInterpolationFlag} 
+  \item[$\dagger$] \label{tn:UNRInterpolationFlag}
       \begin{description}[font=\ttfamily]
         \item[2] linear-linear interpolation,
         \item[5] log-log interpolation
