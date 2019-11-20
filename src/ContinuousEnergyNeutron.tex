@@ -244,7 +244,7 @@ The format of the \Block{TYR} (for incident neutron reactions) and \Block{TYRH} 
     \bottomrule
   \end{tabular}
   \caption{\var{TYR} and \var{NMT} values for the \Block{TYR} and \Block{TYRH}.}
-  \label{tab:LMT_NMT}
+  \label{tab:TYR_NMT}
 \end{table}
 
 \begin{BlockTable}{TYR}
@@ -263,11 +263,28 @@ The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$
 Thus if \var{TY}$_{i}$=+3, three particles are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission (only used in the \Block{TYR}). The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption; no particles are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent multiplicities. The number of secondary particles released is determined from the yield data found in the \Block{DLW} or \Block{DLWH}. The \MT$_{i}$s are given in the \Block{MTR} or \Block{MTRH}.
 
 \subsubsection{\textsf{LSIG}\& \textsf{LSIGP} Blocks}\label{sec:LSIGBlock}\label{sec:LSIGPBlock}
-The \Block{LSIG} and \Block{LSIGP} give the locators for cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data. In this case, the data is the cross section values. The format of the \Block{LSIG} (for incident neutron cross sections) and \Block{LSIGP} (for photon production cross sections) is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}. The format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock}.
+The \Block{LSIG} (for incident neutron cross sections), \Block{LSIGP} (for photon production cross sections) and \Block{LSIGH} (for particle production cross sections) give the locators for the cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the cross section values. The format of the \Block{LSIG}, \Block{LSIGP} and \Block{LSIGH} is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}, the format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock} and the format for the particle production cross sections is given in \Sectionref{sec:SIGHBlock}.
 
-All locators are relative to \jxs{7} for the \Block{LSIG} or \jxs{15} for the \Block{LSIGP}. That is, \var{LXS}=\jxs{6} for the \Block{LSIG} and \var{LXS}=\jxs{14} for the \Block{LSIGP}. So the actual cross section data begins at the index \LOC{A}+\var{LXS}. The \MT s are given in the \Block{MTR} and the \Block{MTRP} for the \Block{LSIG} and the \Block{LSIGP} respectively. \LOC{A}{i} must be monotonically increasing.
+The starting index depends on whether it is the \Block{LSIG}, \Block{LSIGP} or \Block{LSIGH} and are given in \Tableref{tab:LXS_NMT}. For the particle production \Block{LSIGH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+
+\begin{table}[h!] \centering
+  \begin{tabular}[h]{lll}
+    \toprule
+    Block        & \var{LXS}                 & \var{NMT} \\
+    \midrule
+    \var{LSIG}  & \jxs{6}                    & \nxs{4} \\
+    \var{LSIGP} & \jxs{14}                   & \nxs{4} \\
+    \var{LSIGH} & \xss{\jxs{32}+10*(i-1)+3}  & \xss{\jxs{31}+i-1} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\var{TYR} and \var{NMT} values for the \Block{TYR} and \Block{TYRH}.}
+  \label{tab:LXS_NMT}
+\end{table}
+
+The actual cross section data thus begins at the index \LOC{A}+\var{LXS}. The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LSIG}, the \Block{LSIGP} and \Block{LSIGH} respectively. \LOC{A}{i} must be monotonically increasing.
+
 \begin{BlockTable}{LSIG \textnormal{\&} LSIGP}
-  \var{LXS}             & \LOC{A}{1}=1       & Location of cross sections for reaction \MT$_{1}$ \\
+  \var{LXS}             & \LOC{A}{1}         & Location of cross sections for reaction \MT$_{1}$ \\
   \var{LXS}+1           & \LOC{A}{2}         & Location of cross sections for reaction \MT$_{2}$ \\
   \ldots \\
   \var{LXS}+\var{NMT}-1 & \LOC{A}{\var{NMT}} & Location of cross sections for reaction \MT$_{\var{NMT}}$
