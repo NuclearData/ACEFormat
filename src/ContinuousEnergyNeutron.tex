@@ -26,6 +26,17 @@ The format of individual blocks found on neutron transport tables is identical f
   \item \textbf{\Block{UNR}}---contains the unresolved resonance range probability tables. The \Block{UNR} exists if \jxs{23}$\neq0$. See \Sectionref{sec:UNRBlock}.
   \item \textbf{\Block{PTYPE}}---contains a list of particle types for which production data will be given. The \Block{PTYPE} exists if \jxs{30}$\neq0$. See \Sectionref{sec:PTYPEBlock}.
   \item \textbf{\Block{NTRO}}---contains the number of reactions that produce the corresponding particle type given in the \Block{PTYPE}. The \Block{NTRO} exists if \jxs{31}$\neq0$. See \Sectionref{sec:NTROBlock}.
+  \item \textbf{\Block{IXS}}---particle production data locators for each particle type given in the \Block{PTYPE}. The \Block{IXS} exists if \jxs{32}$\neq 0$. See \Sectionref{sec:IXSBlock}.
+  \item \textbf{\Block{HPD}}---total particle production cross section and average heating numbers for the current particle type. The \Block{HPD} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) \neq 0$. See \Sectionref{sec:HPDBlock}.
+  \item \textbf{\Block{MTRH}}---contains a list of ENDF MT numbers for all reactions that produce the current particle. The \Block{MTR} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) + 1 \neq 0$. See \Sectionref{sec:MTRHBlock}.
+  \item \textbf{\Block{TYRH}}---contains the reaction types for all reactions that produce the current particle. The \Block{TYRH} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) + 2 \neq 0$. See \Sectionref{sec:TYRHBlock}.
+  \item \textbf{\Block{LSIGH}}---contains the cross section locators for all reactions that produce the current particle. The \Block{LSIGH} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) + 3 \neq 0$. See \Sectionref{sec:LSIGHBlock}.
+  \item \textbf{\Block{SIGH}}---contains the cross section data for all reactions that produce the current particle. The \Block{SIGH} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) + 4 \neq 0$. See \Sectionref{sec:SIGHBlock}.
+  \item \textbf{\Block{LANDH}}---contains the angular distribution locators for all reactions that produce the current particle. The \Block{LANDH} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) + 5 \neq 0$. See \Sectionref{sec:LANDHBlock}.
+  \item \textbf{\Block{ANDH}}---contains the angular distribution data for all reactions that produce the current particle. The \Block{ANDH} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) + 6 \neq 0$. See \Sectionref{sec:ANDHBlock}.
+  \item \textbf{\Block{LDLWH}}---contains the energy distribution locators for all reactions that produce the current particle. The \Block{LDLWH} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) + 7 \neq 0$. See \Sectionref{sec:LDLWHBlock}.
+  \item \textbf{\Block{DLWH}}---contains the energy distribution data for all reactions that produce the current particle. The \Block{DLWH} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) + 8 \neq 0$. See \Sectionref{sec:DLWHBlock}.
+  \item \textbf{\Block{YH}}---contains the particle production yield multiplier for all reactions that produce the current particle. The \Block{YH} for a given particle type $i$ exists if $\jxs{32}+10*(i-1) + 9 \neq 0$. See \Sectionref{sec:DLWHBlock}.
 \end{enumerate}
 
 \clearpage
@@ -80,7 +91,7 @@ The format of individual blocks found on neutron transport tables is identical f
     19 & \var{DLWP}  & Photon production energy distributions \\
     20 & \var{YP}    & Table of yield multipliers \\
     21 & \var{FIS}   & Total fission cross section \\
-    22 & \var{END}   & Last word of this table \\
+    22 & \var{END}   & Last word of the conventional table (last word of photon production data) \\
     23 & \var{LUNR}  & Probability tables \\
     24 & \var{DNU}   & Delayed $\overline{\nu}$ data \\
     25 & \var{BDD}   & Basic delayed neutron precursor data ($\lambda$'s, probabilities) \\
@@ -89,7 +100,7 @@ The format of individual blocks found on neutron transport tables is identical f
        & \ldots      & \\
     30 & \var{PTYPE} & Particle type array \\
     31 & \var{NTRO}  & Array containing the number of particle production reactions \\
-    32 & \var{IXS}   & Table of particle production locators
+    32 & \var{NEXT}  & Table of particle production locators (IXS array)
   \label{tab:JXSContinuousEnergyNeutron}
 \end{JXSTable}
 
@@ -178,15 +189,18 @@ If delayed neutron data exist (when \jxs{24}>0), the precursor distribution form
   \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{MTR} \& \textsf{MTRP} Blocks}\label{sec:MTRBlock}\label{sec:MTRPBlock}
-The format of the \Block{MTR} (for incident neutron reactions) and \Block{MTRP} (for photon production reactions) is given in \Tableref{tab:MTRBlock}. The starting index depends on whether it is the \Block{MTR} or \Block{MTRP} and are given in \Tableref{tab:LMT_NMT}.
+\subsubsection{\textsf{MTR}, \textsf{MTRP} and \textsf{MTRP} Blocks}\label{sec:MTRBlock}\label{sec:MTRPBlock}\label{sec:MTRHBlock}
+
+The format of the \Block{MTR} (for incident neutron reactions), \Block{MTRP} (for photon production reactions) and \Block{MTRH} (for particle production reactions) is given in \Tableref{tab:MTRBlock}. The starting index depends on whether it is the \Block{MTR}, \Block{MTRP} or \Block{MTRH} and are given in \Tableref{tab:LMT_NMT}. For the particle production \Block{MTRH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+
 \begin{table}[h!] \centering
   \begin{tabular}[h]{lll}
     \toprule
-    Block & \var{LMT} & \var{NMT} \\
+    Block      & \var{LMT}                 & \var{NMT} \\
     \midrule
-    \var{MTR} & \jxs{3} & \nxs{4} \\
-    \var{MTRP} & \jxs{13} & \nxs{6} \\
+    \var{MTR}  & \jxs{3}                   & \nxs{4} \\
+    \var{MTRP} & \jxs{13}                  & \nxs{6} \\
+    \var{MTRH} & \xss{\jxs{32}+10*(i-1)+1} & \xss{\jxs{31}+i-1} \\
     \bottomrule
   \end{tabular}
   \caption{\var{LMT} and \var{NMT} values for the \Block{MTR} and \Block{MTR}.}
@@ -201,7 +215,7 @@ The format of the \Block{MTR} (for incident neutron reactions) and \Block{MTRP} 
   \label{tab:MTRBlock}
 \end{BlockTable}
 
-For the \Block{MTR}, \MT$_{1},\ldots,\MT_{\var{NMT}}$ are standard ENDF \MT numbers; that is, \MT=16=$(n,2n)$; \MT=17=$(n,3n)$; etc. For a complete listing of \MT\ numbers, see \cite[Appendix B]{Trkov:2011ENDF--0}.
+For the \Block{MTR} and \Block{MTRH}, \MT$_{1},\ldots,\MT_{\var{NMT}}$ are standard ENDF \MT numbers; that is, \MT=16=$(n,2n)$; \MT=17=$(n,3n)$; etc. For a complete listing of \MT\ numbers, see \cite[Appendix B]{Trkov:2011ENDF--0}. For the \Block{MTR}, every \MT number may be appear only once. In the \Block{MTRH}, it is possible for a given \MT number to appear twice if the same particle is also produced as the residual after the reaction (e.g. d + t -> d + d).
 
 For the \Block{MTRP}, the \MT\ numbers are somewhat arbitrary. To understand the scheme used for numbering the photon production \MT s, it is necessary to realize that in the ENDF format, more than one photon can be produced by a particular neutron reaction that is itself specified by a single \MT. Each of these photons is produced with an individual energy-dependent cross section. For example, \MT 102 (radiative capture) might be responsible for 40 photons, each with its own cross section, angular distribution, and energy distribution. We need 40 photon \MT s to represent the data; the \MT s are numbered \textsf{1002001}, \textsf{1002002}, \ldots, \textsf{1002040}. Therefore, if ENDF \MT\ $N$ is responsible for $M$ photons, we shall number the photon \MT s \textsf{1000*$N$+1}, \textsf{1000*$N$+2}, \ldots, \textsf{1000*$N$+$M$}.
 
@@ -1231,4 +1245,32 @@ The format of the \Block{NTRO} is given in \Tableref{tab:NTROBlock}.
 
 \subsubsection{\textsf{IXS} Block}\label{sec:IXSBlock}
 
-The \Block{IXS} gives 10 particle production locators for each of the particle types defined in the \Block{PTYPE}. If the \Block{IXS} is present, the \Block{IXS} starts at the index \var{LTYPE} = \jxs{32}. The \Block{IXS} serves a similar function as the \Block{JXS}, in that it provides locators for individual blocks of data.
+The \Block{IXS} gives 10 particle production locators for each of the particle types defined in the \Block{PTYPE}. If the \Block{IXS} is present, the \Block{IXS} starts at the index \var{NEXT} = \jxs{32}. The \Block{IXS} serves a similar function as the \Block{JXS}, in that it provides the locators to specific blocks of data, as laid out in \Tableref{tab:IXSBlock}.
+
+\begin{BlockTable}{IXS array for particle type $j$, with $\var{LTYPE}=\var{NEXT}+10\var{NTYPE}(j-1)$}
+  \var{LTYPE}     & \var{HPD}    & Location of the total particle production and heating data \\
+  \var{LTYPE}+1   & \var{MTRH}   & Location of the particle production MT array \\
+  \var{LTYPE}+2   & \var{TYRH}   & Location of the particle production TYR data \\
+  \var{LTYPE}+3   & \var{LSIGH}  & Location of the particle production cross section locators \\
+  \var{LTYPE}+4   & \var{SIGH}   & Location of the particle production cross sections \\
+  \var{LTYPE}+5   & \var{LANDH}  & Location of the particle production angular distribution locators \\
+  \var{LTYPE}+6   & \var{ANDH}   & Location of the particle production angular distributions \\
+  \var{LTYPE}+7   & \var{LDLWH}  & Location of the particle production energy distribution locators \\
+  \var{LTYPE}+8   & \var{DLWH}   & Location of the particle production energy distributions \\
+  \var{LTYPE}+9   & \var{YH}     & Location of the particle production yield multipliers
+  \label{tab:IXSBlock}
+\end{BlockTable}
+
+With the exception of the \Block{HPD}, all other locators point to blocks similar to the ones already defined for neutrons and photons.
+
+\subsubsection{\textsf{HPD} Block}\label{sec:IXSBlock}
+
+The \Block{HPD} gives the total particle production cross section and the associated heating number for a given particle. If the particle production data is given (i.e. the $\var{NTYPE}\ne0$, and the \Block{PTYPE}, the \Block{NTRO} and \Block{IXS} are given), the \Block{HPD} is present. The \Block{HPD} starts at the location index $\var{HPD}=\xss(\var{NEXT}+10*(j-1))$.
+
+\begin{BlockTable}{HPD}
+  \var{HPD}              & \var{IE}                         & Energy grid index \\
+  \var{HPD}+1            & $N_{E}$                          & Number of consecutive energies \\
+  \var{HPD}+2            & $\sigma[E(K)],$                  & Total particle production cross section \\
+  \var{HPD}+2+\var{NE}   & $E(l),l=1,\ldots,N_{E}$          & Average heating numbers \\
+  \label{tab:HPDBlock}
+\end{BlockTable}
