@@ -14,7 +14,7 @@ The format of individual blocks found on neutron transport tables is identical f
   \item \textbf{\Block{LDLW}}---contains a list of energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{LDLW} exists if \nxs{5}$\neq0$. See \Sectionref{sec:LDLWBlock}.
   \item \textbf{\Block{DLW}}---contains energy distributions for all reactions producing secondary neutrons except for elastic scattering. The \Block{DLW} exists if \nxs{5}$\neq0$. See \Sectionref{sec:DLWBlock}.
   \item \textbf{\Block{GPD}}---contains the total photon production cross section tabulated on the ESZ energy grid and a $30\times$ matrix of secondary photon energies. The \Block{GPD} exists only for those older evaluations that provide coupled neutron/photon information; that is, if \jxs{12}$\neq0$. See \Sectionref{sec:GPDBlock}.
-  \item \textbf{\Block{MTRP}}---contains a list of MT numbers for all photon production reactions. The term ``photon production reaction'' is used for any information describing a specific neutron-in, photon-out reaction. The \Block{MTR} exists if \nxs{6}$\neq6$. See \Sectionref{sec:MTRBlock}.
+  \item \textbf{\Block{MTRP}}---contains a list of MT numbers for all photon production reactions. The term ``photon production reaction'' is used for any information describing a specific neutron-in, photon-out reaction. The \Block{MTR} exists if \nxs{6}$\neq0$. See \Sectionref{sec:MTRBlock}.
   \item \textbf{\Block{LSIGP}}---contains a list of cross section locators for all photon production reactions. The \Block{LSIGP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:LSIGBlock}.
   \item \textbf{\Block{SIGP}}---contains cross sections for all photon production reactions. The \Block{SIGP} exists if \nxs{6}$\neq0$. See \Sectionref{sec:SIGPBlock}.
   \item \textbf{\Block{LANDP}}---contains a list of angular-distribution locators for all photon production reactions. The \Block{LANDP} exist if \nxs{6}$\neq0$. See \Sectionref{sec:LANDPBlock}
@@ -273,7 +273,7 @@ The starting index depends on whether it is the \Block{LSIG}, \Block{LSIGP} or \
     Block        & \var{LXS}                 & \var{NMT} \\
     \midrule
     \var{LSIG}  & \jxs{6}                    & \nxs{4} \\
-    \var{LSIGP} & \jxs{14}                   & \nxs{4} \\
+    \var{LSIGP} & \jxs{14}                   & \nxs{6} \\
     \var{LSIGH} & \xss{\jxs{32}+10*(i-1)+3}  & \xss{\jxs{31}+i-1} \\
     \bottomrule
   \end{tabular}
@@ -1005,29 +1005,40 @@ The format of this Block is given in \Tableref{tab:GPDBlockOutgoing}. The \XSS\ 
   \label{tab:GPDBlockOutgoing}
 \end{XSSTable}
 
-\subsubsection{\textsf{SIGP} Block}\label{sec:SIGPBlock}
-The \Block{SIGP} contains the photon production cross section data. The format of the \Block{SIGP} is given in \Tableref{tab:SIGPBlock}. The cross section data begins at the index specified by the locator, \LOC{A}{i}, given in the \Block{LSIG} (see \Sectionref{sec:LSIGBlock}). The \MT s are defined in the \Block{MTRP} (see \Sectionref{sec:MTRBlock}). All indices to the \XSS\ array are \emph{relative} to \jxs{15}. 
-\begin{ThreePartTable}
+\subsubsection{\textsf{SIGP} and \textsf{SIGH} Block}\label{sec:SIGPBlock}\label{sec:SIGHBlock}
+
+The \Block{SIGP} contains the photon production cross section data and the \Block{SIGH} contains the particle production cross section data. The format of the \Block{SIGP} and \Block{SIGH} is given in \Tableref{tab:SIGPBlock}. The starting index depends on whether it is the \Block{LSIGP} or \Block{LSIGH} and are given in \Tableref{tab:SIG_NMT}. For the particle production \Block{SIGH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+
+\begin{table}[h!] \centering
+  \begin{tabular}[h]{lll}
+    \toprule
+    Block        & \var{SIG}                 & \var{NMT} \\
+    \midrule
+    \var{SIGP}   & \jxs{15}                  & \nxs{6} \\
+    \var{SIGH}   & \xss{\jxs{32}+10*(i-1)+4} & \xss{\jxs{31}+i-1} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\var{SIG} and \var{NMT} values for the \Block{SIGP} and \Block{SIGH}.}
+  \label{tab:LXS_NMT}
+\end{table}
+
+The cross section data begins at the index specified by the locator, \LOC{A}{i}, given in the \Block{LSIGP} or \Block{LSIGH}. The \MT s are defined in the \Block{MTRP} or \Block{MTRH}. All indices to the \XSS\ array are \emph{relative} to \var{SIG}. 
 \begin{BlockTable}{SIGP}
-  \jxs{15}+\LOC{A}{1}-1         & \var{MFTYPE}$_{1}$ & Cross section array for reaction \MT$_{1}$ \\
-  \jxs{15}+\LOC{A}{2}-1         & \var{MFTYPE}$_{2}$ & Cross section array for reaction \MT$_{2}$ \\
+  \var{SIG}+\LOC{A}{1}-1         & \var{MFTYPE}$_{1}$ & Cross section array for reaction \MT$_{1}$ \\
+  \var{SIG}+\LOC{A}{2}-1         & \var{MFTYPE}$_{2}$ & Cross section array for reaction \MT$_{2}$ \\
   \ldots \\
-  \jxs{15}+\LOC{A}{\var{NMT}}-1 & \var{MFTYPE}$_{\var{NMT}}$ & Cross section array for reaction \MT$_{\var{NMT}}$
+  \var{SIG}+\LOC{A}{\var{NMT}}-1 & \var{MFTYPE}$_{\var{NMT}}$ & Cross section array for reaction \MT$_{\var{NMT}}$
   \label{tab:SIGPBlock}
 \end{BlockTable}
-\begin{tablenotes}
-  \note The number of photon production cross section arrays \var{NMT}=\nxs{6}.
-\end{tablenotes}
-\end{ThreePartTable}
 
 The format of the $i$-th cross section array has two possible forms depending on the first number in the array, \var{MFTYPE}.
 \begin{enumerate}
-  \item If \var{MFTYPE}=12 or \var{MFTYPE}=16, yield data taken from ENDF File 12 or 6, respectively (see \Tableref{tab:PhotonProductionArray}). With this format, the photon production cross section can be constructed using \Equationref{eq:PhotonProductionConstruction}:
+  \item If \var{MFTYPE}=12 or \var{MFTYPE}=16, yield data taken from ENDF File 12 or 6, respectively (see \Tableref{tab:PhotonProductionArray}). With this format, the photon or particle production cross section can be constructed using \Equationref{eq:PhotonProductionConstruction}:
   \begin{equation}
-    \sigma_{\gamma,i}(E) = Y(E)*\sigma_{\var{MTMULT}}(E).
+    \sigma_{i}(E) = Y(E)*\sigma_{\var{MTMULT}}(E).
     \label{eq:PhotonProductionConstruction}
   \end{equation}
-  \item If \var{MFTYPE}=13, cross section data from ENDF File 13 (see \Tableref{tab:PhotonProductionCrossSectionArray}).
+  \item If \var{MFTYPE}=13, photon production cross section data from ENDF File 13 (see \Tableref{tab:PhotonProductionCrossSectionArray}). This form is only allowed for the \Block{SIGP}.
 \end{enumerate}
 
 \begin{ThreePartTable}
