@@ -203,7 +203,7 @@ The format of the \Block{MTR} (for incident neutron reactions), \Block{MTRP} (fo
     \var{MTRH} & \xss{\jxs{32}+10*(i-1)+1} & \xss{\jxs{31}+i-1} \\
     \bottomrule
   \end{tabular}
-  \caption{\var{LMT} and \var{NMT} values for the \Block{MTR} and \Block{MTR}.}
+  \caption{\var{LMT} and \var{NMT} values for the \Block{MTR} and \Block{MTRH}.}
   \label{tab:LMT_NMT}
 \end{table}
 
@@ -220,6 +220,7 @@ For the \Block{MTR} and \Block{MTRH}, \MT$_{1},\ldots,\MT_{\var{NMT}}$ are stand
 For the \Block{MTRP}, the \MT\ numbers are somewhat arbitrary. To understand the scheme used for numbering the photon production \MT s, it is necessary to realize that in the ENDF format, more than one photon can be produced by a particular neutron reaction that is itself specified by a single \MT. Each of these photons is produced with an individual energy-dependent cross section. For example, \MT 102 (radiative capture) might be responsible for 40 photons, each with its own cross section, angular distribution, and energy distribution. We need 40 photon \MT s to represent the data; the \MT s are numbered \textsf{1002001}, \textsf{1002002}, \ldots, \textsf{1002040}. Therefore, if ENDF \MT\ $N$ is responsible for $M$ photons, we shall number the photon \MT s \textsf{1000*$N$+1}, \textsf{1000*$N$+2}, \ldots, \textsf{1000*$N$+$M$}.
 
 \subsubsection{\textsf{LQR} Block}\label{sec:LQRBlock}
+
 The format of the \Block{LQR}, containing the reaction-specific $Q$-values, is given in \Tableref{tab:LQRBlock}. The index at the start of the \Block{LQR}, \startblock{LQR}=\jxs{4}. The number of reactions, \var{NMT}, is the same through the \ACE\ Table, \var{NMT}=\nxs{4}.
 \begin{BlockTable}{LQR}
   \startblock{LQR}           & $Q_{1}$         & $Q$-value for reaction \MT$_{1}$ \\
@@ -229,8 +230,22 @@ The format of the \Block{LQR}, containing the reaction-specific $Q$-values, is g
   \label{tab:LQRBlock}
 \end{BlockTable}
 
-\subsubsection{\textsf{TYR} Block}\label{sec:TYRBlock}
-The format of the \Block{TYR} is given in \Tableref{tab:TYRBlock}. The index at the start of the \Block{TYR}, \startblock{TYR}=\jxs{5}. The number of reactions, \var{NMT}, is the same through the \ACE\ Table, \var{NMT}=\nxs{4}.
+\subsubsection{\textsf{TYR} and \textsf{TYRH} Block}\label{sec:TYRBlock}\label{sec:TYRHBlock}
+
+The format of the \Block{TYR} (for incident neutron reactions) and \Block{TYRH} (for particle production reactions) is given in \Tableref{tab:TYRBlock}. The starting index depends on whether it is the \Block{TYR} or \Block{TYRH} and are given in \Tableref{tab:TYR_NMT}. For the particle production \Block{TYRH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+
+\begin{table}[h!] \centering
+  \begin{tabular}[h]{lll}
+    \toprule
+    Block      & \var{TYR}                 & \var{NMT} \\
+    \midrule
+    \var{TYR}  & \jxs{3}                   & \nxs{4} \\
+    \var{TYRH} & \xss{\jxs{32}+10*(i-1)+2} & \xss{\jxs{31}+i-1} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\var{TYR} and \var{NMT} values for the \Block{TYR} and \Block{TYRH}.}
+  \label{tab:LMT_NMT}
+\end{table}
 
 \begin{BlockTable}{TYR}
   \startblock{TYR}             & \var{TY}$_{1}$         & Neutron release for reaction \MT$_{1}$ \\
@@ -239,12 +254,13 @@ The format of the \Block{TYR} is given in \Tableref{tab:TYRBlock}. The index at 
   \startblock{TYR}+\var{NMT}-1 & \var{TY}$_{\var{NMT}}$ & Neutron release for reaction \MT$_{\var{NMT}}$
   \label{tab:TYRBlock}
 \end{BlockTable}
+
 The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering: 
 \begin{description}
   \item[negative] \CM,
   \item[positive] \LAB.
 \end{description}
-Thus if \var{TY}$_{i}$=+3, three neutrons are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission. The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption (ENDF reactions \MT>100); no neutrons are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent neutron multiplicities. The number of secondary neutrons released is determined from the yield data found in the \Block{DLW}. The \MT$_{i}$s are given in the \Block{MTR}.
+Thus if \var{TY}$_{i}$=+3, three particles are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission (only used in the \Block{TYR}). The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption; no particles are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent multiplicities. The number of secondary particles released is determined from the yield data found in the \Block{DLW} or \Block{DLWH}. The \MT$_{i}$s are given in the \Block{MTR} or \Block{MTRH}.
 
 \subsubsection{\textsf{LSIG}\& \textsf{LSIGP} Blocks}\label{sec:LSIGBlock}\label{sec:LSIGPBlock}
 The \Block{LSIG} and \Block{LSIGP} give the locators for cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data. In this case, the data is the cross section values. The format of the \Block{LSIG} (for incident neutron cross sections) and \Block{LSIGP} (for photon production cross sections) is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}. The format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock}.
