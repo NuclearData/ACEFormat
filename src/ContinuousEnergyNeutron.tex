@@ -335,7 +335,8 @@ The \Block{LAND} contains locators for the angular distributions for all reactio
 \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{AND} Block}\label{sec:ANDBlock}
+\subsubsection{\textsf{AND} and \textsf{ANDH} Block}\label{sec:ANDBlock}
+
 The \Block{AND} contains angular distribution data for all reactions that produce secondary neutrons. The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}. If \LOC{B}{i}=0 (given in the \Block{LAND}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR}. If \LOC{B}{i}=-1 no angular distribution data are given for reaction $i$ in the \Block{AND}. The angular distribution data are specified through \law{44} in the \Block{DLW}. 
 
 \begin{ThreePartTable}
