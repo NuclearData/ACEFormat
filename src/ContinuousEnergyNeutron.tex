@@ -336,9 +336,9 @@ The \Block{SIG} contains the incident neutron cross section data (photon product
 
 The energy grid index $\var{IE}_{i}$ corresponds to the first energy in the grid at which a cross section is given. The \MT$_{i}$s are defined in the \Block{MTR}.
 
-\subsubsection{\textsf{LAND} Block}\label{sec:LANDBlock}
+\subsubsection{\textsf{LAND}, \textsf{LANDP} and \textsf{LANDH} Block}\label{sec:LANDBlock}\label{sec:LANDPBlock}\label{sec:LANDHBlock}
 
-The \Block{LAND} (for incident neutron cross sections), \Block{LANDP} (for photon production cross sections) and \Block{LANDH} (for particle production cross sections) give the locators for the angular distribution array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the angular distributions. The format of the \Block{LAND}, \Block{LANDP} and \Block{LANDH} is given in \Tableref{tab:LANDBlock}.
+The \Block{LAND} (for incident neutron reactions), \Block{LANDP} (for photon production reactions) and \Block{LANDH} (for particle production reactions) give the locators for the angular distribution array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the angular distributions. The format of the \Block{LAND}, \Block{LANDP} and \Block{LANDH} is given in \Tableref{tab:LANDBlock}.
 
 The starting index \var{LAND} depends on whether it is the \Block{LAND}, \Block{LANDP} or \Block{LANDH} and are given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
@@ -366,11 +366,11 @@ The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respec
   \label{tab:LSIGBlock}
 \end{BlockTable}
 
-\subsubsection{\textsf{AND} and \textsf{ANDH} Block}\label{sec:ANDBlock}
+\subsubsection{\textsf{AND}, \textsf{ANDP} and \textsf{ANDH} Block}\label{sec:ANDBlock}
 
-The \Block{AND} and \Block{ANDH} contains angular distribution data for all reactions that produce secondary particles (neutrons for the \Block{AND} and a specific particle for the \Block{ANDH}). The format of these blocks is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND} or \Block{LANDH}. If \LOC{B}{i}=0 (given in the \Block{LAND} and \Block{LANDH}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR} and \Block{TYRH}. If \LOC{B}{i}=-1 no angular distribution data are given for reaction $i$ in the \Block{AND} or \Block{ANDH}. The angular distribution data are specified through \law{44} in the \Block{DLW} or \Block{DLWH}. 
+The \Block{AND}, \Block{ANDP} and \Block{ANDH} contains angular distribution data for all reactions that produce secondary particles (neutrons for the \Block{AND}, photons for the \Block{ANDP} and a specific particle for the \Block{ANDH}). The format of these blocks is given in \Tableref{tab:ANDBlock} and \Tableref{tab:ANDPBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}, \Block{LANDP} or \Block{LANDH}. If \LOC{B}{i}=0, no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. If \LOC{B}{i}=-1 no angular distribution data is given for reaction $i$ (this can only happen for the the \Block{AND} or \Block{ANDH}). In this case, the angular distribution data are specified through \law{44} in the \Block{DLW} or \Block{DLWH}. 
 
-The starting index \var{LAND} depends on whether it is the \Block{AND} or \Block{ANDH} and are given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+The starting index \var{LAND} depends on whether it is the \Block{AND}, \Block{ANDP} or \Block{ANDH} and are given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
 \begin{table}[h!] \centering
   \begin{tabular}[h]{lll}
@@ -392,7 +392,19 @@ The starting index \var{LAND} depends on whether it is the \Block{AND} or \Block
   \var{LAND}+\LOC{B}{2}-1         & Angular distribution array for reaction \MT$_{1}$ \\
   \ldots \\
   \var{LAND}+\LOC{B}{\var{NMT}}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
-  \label{tab:ANDBlock}
+  \label{tab:ANDLocationBlock}
+\end{LOCTable}
+\begin{tablenotes}
+  \note The format for the angular distribution of the $i$-th array is given in \Tableref{tab:AngularDistributionArray}.
+\end{tablenotes}
+\end{ThreePartTable}
+
+\begin{ThreePartTable}
+\begin{LOCTable}{\Block{ANDP} and \Block{ANDH}}
+  \var{LAND}+\LOC{B}{1}-1         & Angular distribution array for reaction \MT$_{1}$ \\
+  \ldots \\
+  \var{LAND}+\LOC{B}{\var{NMT}}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
+  \label{tab:ANDPBlock}
 \end{LOCTable}
 \begin{tablenotes}
   \note The format for the angular distribution of the $i$-th array is given in \Tableref{tab:AngularDistributionArray}.
@@ -409,15 +421,14 @@ The starting index \var{LAND} depends on whether it is the \Block{AND} or \Block
 
 The angular distribution arrays (\Tableref{tab:AngularDistributionArray}) contains additional locators, $L_{C}$; the sign of these locators is a flag:
 \begin{itemize}
-  \item if $L_{C}(l)>0$, then $L_{C}(l)$ points to a 32 equiprobable bin distribution (see \Tableref{tab:32EquiprobableBinDistribution});
-  \item if $L_{C}(l)<0$, then $L_{C}(l)$ points to a tabulated angular distribution (see \Tableref{tab:TabulatedAngularDistribution});
-  \item if $L_{C}(l)=0$, then distribution is isotropic and no further data is needed.
+  \item if \LOC{C}{l}=0, then distribution is isotropic and no further data is needed;
+  \item if \LOC{C}{l}>0, then $\LOC{C}{l}$ points to a 32 equiprobable bin distribution (see \Tableref{tab:32EquiprobableBinDistribution});
+  \item if \LOC{C}{l}<0, then $\LOC{C}{l}$ points to a tabulated angular distribution (see \Tableref{tab:TabulatedAngularDistribution}).
 \end{itemize}
-Note: \textbf{All $L_{C}$ locators point to data \emph{relative} to \jxs{9}.}
 
 \begin{XSSTable}{Format for the 32 equiprobable bin distribution}
-  \multirow{2}{*}{\jxs{9}+$|L_{C}(l)|-1$} & $P(1,K)$        & 32 equiprobable cosine bins for scattering  \\
-                                          & $K=1,\ldots,33$ & at energy $E(l)$.
+  \multirow{2}{*}{\var{LAND}+|\LOC{C}{l}|-1} & $P(1,K)$        & 32 equiprobable cosine bins for scattering  \\
+                                               & $K=1,\ldots,33$ & at energy $E(l)$.
   \label{tab:32EquiprobableBinDistribution}
 \end{XSSTable}
 
@@ -430,17 +441,16 @@ Note: \textbf{All $L_{C}$ locators point to data \emph{relative} to \jxs{9}.}
       \end{description}
   \end{TableNotes}
 \begin{XSSTable}{Format for the tabulated angular distribution.}
-  \var{LDAT}$_{l}+1$ & \var{JJ}                                & Interpolation flag\tnotex{tn:ANDInterpolationFlag} \\
-  \var{LDAT}$_{l}+2$ & $N_{P}$                                 & Number of points in the distribution \\
-  \var{LDAT}$_{l}+3$ & $CS_{\mathrm{out}}(j),j=1,\ldots,N_{P}$ & Cosine scattering angular grid \\
-  \var{LDAT}$_{l}+4$ & $\PDF(j),j=1,\ldots,N_{P}$              & Probability density function \\
-  \var{LDAT}$_{l}+5$ & $\CDF(j),j=1,\ldots,N_{P}$              & Cumulative density function
+  \var{LAND}+$|\LOC{C}{l}|-1$        & \var{JJ}                                & Interpolation flag\tnotex{tn:ANDInterpolationFlag} \\
+  \var{LAND}+$|\LOC{C}{l}|$          & $N_{P}$                                 & Number of points in the distribution \\
+  \var{LAND}+$|\LOC{C}{l}|+1$        & $CS_{\mathrm{out}}(j),j=1,\ldots,N_{P}$ & Cosine scattering angular grid \\
+  \var{LAND}+$|\LOC{C}{l}|+1+N_{P}$  & $\PDF(j),j=1,\ldots,N_{P}$              & Probability density function \\
+  \var{LAND}+$|\LOC{C}{l}|+1+2N_{P}$ & $\CDF(j),j=1,\ldots,N_{P}$              & Cumulative density function
   \label{tab:TabulatedAngularDistribution}
 \end{XSSTable}
-\begin{tablenotes}
-  \note \var{LDAT}$_{l}=\jxs{9}+|L_{C}(l)|-1$
-\end{tablenotes}
 \end{ThreePartTable}
+
+The \Block{AND} and \Block{ANDH} can use both options (either a 32 equiprobable bin or tabulated distribution). The \Block{ANDP} on the other hand can only use 32 equiprobable bin distributions.
 
 \subsubsection{\textsf{LDLW}, \textsf{LDLWP} and \textsf{DNEDL} Blocks}\label{sec:LDLWBlock}\label{sec:LDLWPBlock}\label{sec:DNEDLBlock}
 
@@ -1133,86 +1143,6 @@ The format of the $i$-th cross section array has two possible forms depending on
 \begin{tablenotes}
   \note The \MT$_{i}$s are defined in the \Block{MTRP}.
 \end{tablenotes}
-\end{ThreePartTable}
-
-\subsubsection{\textsf{LANDP} and \textsf{LANDH} Block}\label{sec:LANDPBlock}\label{sec:LANDHBlock}
-
-The \Block{LANDP} (for photon production) and \Block{LANDH} (for particle production) give the locators for the angular distribution array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the angular distributions. The format of the \Block{LANDP} and \Block{LANDH} is given in \Tableref{tab:LANDPBlock}. The angular distribution format for photon production is given in \Sectionref{sec:ANDPBlock} and the format for particle production is given in \Sectionref{sec:ANDHBlock}.
-
-The starting index \var{LAND} depends on whether it is the \Block{LANDP} or \Block{LANDH} and are given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
-
-\begin{table}[h!] \centering
-  \begin{tabular}[h]{lll}
-    \toprule
-    Block        & \var{LAND}                 & \var{NMT} \\
-    \midrule
-    \var{LANDP}  & \jxs{16}                   & \nxs{6} \\
-    \var{LANDH}  & \xss{\jxs{32}+10*(i-1)+5}  & \xss{\jxs{31}+i-1} \\
-    \bottomrule
-  \end{tabular}
-  \caption{\var{LAND} and \var{NMT} values for the \Block{TYR} and \Block{TYRH}.}
-  \label{tab:LXS_NMT}
-\end{table}
-
-The \MT s are given in the the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LANDP} and \Block{LANDH} respectively. \LOC{B}{i} must be monotonically increasing. All locators (\LOC{B}) are \emph{relative} to \var{ANDP}=\jxs{17} for the \Block{LANDP} and relative to \var{ANDH}=\xss{\jxs{32}+10*(i-1)+6} for the \Block{LANDP}.
-
-\begin{BlockTable}{LSIG \textnormal{\&} LSIGP}
-  \var{LAND}             & \LOC{B}{1}         & Location of cross sections for reaction \MT$_{1}$ \\
-  \var{LAND}+1           & \LOC{B}{2}         & Location of cross sections for reaction \MT$_{2}$ \\
-  \ldots \\
-  \var{LAND}+\var{NMT}-1 & \LOC{B}{\var{NMT}} & Location of cross sections for reaction \MT$_{\var{NMT}}$
-  \label{tab:LSIGBlock}
-\end{BlockTable}
-
-
-
-
-
-
-The \Block{LANDP} gives locator information for angular distribution arrays for photon production reactions and exists if $\nxs{6}\neq0$. All locators (\LOC{B}) in the \Block{LANDP} are \emph{relative} to \jxs{17}; that is, the angular distribution arrays begin at $\jxs{17}+\LOC{B}{i}$. The number of photon-producing reactions is \var{NMT}=\nxs{6}. The \LOC{B}{i} must be monotonically increasing. The \MT s are defined in the \Block{MTRP} (see \Sectionref{sec:MTRBlock}). The format of the \Block{LANDP} is given in \Tableref{tab:LANDPBlock}.
-
-\begin{ThreePartTable}
-\begin{BlockTable}{LANDP}
-  \jxs{16} & \LOC{B}{1}=1 & Location of angular distribution data for reaction \MT$_{1}$ \\
-  \jxs{16}+1 & \LOC{B}{2} & Location of angular distribution data for reaction \MT$_{2}$ \\
-  \ldots \\
-  \jxs{16}+\var{NMT}-1 & \LOC{B}{\var{NMT}} & Location of angular distribution data for reaction \MT$_{\var{NMT}}$ \\
-  \label{tab:LANDPBlock}
-\end{BlockTable}
-\begin{tablenotes}
-  \note The \LOC{B}{i} must be monotonically increasing. The format for the angular distribution of the $i$-th reaction is given in \Tableref{tab:SecondaryPhotonAngularDistribution}.
-\end{tablenotes}
-\end{ThreePartTable}
-
-\subsubsection{\textsf{ANDP} Block}\label{sec:ANDPBlock}
-The \Block{ANDP} contains angular distribution data for all photon-producing reactions and exists if $\nxs{6}\neq0$. The format of the \Block{ANDP} is given in \Tableref{tab:ANDPBlock}; the format of each angular distribution array is given in \Tableref{tab:SecondaryPhotonAngularDistribution}. The angular distribution data begins at the index specified by the locator, \LOC{B}, from the \Block{LANDP}; if $\LOC{B}{i}=0$, there are no angular distribution data given for reaction $i$ and isotropic scattering is assumed in the \LAB\ system.
-\begin{ThreePartTable}
-\begin{LOCTable}{ANDP}
-  \jxs{17}+\LOC{B}{1}-1         & Angular distribution array for reaction \MT$_{1}$ \\
-  \jxs{17}+\LOC{B}{2}           & Angular distribution array for reaction \MT$_{2}$ \\
-  \ldots \\
-  \jxs{17}+\LOC{B}{\var{NMT}}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
-  \label{tab:ANDPBlock}
-\end{LOCTable}
-\begin{tablenotes}
-  \note \var{NMT}=\nxs{6} is the number of photon-producing reactions.
-\end{tablenotes}
-\end{ThreePartTable}
-
-\begin{ThreePartTable}
-  \begin{TableNotes}
-  \item[$\dagger$] \label{tn:CosineBinLocators} All values of $L_{C}(l)$ are \emph{relative} to \jxs{17}. If $L_{C}(l)=0$, no table is given for energy $E(l)$ and scattering is assumed to be isotropic in the \LAB\ system.
-  \end{TableNotes}
-\begin{XSSTable}{Angular distribution array for the $i$-th photon-producing reaction}
-  \jxs{17}+\LOC{B}{i}-1       & $N_{E}$                      & Number of energies at which angular distributions are tabulated. \\
-  \jxs{17}+\LOC{B}{i}         & $E(l),l=1,N_{E}$             & Energy grid \\
-  \jxs{17}+\LOC{B}{i}+$N_{E}$ & $L_{C}(l),l=1,\ldots, N_{E}$ & Location of tables associated with $E(l)$\tnotex{tn:CosineBinLocators} \\
-  \jxs{17}+$L_{C}(1)-1$       & $P_{1}(K),K=1,\ldots,33$     & 32 equiprobable cosine bins for scattering at energy $E(1)$ \\
-  \jxs{17}+$L_{C}(2)-1$       & $P_{2}(K),K=1,\ldots,33$     & 32 equiprobable cosine bins for scattering at energy $E(2)$ \\
-  \ldots \\
-  \jxs{17}+$L_{C}(N_{E})-1$       & $P_{N_{E}}(K),K=1,\ldots,33$     & 32 equiprobable cosine bins for scattering at energy $E(N_{E})$
-  \label{tab:SecondaryPhotonAngularDistribution}
-\end{XSSTable}
 \end{ThreePartTable}
 
 \subsubsection{\textsf{YP} Block}\label{sec:YPBlock}
