@@ -106,7 +106,9 @@ The format of individual blocks found on neutron transport tables is identical f
 
 \subsection{Format of Individual Data Blocks}
 \subsubsection{\textsf{ESZ} Block}\label{sec:ESZBlock}
-The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
+
+The \Block{ESZ} provides the common incident energy table for all reactions defined in the ACE Table, cross section tables for fundamental cross sections (total, absorption, and elastic scattering) and average heating numbers. The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}. The starting index \var{ESZ} for this block is given by \jxs{1}.
+
 \begin{ThreePartTable}
   \begin{TableNotes}
   \item[$\dagger$] \label{tn:DisappearanceXS} The disappearance cross section is defined in \cite[Appendix B]{Trkov:2011ENDF--0} as \MT{101}
@@ -116,7 +118,7 @@ The format of the \Block{ESZ} is given in \Tableref{tab:ESZBlock}.
     \startblock{ESZ} + $N_{E}$  & $\sigma_{t}(l), l=1,\ldots, N_{E}$  & Total cross section \\
     \startblock{ESZ} + $2N_{E}$ & $\sigma_{a}(l), l=1,\ldots, N_{E}$  & Total neutron disappearance cross section\tnotex{tn:DisappearanceXS} \\
     \startblock{ESZ} + $3N_{E}$ & $\sigma_{el}(l), l=1,\ldots, N_{E}$ & Elastic cross section \\
-    \startblock{ESZ} + $4N_{E}$ & $H_{ave}(l), l=1,\ldots, N_{E}$      & Average Heating numbers
+    \startblock{ESZ} + $4N_{E}$ & $H_{ave}(l), l=1,\ldots, N_{E}$     & Average Heating numbers
     \label{tab:ESZBlock}
   \end{BlockTable}
   \begin{tablenotes}
@@ -176,7 +178,7 @@ For the \Block{DNU}, the delayed \nubar\ array begins at \xss{KNU} where {\sffam
 
 \subsubsection{\textsf{BDD} Block}\label{sec:BDDBlock}
 
-The \Block{BDD} is used to specify basic delayed neutron precursor data and is present only if \var{KNU} = \jxs{25} > 0. For every precursor group (the total number of precursor groups is given in \nxs{8}), a decay constant is given along with the partial probability that a delayed fission neutron is born from the current group. This data is given in the format given in table \Tableref{tab:DelayedPrecursorDistribution}.
+The \Block{BDD} is used to specify basic delayed neutron precursor data and is present only if \jxs{25} > 0. For every precursor group (the total number of precursor groups is given in \nxs{8}), a decay constant is given along with the partial probability that a delayed fission neutron is born from the current group. This data is given in the format given in table \Tableref{tab:DelayedPrecursorDistribution}. The starting index \var{BDD} for this block is given by \jxs{25}.
 
 \begin{ThreePartTable}
   \begin{TableNotes}
@@ -184,13 +186,13 @@ The \Block{BDD} is used to specify basic delayed neutron precursor data and is p
   \end{TableNotes}
   \begin{XSSTable}{Delayed \nubar\ precursor distribution.}
   \multicolumn{3}{c}{\bfseries Data for precursor group 1} \\
-    $\var{KNU}$                 & \var{DEC}$_{1}$                  & Decay constant for the group 1 \\
-    $\var{KNU}+1$               & $N_{R}$                          & Number of interpolation regions \\
-    $\var{KNU}+2$               & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters\tnotex{tn:schemeDelayedPrecursors} \\
-    $\var{KNU}+2+N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme \\
-    $\var{KNU}+2+2N_{R}$        & $N_{E}$                          & Number of energies \\
-    $\var{KNU}+3+2N_{R}$        & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
-    $\var{KNU}+3+2N_{R}+N_{E}$  & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities \\
+    $\var{BDD}$                 & \var{DEC}$_{1}$                  & Decay constant for the group 1 \\
+    $\var{BDD}+1$               & $N_{R}$                          & Number of interpolation regions \\
+    $\var{BDD}+2$               & \var{NBT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation parameters\tnotex{tn:schemeDelayedPrecursors} \\
+    $\var{BDD}+2+N_{R}$         & \var{INT}$(l), l=1,\ldots,N_{R}$ & ENDF interpolation scheme \\
+    $\var{BDD}+2+2N_{R}$        & $N_{E}$                          & Number of energies \\
+    $\var{BDD}+3+2N_{R}$        & $E(l),l=1,\ldots,N_{E}$          & Tabulated energy points \\
+    $\var{BDD}+3+2N_{R}+N_{E}$  & $P(l),l=1,\ldots,N_{E}$          & Corresponding probabilities \\
     \multicolumn{3}{c}{\bfseries Data for precursor group 2---same format as for group 1} \\
     \multicolumn{3}{c}{\ldots} \\
     \multicolumn{3}{c}{\bfseries Data for precursor group \var{NPCR} = \nxs{8}---same format as for group 1}
@@ -200,7 +202,7 @@ The \Block{BDD} is used to specify basic delayed neutron precursor data and is p
 
 \subsubsection{\textsf{MTR}, \textsf{MTRP} and \textsf{MTRP} Blocks}\label{sec:MTRBlock}\label{sec:MTRPBlock}\label{sec:MTRHBlock}
 
-The format of the \Block{MTR} (for incident neutron reactions), \Block{MTRP} (for photon production reactions) and \Block{MTRH} (for particle production reactions) is given in \Tableref{tab:MTRBlock}. The starting index depends on whether it is the \Block{MTR}, \Block{MTRP} or \Block{MTRH} and are given in \Tableref{tab:LMT_NMT}. For the particle production \Block{MTRH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+The format of the \Block{MTR} (for incident neutron reactions), \Block{MTRP} (for photon production reactions) and \Block{MTRH} (for particle production reactions) is given in \Tableref{tab:MTRBlock} and provides a list of \MT\ numbers for which data is available in other blocks of the ACE Table. The starting index depends on whether it is the \Block{MTR}, \Block{MTRP} or \Block{MTRH} and are given in \Tableref{tab:LMT_NMT}. For the particle production \Block{MTRH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
 \begin{table}[h!] \centering
   \begin{tabular}[h]{lll}
@@ -217,8 +219,8 @@ The format of the \Block{MTR} (for incident neutron reactions), \Block{MTRP} (fo
 \end{table}
 
 \begin{BlockTable}{MTR \textnormal{\&} MTRP}
-  \var{LMT} & \MT$_{1}$ & First ENDF Reaction available \\
-  \var{LMT}+1 & \MT$_{2}$ & Second ENDF Reaction available \\
+  \var{LMT}             & \MT$_{1}$ & First ENDF Reaction available \\
+  \var{LMT}+1           & \MT$_{2}$ & Second ENDF Reaction available \\
   \ldots \\
   \var{LMT}+\var{NMT}-1 & \MT$_{\var{NMT}}$ & Last ENDF reaction available
   \label{tab:MTRBlock}
@@ -231,6 +233,7 @@ For the \Block{MTRP}, the \MT\ numbers are somewhat arbitrary. To understand the
 \subsubsection{\textsf{LQR} Block}\label{sec:LQRBlock}
 
 The format of the \Block{LQR}, containing the reaction-specific $Q$-values, is given in \Tableref{tab:LQRBlock}. The index at the start of the \Block{LQR}, \startblock{LQR}=\jxs{4}. The number of reactions, \var{NMT}, is the same through the \ACE\ Table, \var{NMT}=\nxs{4}.
+
 \begin{BlockTable}{LQR}
   \startblock{LQR}           & $Q_{1}$         & $Q$-value for reaction \MT$_{1}$ \\
   \startblock{LQR}+1         & $Q_{2}$         & $Q$-value for reaction \MT$_{2}$ \\
@@ -241,26 +244,26 @@ The format of the \Block{LQR}, containing the reaction-specific $Q$-values, is g
 
 \subsubsection{\textsf{TYR} and \textsf{TYRH} Block}\label{sec:TYRBlock}\label{sec:TYRHBlock}
 
-The format of the \Block{TYR} (for incident neutron reactions) and \Block{TYRH} (for particle production reactions) is given in \Tableref{tab:TYRBlock}. The starting index depends on whether it is the \Block{TYR} or \Block{TYRH} and are given in \Tableref{tab:TYR_NMT}. For the particle production \Block{TYRH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+The format of the \Block{TYR} (for incident neutron reactions) and \Block{TYRH} (for particle production reactions) is given in \Tableref{tab:TYRBlock}. The starting index \var{LTYR} depends on whether it is the \Block{TYR} or \Block{TYRH} and are given in \Tableref{tab:TYR_NMT}. For the particle production \Block{TYRH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
 \begin{table}[h!] \centering
   \begin{tabular}[h]{lll}
     \toprule
-    Block      & \var{TYR}                 & \var{NMT} \\
+    Block      & \var{LTYR}                 & \var{NMT} \\
     \midrule
     \var{TYR}  & \jxs{3}                   & \nxs{4} \\
     \var{TYRH} & \xss{\jxs{32}+10*(i-1)+2} & \xss{\jxs{31}+i-1} \\
     \bottomrule
   \end{tabular}
-  \caption{\var{TYR} and \var{NMT} values for the \Block{TYR} and \Block{TYRH}.}
+  \caption{\var{LTYR} and \var{NMT} values for the \Block{TYR} and \Block{TYRH}.}
   \label{tab:TYR_NMT}
 \end{table}
 
 \begin{BlockTable}{TYR}
-  \startblock{TYR}             & \var{TY}$_{1}$         & Neutron release for reaction \MT$_{1}$ \\
-  \startblock{TYR}+1           & \var{TY}$_{2}$         & Neutron release for reaction \MT$_{2}$ \\
+  \startblock{LTYR}             & \var{TY}$_{1}$         & Particle release for reaction \MT$_{1}$ \\
+  \startblock{LTYR}+1           & \var{TY}$_{2}$         & Particle release for reaction \MT$_{2}$ \\
   \ldots \\
-  \startblock{TYR}+\var{NMT}-1 & \var{TY}$_{\var{NMT}}$ & Neutron release for reaction \MT$_{\var{NMT}}$
+  \startblock{LTYR}+\var{NMT}-1 & \var{TY}$_{\var{NMT}}$ & Particle release for reaction \MT$_{\var{NMT}}$
   \label{tab:TYRBlock}
 \end{BlockTable}
 
@@ -269,28 +272,29 @@ The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$
   \item[negative] \CM,
   \item[positive] \LAB.
 \end{description}
-Thus if \var{TY}$_{i}$=+3, three particles are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission (only used in the \Block{TYR}). The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption; no particles are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent multiplicities. The number of secondary particles released is determined from the yield data found in the \Block{DLW} or \Block{DLWH}. The \MT$_{i}$s are given in the \Block{MTR} or \Block{MTRH}.
+Thus if \var{TY}$_{i}$=+3, three particles are released for reaction \MT$_{i}$ and the data on the cross section tables used to determine the exiting neutrons' angles are given in the \LAB\ frame of reference. \var{TY}=19 indicates fission (only used in the \Block{TYR}). The number of secondary neutrons released is determined from the fission \nubar\ data found in the \Block{NU}. \var{TY}$_{i}$=0 indicates absorption; no particles are released. $\|\var{TY}_{i}\|>100$ signifies reactions other than fission that have energy-dependent multiplicities (currently only used in the \Block{TYR}). The number of secondary particles released is determined from the yield data found in the \Block{DLW} or \Block{DLWH}. The \MT$_{i}$s are given in the \Block{MTR} or \Block{MTRH}.
 
-\subsubsection{\textsf{LSIG}\& \textsf{LSIGP} Blocks}\label{sec:LSIGBlock}\label{sec:LSIGPBlock}
-The \Block{LSIG} (for incident neutron cross sections), \Block{LSIGP} (for photon production cross sections) and \Block{LSIGH} (for particle production cross sections) give the locators for the cross section array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the cross section values. The format of the \Block{LSIG}, \Block{LSIGP} and \Block{LSIGH} is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}, the format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock} and the format for the particle production cross sections is given in \Sectionref{sec:SIGHBlock}.
+\subsubsection{\textsf{LSIG}, \textsf{LSIGP} and \textsf{LSIGH} Blocks}\label{sec:LSIGBlock}\label{sec:LSIGPBlock}
 
-The starting index depends on whether it is the \Block{LSIG}, \Block{LSIGP} or \Block{LSIGH} and are given in \Tableref{tab:LXS_NMT}. For the particle production \Block{LSIGH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+The \Block{LSIG} (for incident neutron cross sections), \Block{LSIGP} (for photon production cross sections) and \Block{LSIGH} (for particle production cross sections) give the locators for the cross section array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the cross section values. The format of the \Block{LSIG}, \Block{LSIGP} and \Block{LSIGH} is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}, the format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock} and the format for the particle production cross sections is given in \Sectionref{sec:SIGHBlock}.
+
+The starting index \var{LXS} depends on whether it is the \Block{LSIG}, \Block{LSIGP} or \Block{LSIGH} and are given in \Tableref{tab:LXS_NMT}. For the particle production \Block{LSIGH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
 \begin{table}[h!] \centering
   \begin{tabular}[h]{lll}
     \toprule
     Block        & \var{LXS}                 & \var{NMT} \\
     \midrule
-    \var{LSIG}  & \jxs{6}                    & \nxs{4} \\
-    \var{LSIGP} & \jxs{14}                   & \nxs{6} \\
-    \var{LSIGH} & \xss{\jxs{32}+10*(i-1)+3}  & \xss{\jxs{31}+i-1} \\
+    \var{LSIG}   & \jxs{6}                    & \nxs{4} \\
+    \var{LSIGP}  & \jxs{14}                   & \nxs{6} \\
+    \var{LSIGH}  & \xss{\jxs{32}+10*(i-1)+3}  & \xss{\jxs{31}+i-1} \\
     \bottomrule
   \end{tabular}
   \caption{\var{TYR} and \var{NMT} values for the \Block{TYR} and \Block{TYRH}.}
   \label{tab:LXS_NMT}
 \end{table}
 
-The actual cross section data thus begins at the index \LOC{A}+\var{LXS}. The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LSIG}, the \Block{LSIGP} and \Block{LSIGH} respectively. \LOC{A}{i} must be monotonically increasing.
+The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LSIG}, the \Block{LSIGP} and \Block{LSIGH} respectively. \LOC{A}{i} must be monotonically increasing. All locators (\LOC{A}) are \emph{relative} to \var{SIG}=\jxs{7} for the \Block{LSIG}, \emph{relative} to \var{SIGP}=\jxs{14} for the \Block{LSIGP} and relative to \var{ANDH}=\xss{\jxs{32}+10*(i-1)+4} for the \Block{LSIGH} for particle index $i$.
 
 \begin{BlockTable}{LSIG \textnormal{\&} LSIGP}
   \var{LXS}             & \LOC{A}{1}         & Location of cross sections for reaction \MT$_{1}$ \\
@@ -301,7 +305,9 @@ The actual cross section data thus begins at the index \LOC{A}+\var{LXS}. The \M
 \end{BlockTable}
 
 \subsubsection{\textsf{SIG} Block}\label{sec:SIGBlock}
-The \Block{SIG} contains the incident neutron cross section data. (The photon production cross section is in the \Block{SIGP}.) The format of the \Block{SIG} is given in \Tableref{tab:SIGBlock}. The cross section data begins at the index specified by the locator from the \Block{LSIG}; the format for which is given in \Tableref{tab:CrossSectionArray}.
+
+The \Block{SIG} contains the incident neutron cross section data (photon production cross sections are given in the \Block{SIGP} and particle production cross sections are given in \Block{SIGH}). The format of the \Block{SIG} is given in \Tableref{tab:SIGBlock}. The starting index \var{LXS} of the \Block{SIG} is given by \jxs{7}. The cross section data for each reaction begins at an index defined by the corresponding relative locator from the \Block{LSIG}, which are given in \Tableref{tab:CrossSectionArray}.
+
 \begin{ThreePartTable}
   \begin{LOCTable}{\Block{SIG}}
     \var{LXS}+\LOC{A}{1}-1         & Cross section array for reaction \MT$_{1}$ \\
@@ -315,7 +321,6 @@ The \Block{SIG} contains the incident neutron cross section data. (The photon pr
   \end{tablenotes}
 \end{ThreePartTable}
 
-The \LOC{A}{i} values are given in the \Block{LSIG} and are all relative to \jxs{7}. The energy grid index $\var{IE}_{i}$ corresponds to the first energy in the grid at which a cross section is given. The \MT$_{i}$s are defined in the \Block{MTR}.
 \begin{ThreePartTable}
 \begin{XSSTable}{Cross section array for the $i$-th reaction.}
   \var{LXS} + \LOC{A}{i}-1                  & $\var{IE}_{i}$                                 & Energy grid index for reaction \MT$_{i}$ \\
@@ -329,30 +334,64 @@ The \LOC{A}{i} values are given in the \Block{LSIG} and are all relative to \jxs
 \end{tablenotes}
 \end{ThreePartTable}
 
+The energy grid index $\var{IE}_{i}$ corresponds to the first energy in the grid at which a cross section is given. The \MT$_{i}$s are defined in the \Block{MTR}.
+
 \subsubsection{\textsf{LAND} Block}\label{sec:LANDBlock}
-The \Block{LAND} contains locators for the angular distributions for all reactions producing secondary neutrons. The \Block{LAND} always exists and begins at \startblock{LAND}=\jxs{8}. All locators (\LOC{B}) are relative \jxs{9}; that is, the angular distribution begins at \jxs{9}+\LOC{B}$_{i}$. The \LOC{B}{i} locators must be monotonically increasing. The format of the \Block{LAND} is given in \Tableref{tab:LANDBlock}.
-\begin{ThreePartTable}
-\begin{BlockTable}{LAND}
-  \startblock{LAND} & \LOC{B}{1}=1 & Location of angular distribution data for elastic scattering reaction \\
-  \startblock{LAND}+1 & \LOC{B}{2} & Location of angular distribution data for reaction \MT$_{1}$ \\
+
+The \Block{LAND} (for incident neutron cross sections), \Block{LANDP} (for photon production cross sections) and \Block{LANDH} (for particle production cross sections) give the locators for the angular distribution array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the angular distributions. The format of the \Block{LAND}, \Block{LANDP} and \Block{LANDH} is given in \Tableref{tab:LANDBlock}.
+
+The starting index \var{LAND} depends on whether it is the \Block{LAND}, \Block{LANDP} or \Block{LANDH} and are given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+
+\begin{table}[h!] \centering
+  \begin{tabular}[h]{lll}
+    \toprule
+    Block        & \var{LAND}                 & \var{NMT} \\
+    \midrule
+    \var{LAND}   & \jxs{8}                    & \nxs{4} \\
+    \var{LANDP}  & \jxs{16}                   & \nxs{6} \\
+    \var{LANDH}  & \xss{\jxs{32}+10*(i-1)+5}  & \xss{\jxs{31}+i-1} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\var{LAND} and \var{NMT} values for the \Block{TYR} and \Block{TYRH}.}
+  \label{tab:LAND_NMT}
+\end{table}
+
+The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LAND}, the \Block{LANDP} and \Block{LANDH} respectively. \LOC{B}{i} must be monotonically increasing. All locators (\LOC{B}) are \emph{relative} to \var{AND}=\jxs{9} for the \Block{LAND}, \emph{relative} to \var{ANDP}=\jxs{17} for the \Block{LANDP} and relative to \var{ANDH}=\xss{\jxs{32}+10*(i-1)+6} for the \Block{LANDH} for particle index $i$.
+
+\begin{BlockTable}{LAND, LANDP \textnormal{and} LANDH}
+  \var{LAND}             & \LOC{B}{1}         & Location of angular distributions for reaction \MT$_{1}$ \\
+  \var{LAND}+1           & \LOC{B}{2}         & Location of angular distributions for reaction \MT$_{2}$ \\
   \ldots \\
-  \startblock{LAND}+\var{NMT} & \LOC{B}{\var{NMT}} & Location of angular distribution data for reaction \MT$_{\var{NMT}}$
-  \label{tab:LANDBlock}
+  \var{LAND}+\var{NMT}-1 & \LOC{B}{\var{NMT}} & Location of angular distributions for reaction \MT$_{\var{NMT}}$
+  \label{tab:LSIGBlock}
 \end{BlockTable}
-\begin{tablenotes}
-  \note \startblock{LAND}=\jxs{8} and \var{NMT}=\nxs{5} is the number of reactions (excluding elastic scattering).
-\end{tablenotes}
-\end{ThreePartTable}
 
 \subsubsection{\textsf{AND} and \textsf{ANDH} Block}\label{sec:ANDBlock}
 
-The \Block{AND} contains angular distribution data for all reactions that produce secondary neutrons. The format of the \Block{AND} is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}. If \LOC{B}{i}=0 (given in the \Block{LAND}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR}. If \LOC{B}{i}=-1 no angular distribution data are given for reaction $i$ in the \Block{AND}. The angular distribution data are specified through \law{44} in the \Block{DLW}. 
+The \Block{AND} and \Block{ANDH} contains angular distribution data for all reactions that produce secondary particles (neutrons for the \Block{AND} and a specific particle for the \Block{ANDH}). The format of these blocks is given in \Tableref{tab:ANDBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND} or \Block{LANDH}. If \LOC{B}{i}=0 (given in the \Block{LAND} and \Block{LANDH}), no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. The choice of \LAB\ or \CM\ system depends upon the value for reaction $i$ in the \Block{TYR} and \Block{TYRH}. If \LOC{B}{i}=-1 no angular distribution data are given for reaction $i$ in the \Block{AND} or \Block{ANDH}. The angular distribution data are specified through \law{44} in the \Block{DLW} or \Block{DLWH}. 
+
+The starting index \var{LAND} depends on whether it is the \Block{AND} or \Block{ANDH} and are given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+
+\begin{table}[h!] \centering
+  \begin{tabular}[h]{lll}
+    \toprule
+    Block        & \var{LAND}                 & \var{NMT} \\
+    \midrule
+    \var{AND}    & \jxs{9}                    & \nxs{4} \\
+    \var{ANDP}   & \jxs{17}                   & \nxs{6} \\
+    \var{ANDH}   & \xss{\jxs{32}+10*(i-1)+6}  & \xss{\jxs{31}+i-1} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\var{LAND} and \var{NMT} values for the \Block{AND} and \Block{ANDH}.}
+  \label{tab:LAND_NMT}
+\end{table}
 
 \begin{ThreePartTable}
 \begin{LOCTable}{\Block{AND}}
-  \jxs{9}+\LOC{B}{1}-1         & Angular distribution array for elastic scattering \\
-  \jxs{9}+\LOC{B}{2}-1         & Angular distribution array for reaction \MT$_{1}$ \\
-  \jxs{9}+\LOC{B}{\var{NMT}}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
+  \var{LAND}+\LOC{B}{1}-1         & Angular distribution array for elastic scattering \\
+  \var{LAND}+\LOC{B}{2}-1         & Angular distribution array for reaction \MT$_{1}$ \\
+  \ldots \\
+  \var{LAND}+\LOC{B}{\var{NMT}}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
   \label{tab:ANDBlock}
 \end{LOCTable}
 \begin{tablenotes}
@@ -361,9 +400,10 @@ The \Block{AND} contains angular distribution data for all reactions that produc
 \end{ThreePartTable}
 
 \begin{XSSTable}{Angular distribution array for the $i$-th reaction}
-  \jxs{9}+\LOC{B}{i}-1     & $N_{E}$                     & Number of energies at which angular distributions are tabulated.  \\
-  \jxs{9}+\LOC{B}{i}       & $E(l),l=1,\ldots,N_{E}$     & Energy grid \\
-  \jxs{9}+\LOC{B}{i}$+N_{E}$ & $L_{C}(l),l=1,\ldots,N_{E}$ & Location of tables associated with $E(l)$
+  \var{LAND}+\LOC{B}{i}-1     & $N_{E}$                     & Number of energies at which angular distributions are tabulated.  \\
+  \var{LAND}+\LOC{B}{i}       & $E(l),l=1,\ldots,N_{E}$     & Energy grid \\
+  \ldots \\
+  \var{LAND}+\LOC{B}{i}$+N_{E}$ & $L_{C}(l),l=1,\ldots,N_{E}$ & Location of tables associated with $E(l)$
   \label{tab:AngularDistributionArray}
 \end{XSSTable}
 
@@ -1095,7 +1135,39 @@ The format of the $i$-th cross section array has two possible forms depending on
 \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{LANDP} Block}\label{sec:LANDPBlock}
+\subsubsection{\textsf{LANDP} and \textsf{LANDH} Block}\label{sec:LANDPBlock}\label{sec:LANDHBlock}
+
+The \Block{LANDP} (for photon production) and \Block{LANDH} (for particle production) give the locators for the angular distribution array for each reaction \MT. A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the angular distributions. The format of the \Block{LANDP} and \Block{LANDH} is given in \Tableref{tab:LANDPBlock}. The angular distribution format for photon production is given in \Sectionref{sec:ANDPBlock} and the format for particle production is given in \Sectionref{sec:ANDHBlock}.
+
+The starting index \var{LAND} depends on whether it is the \Block{LANDP} or \Block{LANDH} and are given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+
+\begin{table}[h!] \centering
+  \begin{tabular}[h]{lll}
+    \toprule
+    Block        & \var{LAND}                 & \var{NMT} \\
+    \midrule
+    \var{LANDP}  & \jxs{16}                   & \nxs{6} \\
+    \var{LANDH}  & \xss{\jxs{32}+10*(i-1)+5}  & \xss{\jxs{31}+i-1} \\
+    \bottomrule
+  \end{tabular}
+  \caption{\var{LAND} and \var{NMT} values for the \Block{TYR} and \Block{TYRH}.}
+  \label{tab:LXS_NMT}
+\end{table}
+
+The \MT s are given in the the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LANDP} and \Block{LANDH} respectively. \LOC{B}{i} must be monotonically increasing. All locators (\LOC{B}) are \emph{relative} to \var{ANDP}=\jxs{17} for the \Block{LANDP} and relative to \var{ANDH}=\xss{\jxs{32}+10*(i-1)+6} for the \Block{LANDP}.
+
+\begin{BlockTable}{LSIG \textnormal{\&} LSIGP}
+  \var{LAND}             & \LOC{B}{1}         & Location of cross sections for reaction \MT$_{1}$ \\
+  \var{LAND}+1           & \LOC{B}{2}         & Location of cross sections for reaction \MT$_{2}$ \\
+  \ldots \\
+  \var{LAND}+\var{NMT}-1 & \LOC{B}{\var{NMT}} & Location of cross sections for reaction \MT$_{\var{NMT}}$
+  \label{tab:LSIGBlock}
+\end{BlockTable}
+
+
+
+
+
 
 The \Block{LANDP} gives locator information for angular distribution arrays for photon production reactions and exists if $\nxs{6}\neq0$. All locators (\LOC{B}) in the \Block{LANDP} are \emph{relative} to \jxs{17}; that is, the angular distribution arrays begin at $\jxs{17}+\LOC{B}{i}$. The number of photon-producing reactions is \var{NMT}=\nxs{6}. The \LOC{B}{i} must be monotonically increasing. The \MT s are defined in the \Block{MTRP} (see \Sectionref{sec:MTRBlock}). The format of the \Block{LANDP} is given in \Tableref{tab:LANDPBlock}.
 
