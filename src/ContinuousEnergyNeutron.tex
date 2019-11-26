@@ -347,7 +347,7 @@ The starting index \var{LAND} depends on whether it is the \Block{LAND}, \Block{
     \toprule
     Block        & \var{LAND}                 & \var{NMT} \\
     \midrule
-    \var{LAND}   & \jxs{8}                    & \nxs{4} \\
+    \var{LAND}   & \jxs{8}                    & \nxs{5} \\
     \var{LANDP}  & \jxs{16}                   & \nxs{6} \\
     \var{LANDH}  & \xss{\jxs{32}+10*(i-1)+5}  & \xss{\jxs{31}+i-1} \\
     \bottomrule
@@ -377,7 +377,7 @@ The starting index \var{LAND} depends on whether it is the \Block{AND}, \Block{A
     \toprule
     Block        & \var{LAND}                 & \var{NMT} \\
     \midrule
-    \var{AND}    & \jxs{9}                    & \nxs{4} \\
+    \var{AND}    & \jxs{9}                    & \nxs{5} \\
     \var{ANDP}   & \jxs{17}                   & \nxs{6} \\
     \var{ANDH}   & \xss{\jxs{32}+10*(i-1)+6}  & \xss{\jxs{31}+i-1} \\
     \bottomrule
@@ -452,25 +452,26 @@ The angular distribution arrays (\Tableref{tab:AngularDistributionArray}) contai
 
 The \Block{AND} and \Block{ANDH} can use both options (either a 32 equiprobable bin or tabulated distribution). The \Block{ANDP} on the other hand can only use 32 equiprobable bin distributions.
 
-\subsubsection{\textsf{LDLW}, \textsf{LDLWP} and \textsf{DNEDL} Blocks}\label{sec:LDLWBlock}\label{sec:LDLWPBlock}\label{sec:DNEDLBlock}
+\subsubsection{\textsf{LDLW}, \textsf{LDLWP}, \textsf{DNEDL and \textsf{LDLWH}} Blocks}\label{sec:LDLWBlock}\label{sec:LDLWPBlock}\label{sec:DNEDLBlock}\label{sec:LDLWHBlock}
 
-The \Block{LDLW} and \Block{LDLW} give the locators for the energy distribution for every reaction that produces secondary neutrons or secondary photons (respectively). The \Block{DNEDL} on the other hand gives the locators for the delayed neutron energy distribution for each precursor group.
+The \Block{LDLW}, \Block{LDLWP} and \Block{LDLWH} give the locators for the energy distribution for every reaction that produces secondary neutron, secondary photons or other secondary particles (respectively). The \Block{DNEDL} on the other hand gives the locators for the delayed neutron energy distribution for each precursor group.
 
-The format of the \Block{LDLW} (for secondary neutrons), the \Block{LDLW} (for secondary photons) and the \Block{DNEDL} (for delayed neutrons) is given in \Tableref{tab:LDLWBlock}. The format for the distributions is given in \Sectionref{sec:DLWBlock}.
+The format of the \Block{LDLW} (for secondary neutrons), the \Block{LDLW} (for secondary photons), the \Block{LDLWH} (for secondary particles)  and the \Block{DNEDL} (for delayed neutrons) is given in \Tableref{tab:LDLWBlock}. The format for the distributions is given in \Sectionref{sec:DLWBlock}.
 
-The \Block{LDLW} exists only if \nxs{5}$\neq0$, the \Block{LDLWP} exists only if \nxs{6}$\neq0$ and the \Block{LDLW} exists only if \nxs{8}$\neq0$. The starting index in these tables, \var{LED}, depends on what data is being read; the starting values and the number of locators, \var{NMT}, are given in \Tableref{tab:LEDNMT}.
+The starting index \var{LED} depends on whether it is the \Block{LDLW}, \Block{LDLWP}, \Block{LDLWH} or \Block{DNEDL} and are given in \Tableref{tab:LED_NMT}. For the particle production \Block{LDLWH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}. These blocks are given only if the starting index \var{LED} is different from zero.
 
 \begin{table}[h!] \centering
   \begin{tabular}{lll}
     \toprule
     Block            & \var{LED} & \var{NMT} \\
     \midrule
-    \var{LDLW}       & \jxs{10}  & \nxs{5} \\
-    \var{LDLWP}      & \jxs{18}  & \nxs{6} \\
-    \var{DNEDL}      & \jxs{26}  & \nxs{8} \\
+    \var{LDLW}       & \jxs{10}                   & \nxs{5} \\
+    \var{LDLWP}      & \jxs{18}                   & \nxs{6} \\
+    \var{LDLWH}      & \xss{\jxs{32}+10*(i-1)+7}  & \xss{\jxs{31}+i-1} \\
+    \var{DNEDL}      & \jxs{26}                   & \nxs{8} \\
     \bottomrule
   \end{tabular}
-  \caption{LED and NMT values for the \Block{LDLW}, the \Block{LDLWP} and \Block{DNEDL}.}
+  \caption{LED and NMT values for the \Block{LDLW}, the \Block{LDLWP}, the \Block{LDLWH} and \Block{DNEDL}.}
   \label{tab:LEDNMT}
 \end{table}
 
@@ -487,25 +488,24 @@ The \Block{LDLW} exists only if \nxs{5}$\neq0$, the \Block{LDLWP} exists only if
 \end{tablenotes}
 \end{ThreePartTable}
 
-The corresponding \MT\ values are given in the \Block{MTR} for \Block{LDLW} or \Block{MTRP} for \Block{LDLWP}.
+The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LDLW}, the \Block{LDLWP} and \Block{LDLWH} respectively. \LOC{C}{i} must be monotonically increasing. All locators (\LOC{C}) are \emph{relative} to \var{JED}=\jxs{19} for the \Block{LDLW}, \emph{relative} to \var{JED}=\jxs{19} for the \Block{LDLWP} and relative to \var{JED}=\xss{\jxs{32}+10*(i-1)+8} for the \Block{LDLWH} for particle index $i$.
 
-\textbf{All locators point to data \emph{relative} to \var{JED} (see \Sectionref{sec:DLWBlock}) in the \XSS\ array.}
+\subsubsection{\textsf{DLW}, \textsf{DLWP}, \textsf{DLWH} and \textsf{DNED} Blocks}\label{sec:DLWBlock}\label{sec:DLWPBlock}\label{sec:DNEDBlock}
 
-\subsubsection{\textsf{DLW}, \textsf{DLWP} and \textsf{DNED} Blocks}\label{sec:DLWBlock}\label{sec:DLWPBlock}\label{sec:DNEDBlock}
-
-The \Block{DLW} contains secondary neutron energy distributions for all reactions producing secondary neutrons (except for elastic scattering), the \Block{DLWP} contains secondary photon energy distributions for all photon-producing reactions and the \Block{DNED} contains the energy distributions for the delayed neutrons. The \Block{DLW}, \Block{DLWP} and \Block{DNED} block have the same format. The energy distributions are given starting with a locator, \LOC{C}, which were given in the \Block{LDLW}, \Block{LDLWP} or \Block{LDNED}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions or the number of delayed precursor groups) is dependent on whether it is the \Block{DLW}, \Block{DLWP} or \Block{DNED}. These values are given in \Tableref{tab:JED_NMT}.
+The \Block{DLW} contains secondary neutron energy distributions for all reactions producing secondary neutrons (except for elastic scattering), the \Block{DLWP} contains secondary photon energy distributions for all photon-producing reactions, the \Block{DLWH} contains secondary particle energy distributions for all secondary particle producing reactions and the \Block{DNED} contains the energy distributions for the delayed neutrons. The \Block{DLW}, \Block{DLWP}, \Block{DLWH} and \Block{DNED} block have the same format (although there may be restrictions on which laws are allowed in these blocks). The energy distributions are given starting with a locator, \LOC{C}, which were given in the \Block{LDLW}, \Block{LDLWP} or \Block{LDNED}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions or the number of delayed precursor groups) is dependent on whether it is the \Block{DLW}, \Block{DLWP}, \Block{DLWH} or \Block{DNED}. These values are given in \Tableref{tab:JED_NMT}. For the particle production \Block{DLWH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
 \begin{table}[h!] \centering
   \begin{tabular}{lll}
     \toprule
-    Block            & \var{JED} & \var{NMT} \\
+    Block            & \var{JED}                  & \var{NMT} \\
     \midrule
-    \var{DLW}        & \jxs{11}  & \nxs{5} \\
-    \var{DLWP}       & \jxs{19}  & \nxs{6} \\
-    \var{DNED}       & \jxs{27}  & \nxs{8} \\
+    \var{DLW}        & \jxs{11}                   & \nxs{5} \\
+    \var{DLWP}       & \jxs{19}                   & \nxs{6} \\
+    \var{DLWH}       & \xss{\jxs{32}+10*(i-1)+8}  & \xss{\jxs{31}+i-1} \\
+    \var{DNED}       & \jxs{27}                   & \nxs{8} \\
     \bottomrule
   \end{tabular}
-  \caption{\var{JED} and \var{NMT} for the \Block{DLW} and \Block{DLW}.}
+  \caption{\var{JED} and \var{NMT} for the \Block{DLW}, \Block{DLWP} and \Block{DLWH}.}
   \label{tab:JED_NMT}
 \end{table}
 
@@ -543,7 +543,7 @@ The $i$-th array has the form shown in
   \end{XSSTable}
 \end{ThreePartTable}
 
-The format for the law data depends on the law. The length, $L$, of the law data array, \var{LDAT}, is determined from parameters with \var{LDAT}. The various \var{LDAT} arrays and their formats are given in the following tables. Laws 2 (\Tableref{tab:LAW2}) and 4 (\Tableref{tab:LAW4}) are used to describe spectra of secondary photons from neutron collisions. All laws---except for Law 2---are usd to describe the spectra of scattered neutrons.
+The format for the law data depends on the law. The length, $L$, of the law data array, \var{LDAT}, is determined from parameters with \var{LDAT}. The various \var{LDAT} arrays and their formats are given in the following tables. Laws 2 (\Tableref{tab:LAW2}) and 4 (\Tableref{tab:LAW4}) are used to describe spectra of secondary photons from neutron collisions. All laws---except for Law 2---are used to describe the spectra of scattered neutrons.
 
 In the following tables, we provide relative locations of data in the \var{LDAT} array rather than the absolute locations in the \XSS\ array. \Tableref{tab:EnergyDistributionArray} defines the starting location of the \var{LDAT} array within the \XSS\ array.
 
@@ -1145,11 +1145,15 @@ The format of the $i$-th cross section array has two possible forms depending on
 \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{YP} Block}\label{sec:YPBlock}
-The \Block{YP} contains a list of \MT\ identifiers of neutron cross sections that are used as yield multipliers in \Equationref{eq:PhotonProductionConstruction} to calculate the photon production cross sections and are referenced by the \var{MTMULT} parameter in \Tableref{tab:PhotonProductionArray}. The \Block{YP} exists if $\nxs{6}\neq0$. The format of the \Block{YP} is given in \Tableref{tab:YPBlock}.
+\subsubsection{\textsf{YP} and \textsf{YH} Block}\label{sec:YPBlock}\label{sec:YHBlock}
+
+The \Block{YP} and \Block{YH} contains a list of \MT\ identifiers of cross sections that are used as yield multipliers in \Equationref{eq:PhotonProductionConstruction} to calculate the photon production cross sections (for the \Block{YP}) and the secondary particle production cross sections (for the \Block{YH}) and are referenced by the \var{MTMULT} parameter in \Tableref{tab:PhotonProductionArray}. The format of the \Block{YP} and \Block{YH} is given in \Tableref{tab:YPBlock}.
+
+The starting index \var{LY} depends on whether it is the \Block{YP} or \Block{YH}. For the \Block{YP}, \var{LY} = \nxs{6}. For the particle production \Block{YH}, \var{JED} = \xss{\jxs{32}+10*(i-1)+8} in which \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}. These blocks are given only if the starting index \var{LY} is different from zero.
+
 \begin{BlockTable}{YP}
-  \jxs{20} & \var{NYP} & Number of neutron \MT s to follow \\
-  \jxs{20}+1 & $\var{MTY}(l),l=1,\ldots,\var{NYP}$ & Neutron \MT s.
+  \var{LY}   & \var{NYP} & Number of \MT s to follow \\
+  \var{LY}+1 & $\var{MTY}(l),l=1,\ldots,\var{NYP}$ & \MT s.
   \label{tab:YPBlock}
 \end{BlockTable}
 
