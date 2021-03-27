@@ -602,7 +602,7 @@ where:
 \begin{description}
   \item[$I$] is the normalization constant
     \begin{equation}
-      I = \theta^{{3/2}} \frac{\sqrt{\pi}}{2} \erf\left( \sqrt{(E-U)/\theta} \right) - \sqrt{(E-U)/\theta}\ e^{-(E-U)/\theta},
+      I = \theta^{{3/2}} \bigg[\frac{\sqrt{\pi}}{2} \erf\left( \sqrt{(E-U)/\theta} \right) - \sqrt{(E-U)/\theta}\ e^{-(E-U)/\theta}\bigg],
       \label{eq:LAW7I}
     \end{equation}
   \item[$\theta$] is tabulated as a function of incident energy, $E$; and
@@ -623,7 +623,7 @@ where:
 \end{LAWTable}
 The outgoing energy, $E_{\mathrm{out}}$, can be calculated as
 \begin{equation}
-  f(E\rightarrow E_{\mathrm{out}}) = \frac{\sqrt{E_{\mathrm{out}}}}{I}\ e^{-E_{\mathrm{out}}/\theta(E)}
+  f(E\rightarrow E_{\mathrm{out}}) = \frac{E_{\mathrm{out}}}{I}\ e^{-E_{\mathrm{out}}/\theta(E)}
   \label{eq:LAW9f}
 \end{equation}
 where:
@@ -636,7 +636,6 @@ where:
   \item[$\theta$] is tabulated as a function of incident energy, $E$; and
   \item[$U$] is a constant introduced to define the proper upper limit for the final particle energy such that $0\leq E_{\mathrm{out}} \leq (E-U)$.
 \end{description}
-\textbf{Note:} \Equationref{eq:LAW9f} is the same as \Equationref{eq:LAW7f}; just the definitions of $I$ in \Equationref{eq:LAW7I} and \Equationref{eq:LAW9I} are different.
 
 \subsubsubsection{\var{LAW}=11---Energy Dependent Watt Spectrum}\label{sec:LAW11}
 \begin{LAWTable}{\var{LAW}=11 (From ENDF-6, \MF=5, \var{LF}=11)}
