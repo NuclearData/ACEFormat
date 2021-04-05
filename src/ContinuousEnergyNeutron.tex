@@ -57,8 +57,8 @@ The format of individual blocks found on neutron transport tables is identical f
       7  & \var{NTYPE} & Number of particle types for which production data is given \\
       8  & \var{NPCR}  & Number of delayed neutron precurser families \\
       9  & \var{S}     & Excited state\tnotex{tn:2.0.0} \\
-      10 & \var{Z}     & Atomic number\tnotex{tn:2.0.0} \\ 
-      11 & \var{A}     & Atomic mass number\tnotex{tn:2.0.0} \\ 
+      10 & \var{Z}     & Atomic number\tnotex{tn:2.0.0} \\
+      11 & \var{A}     & Atomic mass number\tnotex{tn:2.0.0} \\
          & \ldots      & \\
       14 &             & Reserved\tnotex{tn:Reserved} \\
       15 &             & Reserved\tnotex{tn:Reserved} \\
@@ -267,7 +267,7 @@ The format of the \Block{TYR} (for incident neutron reactions) and \Block{TYRH} 
   \label{tab:TYRBlock}
 \end{BlockTable}
 
-The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering: 
+The possible values of \var{TY} are $\pm 1$, $\pm 2$, $\pm 3$, $\pm 4$, $\pm 19$, 0, and integers greater than 100 in absolute value; the sign indicates the system for scattering:
 \begin{description}
   \item[negative] \CM,
   \item[positive] \LAB.
@@ -368,7 +368,7 @@ The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respec
 
 \subsubsection{\textsf{AND}, \textsf{ANDP} and \textsf{ANDH} Block}\label{sec:ANDBlock}
 
-The \Block{AND}, \Block{ANDP} and \Block{ANDH} contains angular distribution data for all reactions that produce secondary particles (neutrons for the \Block{AND}, photons for the \Block{ANDP} and a specific particle for the \Block{ANDH}). The format of these blocks is given in \Tableref{tab:ANDBlock} and \Tableref{tab:ANDPBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}, \Block{LANDP} or \Block{LANDH}. If \LOC{B}{i}=0, no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. If \LOC{B}{i}=-1 no angular distribution data is given for reaction $i$ (this can only happen for the the \Block{AND} or \Block{ANDH}). In this case, the angular distribution data are specified through \law{44} in the \Block{DLW} or \Block{DLWH}. 
+The \Block{AND}, \Block{ANDP} and \Block{ANDH} contains angular distribution data for all reactions that produce secondary particles (neutrons for the \Block{AND}, photons for the \Block{ANDP} and a specific particle for the \Block{ANDH}). The format of these blocks is given in \Tableref{tab:ANDBlock} and \Tableref{tab:ANDPBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}, \Block{LANDP} or \Block{LANDH}. If \LOC{B}{i}=0, no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. If \LOC{B}{i}=-1 no angular distribution data is given for reaction $i$ (this can only happen for the the \Block{AND} or \Block{ANDH}). In this case, the angular distribution data are specified through \law{44} in the \Block{DLW} or \Block{DLWH}.
 
 The starting index \var{LAND} depends on whether it is the \Block{AND}, \Block{ANDP} or \Block{ANDH} and are given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
@@ -1091,7 +1091,7 @@ The \Block{SIGP} contains the photon production cross section data and the \Bloc
   \label{tab:LXS_NMT}
 \end{table}
 
-The cross section data begins at the index specified by the locator, \LOC{A}{i}, given in the \Block{LSIGP} or \Block{LSIGH}. The \MT s are defined in the \Block{MTRP} or \Block{MTRH}. All indices to the \XSS\ array are \emph{relative} to \var{SIG}. 
+The cross section data begins at the index specified by the locator, \LOC{A}{i}, given in the \Block{LSIGP} or \Block{LSIGH}. The \MT s are defined in the \Block{MTRP} or \Block{MTRH}. All indices to the \XSS\ array are \emph{relative} to \var{SIG}.
 
 \begin{BlockTable}{SIGP}
   \var{SIG}+\LOC{A}{1}-1         & \var{MFTYPE}$_{1}$ & Cross section array for reaction \MT$_{1}$ \\
@@ -1277,7 +1277,7 @@ The \Block{PTYPE} is the first of the particle production blocks used for neutro
 
 {\color{red}\textbf{Question:} The particle type can be neutron, when is this actually used?}
 
-The \Block{PTYPE} gives a list of particle types for which particle production data is available. This includes cross section data (given in the {\color{red}\textbf{ADD BLOCK NAMES HERE}}), angular distribution data (given in the {\color{red}\textbf{ADD BLOCK NAMES HERE}}) and secondary particle energy distribution data (given in the {\color{red}\textbf{ADD BLOCK NAMES HERE}}).
+The \Block{PTYPE} gives a list of particle types for which particle production data is available. This includes cross section data (given in the \Block{SIGH}), angular distribution data (given in the \Block{ANDH}) and secondary particle energy distribution data (given in the \Block{DLWH}).
 
 The format of the \Block{PTYPE} is given in \Tableref{tab:PTYPEBlock}.
 
