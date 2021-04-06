@@ -5,7 +5,7 @@ The format of individual blocks found on neutron transport tables is identical f
   \item \textbf{\Block{ESZ}}---contains the main energy grid for the Table and the total, absorption, and elastic cross sections as well as the average heating numbers. The \Block{ESZ} always exists. See \Sectionref{sec:ESZBlock}.
   \item \textbf{\Block{NU}}---contains prompt, delayed and/or total $\overline{\nu}$ as a function of incident neutron energy. The \Block{NU} exists only for fissionable isotopes; that is, if \jxs{2}$\neq0$. See \Sectionref{sec:NUBlock}.
   \item \textbf{\Block{MTR}}---contains a list of ENDF MT numbers for all neutron reactions other than elastic scattering. The \Block{MTR} exists for all isotopes that have reactions other than elastic scattering; that is, all isotopes with \nxs{4}$\neq0$. See \Sectionref{sec:MTRBlock}.
-  \item \textbf{\Block{LQR}}---contains a list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LTR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:LQRBlock}.
+  \item \textbf{\Block{LQR}}---contains a list of kinematic $Q$-values for all neutron reactions other than elastic scattering. The \Block{LQR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:LQRBlock}.
   \item \textbf{\Block{TYR}}---contains information about the type of reaction for all neutron reactions other than elastic scattering. Information for each reaction includes the number of secondary neutrons and whether secondary neutron angular distributions are in the laboratory or \CM system. The \Block{TYR} exists if \nxs{4}$\neq0$. See \Sectionref{sec:TYRBlock}.
   \item \textbf{\Block{LSIG}}---contains a list of cross section locators for all neutron reacitons other than elastic scattering. The \Block{LSIG} exists if \nxs{4}$\neq0$. See \Sectionref{sec:LSIGBlock}
   \item \textbf{\Block{SIG}}---contains cross sections for all reactions other than elastic scattering. The \Block{SIG} exists if \nxs{4}$\neq0$. See \Sectionref{sec:SIGBlock}.
@@ -368,7 +368,7 @@ The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respec
 
 \subsubsection{\textsf{AND}, \textsf{ANDP} and \textsf{ANDH} Block}\label{sec:ANDBlock}\label{sec:ANDPBlock}\label{sec:ANDHBlock}
 
-The \Block{AND}, \Block{ANDP} and \Block{ANDH} contains angular distribution data for all reactions that produce secondary particles (neutrons for the \Block{AND}, photons for the \Block{ANDP} and a specific particle for the \Block{ANDH}). The format of these blocks is given in \Tableref{tab:ANDLocationBlock} and \Tableref{tab:ANDPBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}, \Block{LANDP} or \Block{LANDH}. If \LOC{B}{i}=0, no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. If \LOC{B}{i}=-1 no angular distribution data is given for reaction $i$ (this can only happen for the the \Block{AND} or \Block{ANDH}). In this case, the angular distribution data are specified through \law{44} in the \Block{DLW} or \Block{DLWH}.
+The \Block{AND}, \Block{ANDP} and \Block{ANDH} contains angular distribution data for all reactions that produce secondary particles (neutrons for the \Block{AND}, photons for the \Block{ANDP} and a specific particle for the \Block{ANDH}). The format of these blocks is given in \Tableref{tab:ANDBlock} and \Tableref{tab:ANDPBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}, \Block{LANDP} or \Block{LANDH}. If \LOC{B}{i}=0, no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. If \LOC{B}{i}=-1 no angular distribution data is given for reaction $i$ (this can only happen for the the \Block{AND} or \Block{ANDH}). In this case, the angular distribution data are specified through \law{44} in the \Block{DLW} or \Block{DLWH}.
 
 The starting index \var{LAND} depends on whether it is the \Block{AND}, \Block{ANDP} or \Block{ANDH} and are given in \Tableref{tab:AND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
@@ -392,7 +392,7 @@ The starting index \var{LAND} depends on whether it is the \Block{AND}, \Block{A
   \var{LAND}+\LOC{B}{2}-1         & Angular distribution array for reaction \MT$_{1}$ \\
   \ldots \\
   \var{LAND}+\LOC{B}{\var{NMT}}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
-  \label{tab:ANDLocationBlock}
+  \label{tab:ANDBlock}
 \end{LOCTable}
 \begin{tablenotes}
   \note The format for the angular distribution of the $i$-th array is given in \Tableref{tab:AngularDistributionArray}.
@@ -492,7 +492,7 @@ The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respec
 
 \subsubsection{\textsf{DLW}, \textsf{DLWP}, \textsf{DLWH} and \textsf{DNED} Blocks}\label{sec:DLWBlock}\label{sec:DLWHBlock}\label{sec:DLWPBlock}\label{sec:DNEDBlock}
 
-The \Block{DLW} contains secondary neutron energy distributions for all reactions producing secondary neutrons (except for elastic scattering), the \Block{DLWP} contains secondary photon energy distributions for all photon-producing reactions, the \Block{DLWH} contains secondary particle energy distributions for all secondary particle producing reactions and the \Block{DNED} contains the energy distributions for the delayed neutrons. The \Block{DLW}, \Block{DLWP}, \Block{DLWH} and \Block{DNED} block have the same format (although there may be restrictions on which laws are allowed in these blocks). The energy distributions are given starting with a locator, \LOC{C}, which were given in the \Block{LDLW}, \Block{LDLWP} or \Block{LDNED}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions or the number of delayed precursor groups) is dependent on whether it is the \Block{DLW}, \Block{DLWP}, \Block{DLWH} or \Block{DNED}. These values are given in \Tableref{tab:JED_NMT}. For the particle production \Block{DLWH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+The \Block{DLW} contains secondary neutron energy distributions for all reactions producing secondary neutrons (except for elastic scattering), the \Block{DLWP} contains secondary photon energy distributions for all photon-producing reactions, the \Block{DLWH} contains secondary particle energy distributions for all secondary particle producing reactions and the \Block{DNED} contains the energy distributions for the delayed neutrons. The \Block{DLW}, \Block{DLWP}, \Block{DLWH} and \Block{DNED} block have the same format (although there may be restrictions on which laws are allowed in these blocks). The energy distributions are given starting with a locator, \LOC{C}, which were given in the \Block{LDLW}, \Block{LDLWP} or \Block{DNEDL}. The locators are relative to the \var{JED} parameter. The value for \var{JED} and \var{NMT} (the number of reactions or the number of delayed precursor groups) is dependent on whether it is the \Block{DLW}, \Block{DLWP}, \Block{DLWH} or \Block{DNED}. These values are given in \Tableref{tab:JED_NMT}. For the particle production \Block{DLWH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
 \begin{table}[h!] \centering
   \begin{tabular}{lll}
@@ -1315,7 +1315,7 @@ The format of the \Block{NTRO} is given in \Tableref{tab:NTROBlock}.
 
 \subsubsection{\textsf{IXS} Block}\label{sec:IXSBlock}
 
-The \Block{IXS} gives 10 particle production locators for each of the particle types defined in the \Block{PTYPE}. If the \Block{IXS} is present, the \Block{IXS} starts at the index \var{NEXT} = \jxs{32}. The \Block{IXS} serves a similar function as the \Block{JXS}, in that it provides the locators to specific blocks of data, as laid out in \Tableref{tab:IXSBlock}.
+The \Block{IXS} gives 10 particle production locators for each of the particle types defined in the \Block{PTYPE}. If the \Block{IXS} is present, the \Block{IXS} starts at the index \var{NEXT} = \jxs{32}. The \Block{IXS} serves a similar function as the \hyperref[sec:JXSContinuousEnergyNeutron]{JXS Array}, in that it provides the locators to specific blocks of data, as laid out in \Tableref{tab:IXSBlock}.
 
 \begin{BlockTable}{IXS array for particle type $j$, with $\var{LTYPE}=\var{NEXT}+10\var{NTYPE}(j-1)$}
   \var{LTYPE}     & \var{HPD}    & Location of the total particle production and heating data \\
