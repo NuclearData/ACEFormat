@@ -126,7 +126,7 @@ The \Block{ESZ} provides the common incident energy table for all reactions defi
   \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{NU} and \textsf{DNU} Block}\label{sec:NUBlock}\label{sec:DNUBlock}
+\subsubsection{\textsf{NU} and \textsf{DNU} Blocks}\label{sec:NUBlock}\label{sec:DNUBlock}
 
 The \Block{NU} is used to specify prompt and/or total \nubar\ and is present only if \jxs{2} > 0. Delayed \nubar\ data is specified in the \Block{DNU} (which is only present if \jxs{24} > 0) but it shares some of the tables defined in this section.
 
@@ -242,7 +242,7 @@ The format of the \Block{LQR}, containing the reaction-specific $Q$-values, is g
   \label{tab:LQRBlock}
 \end{BlockTable}
 
-\subsubsection{\textsf{TYR} and \textsf{TYRH} Block}\label{sec:TYRBlock}\label{sec:TYRHBlock}
+\subsubsection{\textsf{TYR} and \textsf{TYRH} Blocks}\label{sec:TYRBlock}\label{sec:TYRHBlock}
 
 The format of the \Block{TYR} (for incident neutron reactions) and \Block{TYRH} (for particle production reactions) is given in \Tableref{tab:TYRBlock}. The starting index \var{LTYR} depends on whether it is the \Block{TYR} or \Block{TYRH} and is given in \Tableref{tab:TYR_NMT}. For the particle production \Block{TYRH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
@@ -278,7 +278,7 @@ As the elastic scattering reaction is not included in the \Block{TYR}, the refer
 
 \subsubsection{\textsf{LSIG}, \textsf{LSIGP} and \textsf{LSIGH} Blocks}\label{sec:LSIGBlock}\label{sec:LSIGHBlock}\label{sec:LSIGPBlock}
 
-The \Block{LSIG} (for incident neutron cross sections), \Block{LSIGP} (for photon production cross sections) and \Block{LSIGH} (for particle production cross sections) give the locators for the cross section array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the cross section values. The format of the \Block{LSIG}, \Block{LSIGP} and \Block{LSIGH} is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}, the format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock} and the format for the particle production cross sections is given in \Sectionref{sec:SIGHBlock}.
+The \Block{LSIG} (for incident neutron cross sections), \Block{LSIGP} (for photon production cross sections) and \Block{LSIGH} (for particle production cross sections), give the locators for the cross section array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the cross section values. The format of the \Block{LSIG}, \Block{LSIGP} and \Block{LSIGH} is given in \Tableref{tab:LSIGBlock}. The format for the incident neutron cross section arrays is given in \Sectionref{sec:SIGBlock}, the format for the photon production cross sections is given in \Sectionref{sec:SIGPBlock} and the format for the particle production cross sections is given in \Sectionref{sec:SIGHBlock}.
 
 The starting index \var{LXS} depends on whether it is the \Block{LSIG}, \Block{LSIGP} or \Block{LSIGH} and are given in \Tableref{tab:LXS_NMT}. For the particle production \Block{LSIGH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
@@ -296,7 +296,7 @@ The starting index \var{LXS} depends on whether it is the \Block{LSIG}, \Block{L
   \label{tab:LXS_NMT}
 \end{table}
 
-The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LSIG}, the \Block{LSIGP} and \Block{LSIGH} respectively. \LOC{A}{i} must be monotonically increasing. All locators (\LOC{A}) are \emph{relative} to \var{SIG}=\jxs{7} for the \Block{LSIG}, \emph{relative} to \var{SIGP}=\jxs{14} for the \Block{LSIGP} and relative to \var{ANDH}=\xss{\jxs{32}+10*(i-1)+4} for the \Block{LSIGH} for particle index $i$.
+The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LSIG}, the \Block{LSIGP} and \Block{LSIGH} respectively. \LOC{A}{i} must be monotonically increasing. All locators (\LOC{A}) are \emph{relative} to \var{SIG}=\jxs{7} for the \Block{LSIG}, \emph{relative} to \var{SIGP}=\jxs{14} for the \Block{LSIGP} and \emph{relative} to \var{ANDH}=\xss{\jxs{32}+10*(i-1)+4} for the \Block{LSIGH} for particle index $i$.
 
 \begin{BlockTable}{LSIG \textnormal{\&} LSIGP}
   \var{LXS}             & \LOC{A}{1}         & Location of cross sections for reaction \MT$_{1}$ \\
@@ -338,11 +338,11 @@ The \Block{SIG} contains the incident neutron cross section data (photon product
 
 The energy grid index $\var{IE}_{i}$ corresponds to the first energy in the grid at which a cross section is given. The \MT$_{i}$s are defined in the \Block{MTR}.
 
-\subsubsection{\textsf{LAND}, \textsf{LANDP} and \textsf{LANDH} Block}\label{sec:LANDBlock}\label{sec:LANDPBlock}\label{sec:LANDHBlock}
+\subsubsection{\textsf{LAND}, \textsf{LANDP} and \textsf{LANDH} Blocks}\label{sec:LANDBlock}\label{sec:LANDPBlock}\label{sec:LANDHBlock}
 
-The \Block{LAND} (for incident neutron reactions), \Block{LANDP} (for photon production reactions) and \Block{LANDH} (for particle production reactions) give the locators for the angular distribution array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the angular distributions. The format of the \Block{LAND}, \Block{LANDP} and \Block{LANDH} is given in \Tableref{tab:LANDBlock}.
+The \Block{LAND} (for incident neutron reactions), \Block{LANDP} (for photon production reactions) and \Block{LANDH} (for particle production reactions), give the locators for the angular distribution array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the angular distributions. The format of the \Block{LAND}, \Block{LANDP} and \Block{LANDH} is given in \Tableref{tab:LANDBlock}.
 
-The starting index \var{LAND} depends on whether it is the \Block{LAND}, \Block{LANDP} or \Block{LANDH} and are given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
+The starting index \var{LAND} depends on whether it is the \Block{LAND}, \Block{LANDP} or \Block{LANDH} and is given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
 \begin{table}[h!] \centering
   \begin{tabular}[h]{lll}
@@ -358,7 +358,7 @@ The starting index \var{LAND} depends on whether it is the \Block{LAND}, \Block{
   \label{tab:LAND_NMT}
 \end{table}
 
-The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LAND}, the \Block{LANDP} and \Block{LANDH} respectively. \LOC{B}{i} must be monotonically increasing. All locators (\LOC{B}) are \emph{relative} to \var{AND}=\jxs{9} for the \Block{LAND}, \emph{relative} to \var{ANDP}=\jxs{17} for the \Block{LANDP} and relative to \var{ANDH}=\xss{\jxs{32}+10*(i-1)+6} for the \Block{LANDH} for particle index $i$.
+The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LAND}, the \Block{LANDP} and \Block{LANDH} respectively. \LOC{B}{i} must be monotonically increasing. All locators (\LOC{B}) are \emph{relative} to \var{AND}=\jxs{9} for the \Block{LAND}, \emph{relative} to \var{ANDP}=\jxs{17} for the \Block{LANDP} and \emph{relative} to \var{ANDH}=\xss{\jxs{32}+10*(i-1)+6} for the \Block{LANDH} for particle index $i$.
 
 \begin{BlockTable}{LAND, LANDP \textnormal{and} LANDH}
   \var{LAND}             & \LOC{B}{1}         & Location of angular distributions for reaction \MT$_{1}$ \\
@@ -368,7 +368,7 @@ The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respec
   \label{tab:LANDBlock}
 \end{BlockTable}
 
-\subsubsection{\textsf{AND}, \textsf{ANDP} and \textsf{ANDH} Block}\label{sec:ANDBlock}\label{sec:ANDPBlock}\label{sec:ANDHBlock}
+\subsubsection{\textsf{AND}, \textsf{ANDP} and \textsf{ANDH} Blocks}\label{sec:ANDBlock}\label{sec:ANDPBlock}\label{sec:ANDHBlock}
 
 The \Block{AND}, \Block{ANDP} and \Block{ANDH} contains angular distribution data for all reactions that produce secondary particles (neutrons for the \Block{AND}, photons for the \Block{ANDP} and a specific particle for the \Block{ANDH}). The format of these blocks is given in \Tableref{tab:ANDBlock} and \Tableref{tab:ANDPBlock}. The angular distribution data begins at the index specified by the locator \LOC{B} from the \Block{LAND}, \Block{LANDP} or \Block{LANDH}. If \LOC{B}{i}=0, no angular distribution data are given for reaction $i$ and isotropic scattering is assumed in either the \LAB\ or \CM\ system. If \LOC{B}{i}=-1 no angular distribution data is given for reaction $i$ (this can only happen for the the \Block{AND} or \Block{ANDH}). In this case, the angular distribution data are specified through \law{44} in the \Block{DLW} or \Block{DLWH}.
 
@@ -460,7 +460,7 @@ The \Block{LDLW}, \Block{LDLWP} and \Block{LDLWH} give the locators for the ener
 
 The format of the \Block{LDLW} (for secondary neutrons), the \Block{LDLW} (for secondary photons), the \Block{LDLWH} (for secondary particles)  and the \Block{DNEDL} (for delayed neutrons) is given in \Tableref{tab:LDLWBlock}. The format for the distributions is given in \Sectionref{sec:DLWBlock}.
 
-The starting index \var{LED} depends on whether it is the \Block{LDLW}, \Block{LDLWP}, \Block{LDLWH} or \Block{DNEDL} and are given in \Tableref{tab:LED_NMT}. For the particle production \Block{LDLWH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}. These blocks are given only if the starting index \var{LED} is different from zero.
+The starting index \var{LED} depends on whether it is the \Block{LDLW}, \Block{LDLWP}, \Block{LDLWH} or \Block{DNEDL} and are given in \Tableref{tab:LED_NMT}. For the particle production \Block{LDLWH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}. These blocks are given only if the starting index, \var{LED}, is different from zero.
 
 \begin{table}[h!] \centering
   \begin{tabular}{lll}
@@ -490,7 +490,7 @@ The starting index \var{LED} depends on whether it is the \Block{LDLW}, \Block{L
 \end{tablenotes}
 \end{ThreePartTable}
 
-The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LDLW}, the \Block{LDLWP} and \Block{LDLWH} respectively. \LOC{C}{i} must be monotonically increasing. All locators (\LOC{C}) are \emph{relative} to \var{JED}=\jxs{19} for the \Block{LDLW}, \emph{relative} to \var{JED}=\jxs{19} for the \Block{LDLWP} and relative to \var{JED}=\xss{\jxs{32}+10*(i-1)+8} for the \Block{LDLWH} for particle index $i$.
+The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LDLW}, the \Block{LDLWP} and \Block{LDLWH} respectively. \LOC{C}{i} must be monotonically increasing. All locators (\LOC{C}) are \emph{relative} to \var{JED}=\jxs{19} for the \Block{LDLW}, \emph{relative} to \var{JED}=\jxs{19} for the \Block{LDLWP} and \emph{relative} to \var{JED}=\xss{\jxs{32}+10*(i-1)+8} for the \Block{LDLWH} for particle index $i$.
 
 \subsubsection{\textsf{DLW}, \textsf{DLWP}, \textsf{DLWH} and \textsf{DNED} Blocks}\label{sec:DLWBlock}\label{sec:DLWHBlock}\label{sec:DLWPBlock}\label{sec:DNEDBlock}
 
@@ -1076,7 +1076,7 @@ The format of this Block is given in \Tableref{tab:GPDBlockOutgoing}. The \XSS\ 
   \label{tab:GPDBlockOutgoing}
 \end{XSSTable}
 
-\subsubsection{\textsf{SIGP} and \textsf{SIGH} Block}\label{sec:SIGPBlock}\label{sec:SIGHBlock}
+\subsubsection{\textsf{SIGP} and \textsf{SIGH} Blocks}\label{sec:SIGPBlock}\label{sec:SIGHBlock}
 
 The \Block{SIGP} contains the photon production cross section data and the \Block{SIGH} contains the particle production cross section data. The format of the \Block{SIGP} and \Block{SIGH} is given in \Tableref{tab:SIGPBlock}. The starting index depends on whether it is the \Block{LSIGP} or \Block{LSIGH} and are given in \Tableref{tab:SIG_NMT}. For the particle production \Block{SIGH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
@@ -1149,7 +1149,7 @@ The format of the $i$-th cross section array has two possible forms depending on
 \end{tablenotes}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{YP} and \textsf{YH} Block}\label{sec:YPBlock}\label{sec:YHBlock}
+\subsubsection{\textsf{YP} and \textsf{YH} Blocks}\label{sec:YPBlock}\label{sec:YHBlock}
 
 The \Block{YP} and \Block{YH} contains a list of \MT\ identifiers of cross sections that are used as yield multipliers in \Equationref{eq:PhotonProductionConstruction} to calculate the photon production cross sections (for the \Block{YP}) and the secondary particle production cross sections (for the \Block{YH}) and are referenced by the \var{MTMULT} parameter in \Tableref{tab:PhotonProductionArray}. The format of the \Block{YP} and \Block{YH} is given in \Tableref{tab:YPBlock}.
 
