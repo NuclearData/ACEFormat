@@ -12,7 +12,7 @@ blocks and reference the sections in which their formats are detailed.
 \begin{enumerate}
   \item \textbf{\Block{ITIE}}---contains the energy-dependent incoherent inelastic scattering cross sections.
                                 The \Block{ITIE}  always exists. See \Sectionref{sec:ITIEBlock}.
-  \item \textbf{\Block{ITCE}} and \textbf{\Block{ITCE}}---contains the energy-dependent elastic scattering cross sections.
+  \item \textbf{\Block{ITCE}} and \textbf{\Block{ITCE2}}---contains the energy-dependent elastic scattering cross sections.
                                 The \Block{ITCE} exists if the material has coherent and/or incoherent elastic scattering
                                 (\nxs{5}$\neq0$ and \jxs{4}$\neq0$). The \Block{ITCE2} only exists for mixed mode elastic scattering
                                 (\nxs{5}$=5$ and \jxs{7}$\neq0$). See \Sectionref{sec:ITCEBlock}.
@@ -80,7 +80,7 @@ Note that \jxs{2}=\jxs{1}+1+$N_{in}$. Linear-linear interpolation is assumed bet
   \label{tab:ITIEBlock}
 \end{BlockTable}
 
-\subsubsection{\textsf{ITCE} Block}\label{sec:ITCEBlock}
+\subsubsection{\textsf{ITCE} Block}\label{sec:ITCEBlock}\label{sec:ITCE2Block}
 
 The format of the \Block{ITCE} and \Block{ITCE2} is given in \Tableref{tab:ITCEBlock}. The index at the start of the \Block{ITCE}
 and \Block{ITCE2} is respectively \startblock{ITCE}=\jxs{4} and \startblock{ITCE}=\jxs{7}.
@@ -188,7 +188,7 @@ for each pair of incident and outgoing energies, however.
   \label{tab:ITXEBlockContinuousData}
 \end{XSSTable}
 
-\subsubsection{\textsf{ITCA} Block}\label{sec:ITCABlock}
+\subsubsection{\textsf{ITCA} Block}\label{sec:ITCABlock}\label{sec:ITCA2Block}
 
 The format of the \Block{ITCA} and \Block{ITCA2} is given in \Tableref{tab:ITCABlock}. The index at the start of the \Block{ITCA}
 and \Block{ITCA2} is respectively \startblock{ITCE}=\jxs{6} and \startblock{ITCE}=\jxs{9}. For each incident energy from the
