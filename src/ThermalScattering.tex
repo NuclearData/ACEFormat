@@ -1,15 +1,24 @@
 %!TEX root = ../ACEFormat.tex
 \section[Thermal Scattering]{Thermal Scattering \SaB}\label{sec:ThermalScattering}
 
-Data from thermal \SaB\ tables provide a complete representation of thermal neutron scattering by molecules and crystalline solids. Cross sections for (coherent and incoherent) elastic and (incoherent) inelastic scattering are found on the tables. A coupled energy/angle representation is used to describe the spectra of inelastically scattered neutrons. Angular distributions for elastic scattering are also provided.
+Data from thermal \SaB\ tables provide a complete representation of thermal neutron scattering by molecules
+and crystalline solids. Cross sections for (coherent and incoherent) elastic and (incoherent) inelastic
+scattering are found on the tables. A coupled energy/angle representation is used to describe the spectra
+of inelastically scattered neutrons. Angular distributions for elastic scattering are also provided.
 
-Four unique blocks of data are associated with \SaB\ tables. We now briefly describe each of the four data blocks and reference the sections in which their formats are detailed.
+Four unique blocks of data are associated with \SaB\ tables. We now briefly describe each of the four data
+blocks and reference the sections in which their formats are detailed.
 
 \begin{enumerate}
-  \item \textbf{\Block{ITIE}}---contains the energy-dependent incoherent inelastic scattering cross sections. The \Block{ITIE}  always exists. See \Sectionref{sec:ITIEBlock}.
-  \item \textbf{\Block{ITCE}}---contains the energy-dependent elastic scattering cross sections. The \Block{ITCE} exists if the material has coherent or incoherent elastic scattering; that is, if \jxs{4}$\neq0$. See \Sectionref{sec:ITCEBlock}.
-  \item \textbf{\Block{ITXE}}---contains coupled energy/angle distributions for incoherent inelastic scattering. The \Block{ITXE} always exists. See \Sectionref{sec:ITXEBlock}.
-  \item \textbf{\Block{ITCA}}---contains angular distributions for elastic scattering. The \Block{ITCA} exists if \jxs{4}$\neq0$ and \nxs{6}$\neq-1$. See \Sectionref{sec:ITCABlock}.
+  \item \textbf{\Block{ITIE}}---contains the energy-dependent incoherent inelastic scattering cross sections.
+                                The \Block{ITIE}  always exists. See \Sectionref{sec:ITIEBlock}.
+  \item \textbf{\Block{ITCE}}---contains the energy-dependent elastic scattering cross sections.
+                                The \Block{ITCE} exists if the material has coherent or incoherent elastic scattering;
+                                that is, if \jxs{4}$\neq0$. See \Sectionref{sec:ITCEBlock}.
+  \item \textbf{\Block{ITXE}}---contains coupled energy/angle distributions for incoherent inelastic scattering.
+                                The \Block{ITXE} always exists. See \Sectionref{sec:ITXEBlock}.
+  \item \textbf{\Block{ITCA}}---contains angular distributions for elastic scattering. The \Block{ITCA} exists if
+                                \jxs{4}$\neq0$ and \nxs{6}$\neq-1$. See \Sectionref{sec:ITCABlock}.
 \end{enumerate}
 
 \subsection{\NXS\ Array}\label{sec:NXSThermalScattering}
@@ -86,7 +95,8 @@ with linear-linear interpolation between points. For coherent elastic scattering
   P(l) = E\cdot\sigma_{el}(E), \qquad E_{el}(l) \le E < E_{el}(l+1).
   \label{eq:CoherentP}
 \end{equation}
-In this case, the energies $E_{el}(l)$ correspond to Bragg edges, and between two energies the cross section is determined by inverting \Equationref{eq:CoherentP}:
+In this case, the energies $E_{el}(l)$ correspond to Bragg edges, and between two energies the cross section
+is determined by inverting \Equationref{eq:CoherentP}:
 \begin{equation}
   \sigma_{el}(l) = \frac{P(l)}{E}, \qquad E_{el}(l) \le E < E_{el}(l+1).
 \end{equation}
@@ -94,14 +104,20 @@ Also note that $\sigma_{el}(E)=0$ below $E_{el}(1)$. However, above $E_{el}(N_{e
 
 \subsubsection{\textsf{ITXE} Block}\label{sec:ITXEBlock}
 
-The format of the coupled energy/angle distribution for incoherent inelastic scattering is governed by the value of \nxs{7}. There are three possibilities:
+The format of the coupled energy/angle distribution for incoherent inelastic scattering is governed by the value
+of \nxs{7}. There are three possibilities:
 \begin{description}
   \item[$\nxs{7}=0$] equally-likely discrete cosines and energies (\Tableref{tab:ITXEBlock})
   \item[$\nxs{7}=1$] skewed distribution of discrete cosines and energies (\Tableref{tab:ITXEBlock})
-  \item[$\nxs{7}=2$] continuous distribution of outgoing energies and equally-likely discrete cosines (\Tableref{tab:ITXEBlockContinuousHeader} and \Tableref{tab:ITXEBlockContinuousData})
+  \item[$\nxs{7}=2$] continuous distribution of outgoing energies and equally-likely discrete cosines
+                     (\Tableref{tab:ITXEBlockContinuousHeader} and \Tableref{tab:ITXEBlockContinuousData})
 \end{description}
 
-The format of the \Block{ITXE} for $\nxs{7}<2$ is given in \Tableref{tab:ITXEBlock}. The index at the start of the block is \startblock{ITXE}=\jxs{3}. For each incident energy from the \Block{ITIE}, $N'=$\nxs{4} discrete outgoing energies are given. For each pair of incident and outgoing energies, $N_\mu=$\nxs{3}+1 discrete cosines are given. The incident inelastic energy grid $E_{in}(l)$ is given in the \Block{ITIE}, and linear-linear interpolation is assumed between adjacent values of $E_{in}$.
+The format of the \Block{ITXE} for $\nxs{7}<2$ is given in \Tableref{tab:ITXEBlock}. The index at the start of the
+block is \startblock{ITXE}=\jxs{3}. For each incident energy from the \Block{ITIE}, $N'=$\nxs{4} discrete outgoing
+energies are given. For each pair of incident and outgoing energies, $N_\mu=$\nxs{3}+1 discrete cosines are given.
+The incident inelastic energy grid $E_{in}(l)$ is given in the \Block{ITIE}, and linear-linear interpolation is assumed
+between adjacent values of $E_{in}$.
 
 \begin{ThreePartTable}
   \begin{TableNotes}
