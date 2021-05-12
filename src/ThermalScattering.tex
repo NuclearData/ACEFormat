@@ -12,13 +12,16 @@ blocks and reference the sections in which their formats are detailed.
 \begin{enumerate}
   \item \textbf{\Block{ITIE}}---contains the energy-dependent incoherent inelastic scattering cross sections.
                                 The \Block{ITIE}  always exists. See \Sectionref{sec:ITIEBlock}.
-  \item \textbf{\Block{ITCE}}---contains the energy-dependent elastic scattering cross sections.
-                                The \Block{ITCE} exists if the material has coherent or incoherent elastic scattering;
-                                that is, if \jxs{4}$\neq0$. See \Sectionref{sec:ITCEBlock}.
+  \item \textbf{\Block{ITCE}} and \textbf{\Block{ITCE}}---contains the energy-dependent elastic scattering cross sections.
+                                The \Block{ITCE} exists if the material has coherent and/or incoherent elastic scattering
+                                (\jxs{4}$\neq0$). The \Block{ITCE2} only exists for mixed mode elastic scattering (\jxs{4}$=5$).
+                                See \Sectionref{sec:ITCEBlock}.
   \item \textbf{\Block{ITXE}}---contains coupled energy/angle distributions for incoherent inelastic scattering.
                                 The \Block{ITXE} always exists. See \Sectionref{sec:ITXEBlock}.
-  \item \textbf{\Block{ITCA}}---contains angular distributions for elastic scattering. The \Block{ITCA} exists if
-                                \jxs{4}$\neq0$ and \nxs{6}$\neq-1$. See \Sectionref{sec:ITCABlock}.
+  \item \textbf{\Block{ITCA}} and \textbf{\Block{ITCA2}}---contains angular distributions for elastic scattering.
+                                The \Block{ITCA} exists if the material has coherent and/or incoherent elastic scattering
+                                (\jxs{4}$\neq0$) and \nxs{6}$\neq-1$. The \Block{ITCE2} only exists for mixed mode elastic
+                                scattering (\jxs{4}$=5$) and \nxs{6}$\neq-1$. See \Sectionref{sec:ITCABlock}.
 \end{enumerate}
 
 \subsection{\NXS\ Array}\label{sec:NXSThermalScattering}
@@ -55,7 +58,8 @@ blocks and reference the sections in which their formats are detailed.
 
 When a single mode of elastic scattering is used (either coherent or incoherent), then only the first
 elastic block will be used. This is the way data was stored in the ACE format prior to the introduction
-of mixed mode elastic scattering that combines both coherent and incoherent elastic scattering.
+of mixed mode elastic scattering in thermal scattering evaluations that combines both coherent and incoherent
+elastic scattering.
 
 When using mixed mode elastic scattering (both coherent and incoherent elastic scattering are given,
 $\nxs{5}=5$), the JXS array will contain an additional set of indices for a second elastic data block. In mixed
