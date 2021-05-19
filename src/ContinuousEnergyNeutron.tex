@@ -200,7 +200,7 @@ The \Block{BDD} is used to specify basic delayed neutron precursor data and is p
   \end{XSSTable}
 \end{ThreePartTable}
 
-\subsubsection{\textsf{MTR}, \textsf{MTRP} and \textsf{MTRP} Blocks}\label{sec:MTRBlock}\label{sec:MTRPBlock}\label{sec:MTRHBlock}
+\subsubsection{\textsf{MTR}, \textsf{MTRP} and \textsf{MTRH} Blocks}\label{sec:MTRBlock}\label{sec:MTRPBlock}\label{sec:MTRHBlock}
 
 The format of the \Block{MTR} (for incident neutron reactions), \Block{MTRP} (for photon production reactions) and \Block{MTRH} (for particle production reactions), is given in \Tableref{tab:MTRBlock} and provides a list of \MT\ numbers for which data is available in other blocks of the ACE Table. The starting index depends on whether it is the \Block{MTR}, \Block{MTRP} or \Block{MTRH} and are given in \Tableref{tab:LMT_NMT}. For the particle production \Block{MTRH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
@@ -340,7 +340,7 @@ The energy grid index $\var{IE}_{i}$ corresponds to the first energy in the grid
 
 \subsubsection{\textsf{LAND}, \textsf{LANDP} and \textsf{LANDH} Blocks}\label{sec:LANDBlock}\label{sec:LANDPBlock}\label{sec:LANDHBlock}
 
-The \Block{LAND} (for incident neutron reactions), \Block{LANDP} (for photon production reactions) and \Block{LANDH} (for particle production reactions), give the locators for the angular distribution array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the angular distributions. The format of the \Block{LAND}, \Block{LANDP} and \Block{LANDH} is given in \Tableref{tab:LANDBlock}.
+The \Block{LAND} (for incident neutron reactions), \Block{LANDP} (for photon production reactions) and \Block{LANDH} (for particle production reactions), give the locators for the angular distribution array for each reaction \MT . A locator is a \emph{relative} index in the \XSS\ array where some piece of data can be found. In this case, the data are the angular distributions. The format of the \Block{LAND}, \Block{LANDP} and \Block{LANDH} is given in \Tableref{tab:LANDBlock} and \Tableref{tab:LANDPBlock}.
 
 The starting index \var{LAND} depends on whether it is the \Block{LAND}, \Block{LANDP} or \Block{LANDH} and is given in \Tableref{tab:LAND_NMT}. For the particle production \Block{LANDH}, \var{i} refers to the index of the corresponding particle type defined on the \Block{PTYPE} and is between 1 and \var{NTYPE}.
 
@@ -360,12 +360,20 @@ The starting index \var{LAND} depends on whether it is the \Block{LAND}, \Block{
 
 The \MT s are given in the \Block{MTR}, the \Block{MTRP} and \Block{MTRH} respectively for the \Block{LAND}, the \Block{LANDP} and \Block{LANDH} respectively. \LOC{B}{i} must be monotonically increasing. All locators (\LOC{B}) are \emph{relative} to \var{AND}=\jxs{9} for the \Block{LAND}, \emph{relative} to \var{ANDP}=\jxs{17} for the \Block{LANDP} and \emph{relative} to \var{ANDH}=\xss{\jxs{32}+10*(i-1)+6} for the \Block{LANDH} for particle index $i$.
 
-\begin{BlockTable}{LAND, LANDP \textnormal{and} LANDH}
+\begin{BlockTable}{LAND}
+  \var{LAND}             & \LOC{B}{1}           & Location of angular distributions for elastic scattering \\
+  \var{LAND}+1           & \LOC{B}{2}           & Location of angular distributions for reaction \MT$_{1}$ \\
+  \ldots \\
+  \var{LAND}+\var{NMT}   & \LOC{B}{\var{NMT}+1} & Location of angular distributions for reaction \MT$_{\var{NMT}}$
+  \label{tab:LANDBlock}
+\end{BlockTable}
+
+\begin{BlockTable}{LANDP \textnormal{and} LANDH}
   \var{LAND}             & \LOC{B}{1}         & Location of angular distributions for reaction \MT$_{1}$ \\
   \var{LAND}+1           & \LOC{B}{2}         & Location of angular distributions for reaction \MT$_{2}$ \\
   \ldots \\
   \var{LAND}+\var{NMT}-1 & \LOC{B}{\var{NMT}} & Location of angular distributions for reaction \MT$_{\var{NMT}}$
-  \label{tab:LANDBlock}
+  \label{tab:LANDPBlock}
 \end{BlockTable}
 
 \subsubsection{\textsf{AND}, \textsf{ANDP} and \textsf{ANDH} Blocks}\label{sec:ANDBlock}\label{sec:ANDPBlock}\label{sec:ANDHBlock}
@@ -393,7 +401,7 @@ The starting index \var{LAND} depends on whether it is the \Block{AND}, \Block{A
   \var{LAND}+\LOC{B}{1}-1         & Angular distribution array for elastic scattering \\
   \var{LAND}+\LOC{B}{2}-1         & Angular distribution array for reaction \MT$_{1}$ \\
   \ldots \\
-  \var{LAND}+\LOC{B}{\var{NMT}}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
+  \var{LAND}+\LOC{B}{\var{NMT}+1}-1 & Angular distribution array for reaction \MT$_{\var{NMT}}$
   \label{tab:ANDBlock}
 \end{LOCTable}
 \begin{tablenotes}
