@@ -6,8 +6,8 @@ and crystalline solids. Cross sections for (coherent and incoherent) elastic and
 scattering are found on the tables. A coupled energy/angle representation is used to describe the spectra
 of inelastically scattered neutrons. Angular distributions for elastic scattering are also provided.
 
-Four unique blocks of data are associated with \SaB\ tables. We now briefly describe each of the four data
-blocks and reference the sections in which their formats are detailed.
+Four unique types of data blocks are associated with \SaB\ tables. We now briefly describe each of these four data
+block types and reference the sections in which their formats are detailed.
 
 \begin{enumerate}
   \item \textbf{\Block{ITIE}}---contains the energy-dependent incoherent inelastic scattering cross sections.
@@ -60,15 +60,15 @@ blocks and reference the sections in which their formats are detailed.
   \label{tab:JXSThermalScattering}
 \end{JXSTable}
 
-When a single mode of elastic scattering is used (either coherent or incoherent), then only the first
+When a single mode of elastic scattering is used (either coherent when \nxs{5}$=4$ or incoherent when \nxs{5}$=3$), then only the first
 elastic block will be used. This is the way data was stored in the ACE format prior to the introduction
 of mixed mode elastic scattering in thermal scattering evaluations that combines both coherent and incoherent
 elastic scattering.
 
 When using mixed mode elastic scattering (both coherent and incoherent elastic scattering are given,
 $\nxs{5}=5$), the JXS array will contain an additional set of indices for a second elastic data block. In mixed
-mode, the first elastic block pointed to by \jxs{4} to \jxs{6} are used for the coherent part and the second
-elastic block pointed to by \jxs{7} to \jxs{9} are used for the incoherent part.
+mode, the first elastic blocks (pointed to by \jxs{4} to \jxs{6}) are used for the coherent part and the second
+elastic blocks (pointed to by \jxs{7} to \jxs{9)} are used for the incoherent part.
 
 \subsection{Format of Individual Data Blocks}
 \subsubsection{\textsf{ITIE} Block}\label{sec:ITIEBlock}
