@@ -947,7 +947,7 @@ Valid values for the interpolation flag, \var{JJ}, are the same as for \var{INTT
 \subsubsubsection{\var{LAW}=66---$N$-body phase space distribution}\label{sec:LAW66}
 \begin{ThreePartTable}
   \begin{TableNotes}
-    \item[$\dagger$] \label{tn:LAW66InterpolationScheme} 
+    \item[$\dagger$] \label{tn:LAW66InterpolationScheme}
       \begin{description}
         \item[\var{INTT}=1] histogram distribution,
         \item[\var{INTT}=2] linear-linear distribution.
@@ -955,8 +955,8 @@ Valid values for the interpolation flag, \var{JJ}, are the same as for \var{INTT
   \end{TableNotes}
   \begin{LAWTable}{\var{LAW}=66 (From ENDF-6 \MF=6 \var{LAW}=6)}
     \var{LDAT}(1) & \var{NPSX} & Number of bodies in the phase space \\
-    \var{LDAT}(2) & $A_{P}$ & Total mass ratio for the \var{NPSX} particles.
-    \var{LDAT}(3)          & $\var{INTT}$                              & Interpolation parameter\tnotex{tn:LAW66InterpolationScheme} \\
+    \var{LDAT}(2) & $A_{P}$ & Total mass ratio for the \var{NPSX} particles. \\
+    \var{LDAT}(3)          & \var{INTT}                                & Interpolation parameter\tnotex{tn:LAW66InterpolationScheme} \\
     \var{LDAT}(4)          & $N_{P}$                                   & Number of points in the distribution \\
     \var{LDAT}(5)          & $\xi_{\mathrm{out}}(j),j=1,\ldots,N_{P}$  & $\xi$ grid (between 0 and 1) \\
     \var{LDAT}(5+$N_{P}$)  & $\PDF(j),j=1,\ldots,N_{P}$                & Probability density function \\
